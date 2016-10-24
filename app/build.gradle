@@ -41,4 +41,8 @@ dependencies {
     compile 'com.zhy:autolayout:1.4.1'
     // 数据库操作GreenDao
     compile 'de.greenrobot:greendao:2.1.0'
+    // Jsoup网络抓取
+    compile 'org.jsoup:jsoup:1.10.1'
+    // Gson解析
+    compile 'com.google.code.gson:gson:2.7'
 }
