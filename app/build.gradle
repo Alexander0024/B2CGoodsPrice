@@ -35,6 +35,10 @@ dependencies {
     // RX binaries
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
+    // butter knife
+    compile 'com.jakewharton:butterknife:7.0.1'
+    // 屏幕适配
+    compile 'com.zhy:autolayout:1.4.1'
     // 数据库操作GreenDao
     compile 'de.greenrobot:greendao:2.1.0'
 }
