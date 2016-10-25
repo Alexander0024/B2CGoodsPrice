@@ -1,11 +1,14 @@
 package com.alexsophia.b2cgoodsprice.network;
 
-import com.alexsophia.b2cgoodsprice.utils.ContentParsingUtils;
+import android.widget.TextView;
 
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
+import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 
-import java.io.IOException;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.schedulers.Schedulers;
+
+import static com.alexsophia.b2cgoodsprice.utils.ContentParsingUtils.getJsonString;
 
 /**
  * JsoupConnect
@@ -13,19 +16,24 @@ import java.io.IOException;
  * Created by Alexander on 2016/10/24.
  */
 public class JsoupConnect {
+    private static String TAG = "JsoupConnect";
 
-    public static String getContent(String url) {
-        try {
-            Document document = Jsoup.connect(url).get();
-            String name = ContentParsingUtils.getJsonString(document.body().data());
-            System.out.println(name);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return "";
-    }
-
-    public static void main(String[] args) {
-        getContent("http://item.taobao.com/item.htm?id=534149604055");
+    public static void getContent(final TextView tv, String url) {
+        ApiInterface.getContent(url)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Action1<String>() {
+                    @Override
+                    public void call(String content) {
+                        LogWrapper.e(TAG, "Finished call: " + content);
+                        tv.setText(getJsonString(content));
+//                        tv.setText(getJsonString(content));
+                    }
+                }, new Action1<Throwable>() {
+                    @Override
+                    public void call(Throwable throwable) {
+                        LogWrapper.e(TAG, "Error call: " + throwable.getMessage());
+                    }
+                });
     }
 }
