@@ -25,4 +25,9 @@ public interface MainPresenters extends BasePresenter {
      * @param url 地址
      */
     void getPrice(String url);
+
+    /**
+     * 获取Top Movie
+     */
+    void getTopMovie250();
 }

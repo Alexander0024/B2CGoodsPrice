@@ -8,9 +8,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Subscriber;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
+import rx.Observable;
 
 /**
  * ApiManager
@@ -58,13 +56,8 @@ public class ApiManager {
      * 用于获取豆瓣电影Top250的数据
      * @param start 起始位置
      * @param count 获取长度
-     * @param subscriber 由调用者传过来的观察者对象
      */
-    public void getTopMovie(int start, int count, Subscriber<MovieEntity> subscriber){
-        mApiInterface.getTopMovie(start, count)
-                .subscribeOn(Schedulers.io())
-                .unsubscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
+    public Observable<MovieEntity> getTopMovie(int start, int count){
+        return mApiInterface.getTopMovie(start, count);
     }
 }
