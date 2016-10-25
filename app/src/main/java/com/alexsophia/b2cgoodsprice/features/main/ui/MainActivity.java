@@ -1,16 +1,19 @@
-package com.alexsophia.b2cgoodsprice.features;
+package com.alexsophia.b2cgoodsprice.features.main.ui;
 
 import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.alexsophia.b2cgoodsprice.R;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseActivity;
-import com.alexsophia.b2cgoodsprice.network.JsoupConnect;
+import com.alexsophia.b2cgoodsprice.features.main.entity.MovieEntity;
+import com.alexsophia.b2cgoodsprice.network.ApiManager;
 import com.alexsophia.b2cgoodsprice.utils.UIJumpUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import rx.Subscriber;
 
 public class MainActivity extends BaseActivity {
     @Bind(R.id.tv_url)
@@ -44,7 +47,33 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void loadData() {
         mTvUrl.setText(url);
-        JsoupConnect.getContent(mTvMain, url);
+        getMovie();
+    }
+
+    private void getMovie() {
+        ApiManager.getInstance().getTopMovie(0, 10, new Subscriber<MovieEntity>() {
+            @Override
+            public void onCompleted() {
+                Toast.makeText(MainActivity.this, "Get Top Movie Completed", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError(Throwable e) {
+                mTvMain.setText(e.getMessage());
+            }
+
+            @Override
+            public void onNext(MovieEntity movieEntity) {
+                StringBuilder stringBuilder = new StringBuilder();
+                for (MovieEntity.SubjectsBean subject : movieEntity.getSubjects()) {
+                    stringBuilder.append(subject.getTitle())
+                            .append(" ")
+                            .append(subject.getYear())
+                            .append("\n");
+                }
+                mTvMain.setText(stringBuilder.toString());
+            }
+        });
     }
 
     @Override
