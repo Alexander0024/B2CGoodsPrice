@@ -39,7 +39,7 @@ public class PriceListAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public Goods getItem(int position) {
         return mGoods.get(position);
     }
 

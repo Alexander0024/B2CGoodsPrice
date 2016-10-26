@@ -1,5 +1,8 @@
 package com.alexsophia.b2cgoodsprice.features.list.ui;
 
+import android.content.DialogInterface;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -11,11 +14,13 @@ import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragment;
 import com.alexsophia.b2cgoodsprice.features.list.presenters.ListPresenters;
 import com.alexsophia.b2cgoodsprice.features.list.presenters.impl.ListPresentersImpl;
 import com.alexsophia.b2cgoodsprice.features.list.ui.adapter.PriceListAdapter;
+import com.alexsophia.b2cgoodsprice.share.CustomDialog;
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 import com.alexsophia.b2cgoodsprice.utils.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import greendao.Goods;
 
 /**
  * ListMainFragment
@@ -71,6 +76,31 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
         mPriceListAdapter = new PriceListAdapter(getContext(), mListPresenters.getGoods());
         mLVPrices.setAdapter(mPriceListAdapter);
         mTvCount.setText(getString(R.string.list_item_count, mListPresenters.getGoods().size()));
+        mLVPrices.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Goods good = mPriceListAdapter.getItem(position);
+                StringBuilder stringBuilder = new StringBuilder();
+                stringBuilder.append("ID = ").append(good.getId()).append("\n")
+                        .append("Good ID = ").append(good.getGoodsId()).append("\n")
+                        .append("Type = ").append(good.getType()).append("\n")
+                        .append("Brand = ").append(good.getBrand()).append("\n")
+                        .append("Name = ").append(good.getName()).append("\n")
+                        .append("Standard = ").append(good.getStandard()).append("\n")
+                        .append("Online price = ").append(good.getCheapest_online()).append("\n")
+                        .append("Offline price = ").append(good.getCheapest_offline());
+                new CustomDialog.Builder(getContext())
+                        .setTitle("详情")
+                        .setMessage(stringBuilder.toString())
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        })
+                        .create().show();
+            }
+        });
     }
 
     @Override
