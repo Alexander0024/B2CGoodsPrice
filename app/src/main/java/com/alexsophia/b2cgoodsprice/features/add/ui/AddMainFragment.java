@@ -4,6 +4,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
@@ -36,7 +37,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     @Bind(R.id.dropEdtTxt_add_name)
     DropEditText mDropEdtTxtName;
     @Bind(R.id.edtTxt_add_standard)
-    DropEditText mEdtTxtStandard;
+    EditText mEdtTxtStandard;
     @Bind(R.id.rb_add_online)
     RadioButton mRbAddOnline;
     @Bind(R.id.rb_add_offline)
@@ -44,7 +45,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     @Bind(R.id.rg_add_type_select)
     RadioGroup mRgAddTypeSelect;
     @Bind(R.id.edtTxt_add_price)
-    DropEditText mEdtTxtPrice;
+    EditText mEdtTxtPrice;
     @Bind(R.id.btn_add_submit)
     Button mBtnSubmit;
 
@@ -169,7 +170,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
 
     @Override
     public String getStandard() {
-        return mEdtTxtStandard.getText();
+        return mEdtTxtStandard.getText().toString();
     }
 
     @Override
@@ -179,6 +180,6 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
 
     @Override
     public double getPrice() {
-        return Double.parseDouble(mEdtTxtPrice.getText());
+        return Double.parseDouble(mEdtTxtPrice.getText().toString());
     }
 }
