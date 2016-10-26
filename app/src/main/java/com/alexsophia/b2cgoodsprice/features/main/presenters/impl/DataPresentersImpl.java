@@ -107,6 +107,10 @@ public class DataPresentersImpl {
         } else {
             MyApplication.getInstance().getDaoSession().update(goods);
         }
+        /**
+         * 更新数据后刷新数据
+         */
+        refreshAllData();
     }
 
     public long addPrice(GoodsPrices price) {
