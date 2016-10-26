@@ -12,6 +12,7 @@ public class Goods {
 
     private Long id;
     private Long goodsId;
+    private String type;
     private String brand;
     private String name;
     private String standard;
@@ -34,9 +35,10 @@ public class Goods {
         this.id = id;
     }
 
-    public Goods(Long id, Long goodsId, String brand, String name, String standard, Double cheapest_online, Double cheapest_offline) {
+    public Goods(Long id, Long goodsId, String type, String brand, String name, String standard, Double cheapest_online, Double cheapest_offline) {
         this.id = id;
         this.goodsId = goodsId;
+        this.type = type;
         this.brand = brand;
         this.name = name;
         this.standard = standard;
@@ -64,6 +66,14 @@ public class Goods {
 
     public void setGoodsId(Long goodsId) {
         this.goodsId = goodsId;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public String getBrand() {

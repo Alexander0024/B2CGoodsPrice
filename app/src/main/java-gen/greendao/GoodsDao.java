@@ -25,11 +25,12 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
         public final static Property GoodsId = new Property(1, Long.class, "goodsId", false, "GOODS_ID");
-        public final static Property Brand = new Property(2, String.class, "brand", false, "BRAND");
-        public final static Property Name = new Property(3, String.class, "name", false, "NAME");
-        public final static Property Standard = new Property(4, String.class, "standard", false, "STANDARD");
-        public final static Property Cheapest_online = new Property(5, Double.class, "cheapest_online", false, "CHEAPEST_ONLINE");
-        public final static Property Cheapest_offline = new Property(6, Double.class, "cheapest_offline", false, "CHEAPEST_OFFLINE");
+        public final static Property Type = new Property(2, String.class, "type", false, "TYPE");
+        public final static Property Brand = new Property(3, String.class, "brand", false, "BRAND");
+        public final static Property Name = new Property(4, String.class, "name", false, "NAME");
+        public final static Property Standard = new Property(5, String.class, "standard", false, "STANDARD");
+        public final static Property Cheapest_online = new Property(6, Double.class, "cheapest_online", false, "CHEAPEST_ONLINE");
+        public final static Property Cheapest_offline = new Property(7, Double.class, "cheapest_offline", false, "CHEAPEST_OFFLINE");
     };
 
     private DaoSession daoSession;
@@ -50,11 +51,12 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
         db.execSQL("CREATE TABLE " + constraint + "\"GOODS\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
                 "\"GOODS_ID\" INTEGER," + // 1: goodsId
-                "\"BRAND\" TEXT," + // 2: brand
-                "\"NAME\" TEXT," + // 3: name
-                "\"STANDARD\" TEXT," + // 4: standard
-                "\"CHEAPEST_ONLINE\" REAL," + // 5: cheapest_online
-                "\"CHEAPEST_OFFLINE\" REAL);"); // 6: cheapest_offline
+                "\"TYPE\" TEXT," + // 2: type
+                "\"BRAND\" TEXT," + // 3: brand
+                "\"NAME\" TEXT," + // 4: name
+                "\"STANDARD\" TEXT," + // 5: standard
+                "\"CHEAPEST_ONLINE\" REAL," + // 6: cheapest_online
+                "\"CHEAPEST_OFFLINE\" REAL);"); // 7: cheapest_offline
     }
 
     /** Drops the underlying database table. */
@@ -78,29 +80,34 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
             stmt.bindLong(2, goodsId);
         }
  
+        String type = entity.getType();
+        if (type != null) {
+            stmt.bindString(3, type);
+        }
+ 
         String brand = entity.getBrand();
         if (brand != null) {
-            stmt.bindString(3, brand);
+            stmt.bindString(4, brand);
         }
  
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(4, name);
+            stmt.bindString(5, name);
         }
  
         String standard = entity.getStandard();
         if (standard != null) {
-            stmt.bindString(5, standard);
+            stmt.bindString(6, standard);
         }
  
         Double cheapest_online = entity.getCheapest_online();
         if (cheapest_online != null) {
-            stmt.bindDouble(6, cheapest_online);
+            stmt.bindDouble(7, cheapest_online);
         }
  
         Double cheapest_offline = entity.getCheapest_offline();
         if (cheapest_offline != null) {
-            stmt.bindDouble(7, cheapest_offline);
+            stmt.bindDouble(8, cheapest_offline);
         }
     }
 
@@ -122,11 +129,12 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
         Goods entity = new Goods( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
             cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // goodsId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // brand
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // name
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // standard
-            cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5), // cheapest_online
-            cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6) // cheapest_offline
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // type
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // brand
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // name
+            cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5), // standard
+            cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6), // cheapest_online
+            cursor.isNull(offset + 7) ? null : cursor.getDouble(offset + 7) // cheapest_offline
         );
         return entity;
     }
@@ -136,11 +144,12 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
     public void readEntity(Cursor cursor, Goods entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
         entity.setGoodsId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setBrand(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setStandard(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setCheapest_online(cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5));
-        entity.setCheapest_offline(cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6));
+        entity.setType(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setBrand(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setName(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setStandard(cursor.isNull(offset + 5) ? null : cursor.getString(offset + 5));
+        entity.setCheapest_online(cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6));
+        entity.setCheapest_offline(cursor.isNull(offset + 7) ? null : cursor.getDouble(offset + 7));
      }
     
     /** @inheritdoc */

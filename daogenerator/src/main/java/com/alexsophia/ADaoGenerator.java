@@ -16,6 +16,7 @@ public class ADaoGenerator {
         Entity goods = schema.addEntity("Goods");
         goods.addIdProperty().primaryKey();
         Property goodsId = goods.addLongProperty("goodsId").getProperty();
+        goods.addStringProperty("type");
         goods.addStringProperty("brand");
         goods.addStringProperty("name");
         goods.addStringProperty("standard");
