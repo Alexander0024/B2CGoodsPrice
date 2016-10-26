@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alexsophia.b2cgoodsprice.R;
+import com.alexsophia.b2cgoodsprice.features.add.ui.AddMainFragment;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragmentActivity;
 import com.alexsophia.b2cgoodsprice.features.list.ui.ListMainFragment;
 import com.alexsophia.b2cgoodsprice.features.main.presenters.MainPresenters;
@@ -109,6 +110,8 @@ public class MainActivity extends BaseFragmentActivity implements MainPresenters
     protected void addFragments() {
         ListMainFragment listMainFragment = ListMainFragment.newInstance();
         mFragmentsList.add(listMainFragment);
+        AddMainFragment addMainFragment = AddMainFragment.newInstance();
+        mFragmentsList.add(addMainFragment);
     }
 
     /**

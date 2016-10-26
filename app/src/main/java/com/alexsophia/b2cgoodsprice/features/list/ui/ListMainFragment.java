@@ -40,7 +40,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.list_activity;
+        return R.layout.list_main_fragment;
     }
 
     @Override
