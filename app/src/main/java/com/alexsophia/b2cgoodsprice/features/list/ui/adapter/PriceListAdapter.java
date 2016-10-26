@@ -58,8 +58,7 @@ public class PriceListAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         if (view == null) {
             viewHolder = new ViewHolder();
-            view = LayoutInflater.from(mContext).inflate(R.layout.list_price_item,
-                    null);
+            view = LayoutInflater.from(mContext).inflate(R.layout.list_price_item, null);
             viewHolder.mBrand = (TextView) view.findViewById(R.id.tv_main_brand);
             viewHolder.mName = (TextView) view.findViewById(R.id.tv_main_name);
             viewHolder.mStandard = (TextView) view.findViewById(R.id.tv_main_standard);
@@ -90,9 +89,9 @@ public class PriceListAdapter extends BaseAdapter {
                         .append("Online price = ").append(goods.getCheapest_online()).append("\n")
                         .append("Offline price = ").append(goods.getCheapest_offline());
                 new CustomDialog.Builder(mContext)
-                        .setTitle("详情")
+                        .setTitle("Details")
                         .setMessage(stringBuilder.toString())
-                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
@@ -116,7 +115,7 @@ public class PriceListAdapter extends BaseAdapter {
                         double price = Double.parseDouble(input.getText().toString());
                         if (price < goods.getCheapest_online() || goods.getCheapest_online() == -1) {
                             goods.setCheapest_online(price);
-                            MyApplication.getInstance().getDataPresenters().addPrice(goods, true);
+                            MyApplication.getInstance().getDataPresenters().updateGood(goods);
                             notifyDataSetChanged();
                         }
                     }
@@ -139,7 +138,7 @@ public class PriceListAdapter extends BaseAdapter {
                         double price = Double.parseDouble(input.getText().toString());
                         if (price < goods.getCheapest_offline() || goods.getCheapest_offline() == -1) {
                             goods.setCheapest_offline(price);
-                            MyApplication.getInstance().getDataPresenters().addPrice(goods, false);
+                            MyApplication.getInstance().getDataPresenters().updateGood(goods);
                             notifyDataSetChanged();
                         }
                     }

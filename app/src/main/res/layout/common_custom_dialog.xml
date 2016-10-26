@@ -58,7 +58,7 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/main"
-            android:textSize="@dimen/h_30"/>
+            android:textSize="@dimen/text_size_normal"/>
 
         <View
             android:id="@+id/v_split_line"
@@ -73,6 +73,6 @@
             android:layout_weight="1"
             android:gravity="center"
             android:textColor="@color/main"
-            android:textSize="@dimen/h_30"/>
+            android:textSize="@dimen/text_size_normal"/>
     </com.zhy.autolayout.AutoLinearLayout>
 </com.zhy.autolayout.AutoLinearLayout>

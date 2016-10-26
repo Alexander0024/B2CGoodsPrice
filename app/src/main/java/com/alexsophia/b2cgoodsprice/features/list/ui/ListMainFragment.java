@@ -54,7 +54,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
 
     @Override
     protected void resume() {
-        LogWrapper.e(TAG, "Refresh list");
+        LogWrapper.e(TAG, "Resume: Refresh list");
         mPriceListAdapter.updateListView(MyApplication.getInstance().getDataPresenters().getGoods());
         mPriceListAdapter.notifyDataSetChanged();
     }
@@ -66,6 +66,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
 
     @Override
     protected void initData() {
+        LogWrapper.e(TAG, "initData");
         mListPresenters = new ListPresentersImpl(ThreadExecutor.getInstance(), MainThreadImpl
                 .getInstance(), this);
         mPriceListAdapter = new PriceListAdapter(getContext(), mListPresenters.getGoods());

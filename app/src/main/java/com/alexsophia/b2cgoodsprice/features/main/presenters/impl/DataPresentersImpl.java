@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import greendao.Goods;
-import greendao.GoodsPrices;
+import greendao.GoodsDao;
 import rx.Observable;
 import rx.functions.Action1;
 
@@ -17,10 +17,12 @@ import rx.functions.Action1;
  * Created by Alexander on 2016/10/26.
  */
 public class DataPresentersImpl {
-    private List<Goods> mGoods; // 所有物品
+    private GoodsDao mGoodsDao; // Goods操作类
+    private List<Goods> mGoods; // 所有Goods列表
     private List<String> mTypes = new ArrayList<>(); // 分类信息
 
     public DataPresentersImpl() {
+        mGoodsDao = MyApplication.getInstance().getDaoSession().getGoodsDao();
         refreshAllData();
     }
 
@@ -96,27 +98,22 @@ public class DataPresentersImpl {
                 return;
             }
         }
-        long id = MyApplication.getInstance().getDaoSession().getGoodsDao().insert(newGood);
+        long id = mGoodsDao.insert(newGood);
         refreshAllData();
         listener.onSuccess(id);
     }
 
-    public void addPrice(Goods goods, boolean isOnline) {
-        if (isOnline) {
-            MyApplication.getInstance().getDaoSession().update(goods);
-        } else {
-            MyApplication.getInstance().getDaoSession().update(goods);
-        }
+    /**
+     * 更新Goods信息
+     *
+     * @param goods 新的Goods的信息
+     */
+    public void updateGood(Goods goods) {
+        mGoodsDao.update(goods);
         /**
          * 更新数据后刷新数据
          */
         refreshAllData();
-    }
-
-    public long addPrice(GoodsPrices price) {
-        long id = price.getId();
-        MyApplication.getInstance().getDaoSession().getGoodsPricesDao().insert(price);
-        return id;
     }
 
     /**

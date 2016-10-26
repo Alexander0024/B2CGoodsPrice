@@ -93,6 +93,7 @@
         <item name="android:layout_marginLeft">1dp</item>
         <item name="android:layout_marginRight">1dp</item>
         <item name="android:layout_marginTop">1dp</item>
+        <item name="android:textSize">16sp</item>
     </style>
 
     <!-- 添加新项目样式 -->
