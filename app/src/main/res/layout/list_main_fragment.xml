@@ -22,6 +22,8 @@
             android:layout_height="wrap_content"/>
     </com.zhy.autolayout.AutoLinearLayout>
 
+    <include layout="@layout/list_price_item"/>
+
     <ListView
         android:id="@+id/lVi_list_prices"
         android:layout_width="match_parent"

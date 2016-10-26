@@ -14,7 +14,7 @@
     <string name="list_standard">规格</string>
     <string name="list_price">价格</string>
     <string name="list_cheapest_online">网店价</string>
-    <string name="list_cheapest_offline">实体店价</string>
+    <string name="list_cheapest_offline">实体店</string>
     <string name="list_online">网店</string>
     <string name="list_offline">实体店</string>
 </resources>
