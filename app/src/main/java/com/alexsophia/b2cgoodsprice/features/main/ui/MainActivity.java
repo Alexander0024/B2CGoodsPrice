@@ -9,12 +9,15 @@ import com.alexsophia.b2cgoodsprice.R;
 import com.alexsophia.b2cgoodsprice.features.base.executor.impl.ThreadExecutor;
 import com.alexsophia.b2cgoodsprice.features.base.threading.impl.MainThreadImpl;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseActivity;
+import com.alexsophia.b2cgoodsprice.features.main.entity.MovieEntity;
 import com.alexsophia.b2cgoodsprice.features.main.presenters.MainPresenters;
 import com.alexsophia.b2cgoodsprice.features.main.presenters.impl.MainPresentersImpl;
 import com.alexsophia.b2cgoodsprice.utils.UIJumpUtils;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import rx.Observable;
+import rx.functions.Action1;
 
 public class MainActivity extends BaseActivity implements MainPresenters.View {
     @Bind(R.id.tv_url)
@@ -72,6 +75,22 @@ public class MainActivity extends BaseActivity implements MainPresenters.View {
     @Override
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    public void onGetMovieTop250Success(MovieEntity movieEntity) {
+        final StringBuilder stringBuilder = new StringBuilder();
+        Observable.from(movieEntity.getSubjects())
+                .subscribe(new Action1<MovieEntity.SubjectsBean>() {
+                    @Override
+                    public void call(MovieEntity.SubjectsBean subjectsBean) {
+                        stringBuilder.append(subjectsBean.getTitle())
+                                .append(" ")
+                                .append(subjectsBean.getYear())
+                                .append("\n");
+                    }
+                });
+        mTvMain.setText(stringBuilder.toString());
     }
 
     @Override

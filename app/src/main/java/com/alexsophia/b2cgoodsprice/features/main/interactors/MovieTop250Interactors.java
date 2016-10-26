@@ -3,6 +3,7 @@ package com.alexsophia.b2cgoodsprice.features.main.interactors;
 import android.content.Context;
 
 import com.alexsophia.b2cgoodsprice.features.base.interactors.Interactor;
+import com.alexsophia.b2cgoodsprice.features.main.entity.MovieEntity;
 
 /**
  * MovieTop250Interactors
@@ -30,5 +31,17 @@ public interface MovieTop250Interactors extends Interactor {
          * 计数
          */
         int getCount();
+
+        /**
+         * 获得movie成功
+         * @param movieEntity movie Entity
+         */
+        void onGetMovieTop250Success(MovieEntity movieEntity);
+
+        /**
+         * 获取movice失败
+         * @param errorMessage 错误信息
+         */
+        void onGetMovieTop250Failed(String errorMessage);
     }
 }

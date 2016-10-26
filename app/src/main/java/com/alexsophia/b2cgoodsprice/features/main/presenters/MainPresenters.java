@@ -4,6 +4,7 @@ import android.content.Context;
 
 import com.alexsophia.b2cgoodsprice.features.base.presenters.BasePresenter;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseView;
+import com.alexsophia.b2cgoodsprice.features.main.entity.MovieEntity;
 
 /**
  * MainPresenters
@@ -18,6 +19,12 @@ public interface MainPresenters extends BasePresenter {
          * @return 当前Activity的Context
          */
         Context getContext();
+
+        /**
+         * 获得movie成功
+         * @param movieEntity movie Entity
+         */
+        void onGetMovieTop250Success(MovieEntity movieEntity);
     }
 
     /**

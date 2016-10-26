@@ -32,12 +32,12 @@ public class MovieTop250InteractorsImpl extends AbstractInteractor implements Mo
                 .subscribe(new Action1<MovieEntity>() {
                     @Override
                     public void call(MovieEntity movieEntity) {
-
+                        mCallback.onGetMovieTop250Success(movieEntity);
                     }
                 }, new Action1<Throwable>() {
                     @Override
                     public void call(Throwable throwable) {
-
+                        mCallback.onGetMovieTop250Failed(throwable.getMessage());
                     }
                 });
     }
