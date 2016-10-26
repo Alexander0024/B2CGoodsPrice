@@ -20,16 +20,20 @@ import java.util.List;
 public class AttrAdapter extends BaseAdapter {
     private String TAG = "AttrAdapter";
     private final Context mContext;
+    private final ATTR_TYPE mAttrType;
     private List<String> mData;
     private String mExtra = "";
 
     public AttrAdapter(Context context, ATTR_TYPE attrType) {
         this.mContext = context;
-        this.mData = getData(attrType);
+        this.mAttrType = attrType;
+        this.mData = getData();
     }
 
     public void setExtra(String extra) {
         this.mExtra = extra;
+        this.mData = getData();
+        notifyDataSetChanged();
     }
 
     @Override
@@ -58,16 +62,16 @@ public class AttrAdapter extends BaseAdapter {
         TYPE, BRAND, NAME
     }
 
-    private List<String> getData(ATTR_TYPE attrType) {
-        LogWrapper.e(TAG, "getData: " + attrType.toString());
+    private List<String> getData() {
+        LogWrapper.e(TAG, "getData: " + mAttrType.toString());
         List<String> data;
-        if (attrType.equals(ATTR_TYPE.TYPE)) {
+        if (mAttrType.equals(ATTR_TYPE.TYPE)) {
             data = MyApplication.getInstance().getDataPresenters().getTypes();
             LogWrapper.e(TAG, "get type with " + data.size() + " items.");
-        } else if (attrType.equals(ATTR_TYPE.BRAND)) {
+        } else if (mAttrType.equals(ATTR_TYPE.BRAND)) {
             LogWrapper.e(TAG, "get brand which under type = " + mExtra);
             data = MyApplication.getInstance().getDataPresenters().getBrand(mExtra);
-        } else if (attrType.equals(ATTR_TYPE.NAME)) {
+        } else if (mAttrType.equals(ATTR_TYPE.NAME)) {
             LogWrapper.e(TAG, "get name which under brand = " + mExtra);
             data = MyApplication.getInstance().getDataPresenters().getName(mExtra);
         } else {
