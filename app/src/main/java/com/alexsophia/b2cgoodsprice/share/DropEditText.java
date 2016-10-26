@@ -2,6 +2,8 @@ package com.alexsophia.b2cgoodsprice.share;
 
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.graphics.drawable.ColorDrawable;
+import android.support.v4.content.ContextCompat;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -24,6 +26,7 @@ import com.alexsophia.b2cgoodsprice.R;
  */
 
 public class DropEditText extends FrameLayout implements View.OnClickListener, AdapterView.OnItemClickListener {
+    private final Context mContext;
     private EditText mEditText;  // 输入框
     private ImageView mDropImage; // 右边的图片按钮
     private PopupWindow mPopup; // 点击图片弹出popupwindow
@@ -39,6 +42,7 @@ public class DropEditText extends FrameLayout implements View.OnClickListener, A
 
     public DropEditText(Context context, AttributeSet attrs, int defStyle) {
         super(context, attrs, defStyle);
+        this.mContext = context;
         LayoutInflater.from(context).inflate(R.layout.common_drop_edittext, this);
         mPopView = (WrapListView) LayoutInflater.from(context).inflate(R.layout.common_drop_pop, null);
 
@@ -86,8 +90,10 @@ public class DropEditText extends FrameLayout implements View.OnClickListener, A
     public void setAdapter(BaseAdapter adapter) {
         mPopView.setAdapter(adapter);
 
-        mPopup = new PopupWindow(mPopView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-//        mPopup.setBackgroundDrawable(new ColorDrawable(R.color.transparent));
+        mPopup = new PopupWindow(mPopView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout
+                .LayoutParams.WRAP_CONTENT);
+        mPopup.setBackgroundDrawable(new ColorDrawable(ContextCompat.getColor(mContext, R.color
+                .transparent)));
         mPopup.setFocusable(true); // 让popwin获取焦点
     }
 
