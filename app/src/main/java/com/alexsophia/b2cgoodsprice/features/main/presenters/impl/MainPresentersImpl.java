@@ -31,6 +31,7 @@ public class MainPresentersImpl extends AbstractPresenter implements MainPresent
 
     @Override
     public void getTopMovie250() {
+        mView.showProgress();
         MovieTop250Interactors interactors = new MovieTop250InteractorsImpl(mExecutor,
                 mMainThread, this);
         interactors.execute();
@@ -78,11 +79,13 @@ public class MainPresentersImpl extends AbstractPresenter implements MainPresent
 
     @Override
     public void onGetMovieTop250Success(MovieEntity movieEntity) {
+        mView.hideProgress();
         mView.onGetMovieTop250Success(movieEntity);
     }
 
     @Override
     public void onGetMovieTop250Failed(String errorMessage) {
+        mView.hideProgress();
         mView.showError(errorMessage);
     }
 }

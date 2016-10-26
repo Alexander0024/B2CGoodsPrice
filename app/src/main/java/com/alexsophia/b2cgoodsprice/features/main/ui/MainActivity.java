@@ -12,6 +12,7 @@ import com.alexsophia.b2cgoodsprice.features.base.ui.BaseActivity;
 import com.alexsophia.b2cgoodsprice.features.main.entity.MovieEntity;
 import com.alexsophia.b2cgoodsprice.features.main.presenters.MainPresenters;
 import com.alexsophia.b2cgoodsprice.features.main.presenters.impl.MainPresentersImpl;
+import com.alexsophia.b2cgoodsprice.utils.ToastUtil;
 import com.alexsophia.b2cgoodsprice.utils.UIJumpUtils;
 
 import butterknife.Bind;
@@ -95,16 +96,16 @@ public class MainActivity extends BaseActivity implements MainPresenters.View {
 
     @Override
     public void showProgress() {
-
+        showLoadingProgress();
     }
 
     @Override
     public void hideProgress() {
-
+        hideLoadingProgress();
     }
 
     @Override
     public void showError(String message) {
-
+        ToastUtil.showLong(this, message);
     }
 }
