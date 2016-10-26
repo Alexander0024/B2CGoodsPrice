@@ -12,8 +12,18 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.alexsophia.b2cgoodsprice.features.main.ui.MainActivity">
 
+    <com.zhy.autolayout.AutoLinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_list_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </com.zhy.autolayout.AutoLinearLayout>
+
     <ListView
-        android:id="@+id/lVi_prices"
+        android:id="@+id/lVi_list_prices"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"

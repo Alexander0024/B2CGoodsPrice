@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                                     android:layout_width="match_parent"
+                                     android:layout_height="match_parent"
+                                     android:background="@color/main"
+                                     android:fitsSystemWindows="true"
+                                     android:orientation="vertical">
+
+    <com.zhy.autolayout.AutoLinearLayout
+        android:id="@+id/v_header_split"
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:background="@color/main"/>
+
+    <com.zhy.autolayout.AutoFrameLayout
+        android:id="@+id/content_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:background="@color/white"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/split_line_dark"/>
+
+    <!-- 底部状态栏 -->
+    <include layout="@layout/main_footer_nav_layout"/>
+</com.zhy.autolayout.AutoLinearLayout>

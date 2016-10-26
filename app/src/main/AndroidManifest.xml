@@ -26,6 +26,7 @@
         <meta-data
             android:name="design_height"
             android:value="1136"/>
+
         <activity android:name=".features.main.ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
@@ -34,5 +35,4 @@
             </intent-filter>
         </activity>
     </application>
-
 </manifest>

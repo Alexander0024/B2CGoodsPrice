@@ -9,29 +9,29 @@
         android:id="@+id/tv_main_brand"
         style="@style/ListItemStyle"
         android:layout_weight="1"
-        android:text="厂家"/>
+        android:text="@string/list_brand"/>
 
     <TextView
         android:id="@+id/tv_main_name"
         style="@style/ListItemStyle"
         android:layout_weight="2"
-        android:text="名称"/>
+        android:text="@string/list_name"/>
 
     <TextView
         android:id="@+id/tv_main_standard"
         style="@style/ListItemStyle"
         android:layout_weight="1"
-        android:text="格式"/>
+        android:text="@string/list_standard"/>
 
     <TextView
         android:id="@+id/tv_main_cheapest_online"
         style="@style/ListItemStyle"
         android:layout_weight="1"
-        android:text="网店价"/>
+        android:text="@string/list_cheapest_online"/>
 
     <TextView
         android:id="@+id/tv_main_cheapest_offline"
         style="@style/ListItemStyle"
         android:layout_weight="1"
-        android:text="实体店价"/>
+        android:text="@string/list_cheapest_offline"/>
 </com.zhy.autolayout.AutoLinearLayout>

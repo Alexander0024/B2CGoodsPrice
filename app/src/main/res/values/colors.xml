@@ -9,6 +9,8 @@
     <color name="black">#000000</color>
     <!-- 白色 -->
     <color name="white">#FFFFFF</color>
+    <!-- 红色 -->
+    <color name="red">#FF0000</color>
     <!-- 透明 -->
     <color name="transparent">#00000000</color>
     <!-- ================ Standard Colors End ================ -->

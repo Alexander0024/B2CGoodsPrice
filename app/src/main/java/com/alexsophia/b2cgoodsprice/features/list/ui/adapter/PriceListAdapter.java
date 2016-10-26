@@ -1,4 +1,4 @@
-package com.alexsophia.b2cgoodsprice.features.main.ui.adapter;
+package com.alexsophia.b2cgoodsprice.features.list.ui.adapter;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -53,7 +53,7 @@ public class PriceListAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         if (view == null) {
             viewHolder = new ViewHolder();
-            view = LayoutInflater.from(mContext).inflate(R.layout.main_price_list_item,
+            view = LayoutInflater.from(mContext).inflate(R.layout.list_price_item,
                     null);
             viewHolder.mBrand = (TextView) view.findViewById(R.id.tv_main_brand);
             viewHolder.mName = (TextView) view.findViewById(R.id.tv_main_name);

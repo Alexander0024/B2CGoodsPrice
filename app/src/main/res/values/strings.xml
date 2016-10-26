@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">B2CGoodsPrice</string>
     <string name="menu_dialog_waiting">载入中，请稍后</string>
+    <string name="list_item_count">共有%1$d个项目</string>
+    <string name="list_brand">厂家</string>
+    <string name="list_name">名称</string>
+    <string name="list_standard">格式</string>
+    <string name="list_cheapest_online">网店价</string>
+    <string name="list_cheapest_offline">实体店价</string>
+    <string name="menu_item">列表</string>
+    <string name="menu_add">添加</string>
+    <string name="menu_future">留空</string>
+    <string name="menu_manage">管理</string>
 </resources>
