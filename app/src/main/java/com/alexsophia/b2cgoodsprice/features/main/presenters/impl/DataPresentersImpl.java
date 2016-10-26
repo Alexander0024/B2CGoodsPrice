@@ -101,6 +101,14 @@ public class DataPresentersImpl {
         listener.onSuccess(id);
     }
 
+    public void addPrice(Goods goods, boolean isOnline) {
+        if (isOnline) {
+            MyApplication.getInstance().getDaoSession().update(goods);
+        } else {
+            MyApplication.getInstance().getDaoSession().update(goods);
+        }
+    }
+
     public long addPrice(GoodsPrices price) {
         long id = price.getId();
         MyApplication.getInstance().getDaoSession().getGoodsPricesDao().insert(price);
