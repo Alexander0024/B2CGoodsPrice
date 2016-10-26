@@ -50,6 +50,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
 
     private AddPresenters mPresenters;
     private AttrAdapter mBrandAdapter;
+    private AttrAdapter mNameAdapter;
 
     @Override
     protected void stop() {
@@ -82,9 +83,8 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
         mPresenters = new AddPresentersImpl(ThreadExecutor.getInstance(), MainThreadImpl
                 .getInstance(), this);
         mBrandAdapter = new AttrAdapter(getContext(), AttrAdapter.ATTR_TYPE.BRAND);
+        mNameAdapter = new AttrAdapter(getContext(), AttrAdapter.ATTR_TYPE.NAME);
         mDropEdtTxtType.setAdapter(new AttrAdapter(getContext(), AttrAdapter.ATTR_TYPE.TYPE));
-        mDropEdtTxtBrand.setAdapter(mBrandAdapter);
-        mDropEdtTxtName.setAdapter(new AttrAdapter(getContext(), AttrAdapter.ATTR_TYPE.NAME));
         mDropEdtTxtType.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -102,6 +102,25 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
                 mBrandAdapter.setExtra(s.toString());
             }
         });
+        mDropEdtTxtBrand.setAdapter(mBrandAdapter);
+        mDropEdtTxtBrand.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                LogWrapper.e(TAG, "mDropEdtTxtBrand afterTextChanged: " + s.toString());
+                mNameAdapter.setExtra(s.toString());
+            }
+        });
+        mDropEdtTxtName.setAdapter(mNameAdapter);
     }
 
     public static AddMainFragment newInstance() {

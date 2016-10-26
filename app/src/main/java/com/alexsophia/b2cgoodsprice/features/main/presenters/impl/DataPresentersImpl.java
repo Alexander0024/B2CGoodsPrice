@@ -50,8 +50,8 @@ public class DataPresentersImpl {
                     @Override
                     public void call(Goods goods) {
                         if (goods.getType().equals(type)) {
-                            if (!brands.contains(type)) {
-                                brands.add(type);
+                            if (!brands.contains(goods.getBrand())) {
+                                brands.add(goods.getBrand());
                             }
                         }
                     }
@@ -68,7 +68,17 @@ public class DataPresentersImpl {
     public List<String> getName(final String brand) {
         final List<String> names = new ArrayList<>();
         Observable.from(mGoods)
-
+                .subscribe(new Action1<Goods>() {
+                    @Override
+                    public void call(Goods goods) {
+                        if (goods.getBrand().equals(brand)) {
+                            if (!names.contains(goods.getName())) {
+                                names.add(goods.getName());
+                            }
+                        }
+                    }
+                });
+        return names;
     }
 
     public void addGoods(final Goods newGood, final OnOperatorListener listener) {

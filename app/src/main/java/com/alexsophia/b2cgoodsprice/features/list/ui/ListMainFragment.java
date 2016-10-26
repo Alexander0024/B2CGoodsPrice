@@ -4,12 +4,14 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alexsophia.b2cgoodsprice.R;
+import com.alexsophia.b2cgoodsprice.app.MyApplication;
 import com.alexsophia.b2cgoodsprice.features.base.executor.impl.ThreadExecutor;
 import com.alexsophia.b2cgoodsprice.features.base.threading.impl.MainThreadImpl;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragment;
 import com.alexsophia.b2cgoodsprice.features.list.presenters.ListPresenters;
 import com.alexsophia.b2cgoodsprice.features.list.presenters.impl.ListPresentersImpl;
 import com.alexsophia.b2cgoodsprice.features.list.ui.adapter.PriceListAdapter;
+import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 import com.alexsophia.b2cgoodsprice.utils.ToastUtil;
 
 import butterknife.Bind;
@@ -21,6 +23,8 @@ import butterknife.ButterKnife;
  * Created by Alexander on 2016/10/26.
  */
 public class ListMainFragment extends BaseFragment implements ListPresenters.View {
+    private String TAG = "ListMainFragment";
+
     @Bind(R.id.lVi_list_prices)
     ListView mLVPrices;
     @Bind(R.id.tv_list_count)
@@ -50,6 +54,8 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
 
     @Override
     protected void resume() {
+        LogWrapper.e(TAG, "Refresh list");
+        mPriceListAdapter.updateListView(MyApplication.getInstance().getDataPresenters().getGoods());
         mPriceListAdapter.notifyDataSetChanged();
     }
 
