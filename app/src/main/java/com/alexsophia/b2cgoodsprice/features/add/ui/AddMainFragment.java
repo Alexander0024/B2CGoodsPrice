@@ -1,5 +1,7 @@
 package com.alexsophia.b2cgoodsprice.features.add.ui;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.RadioButton;
@@ -7,16 +9,16 @@ import android.widget.RadioGroup;
 
 import com.alexsophia.b2cgoodsprice.R;
 import com.alexsophia.b2cgoodsprice.features.add.presenters.AddPresenters;
-import com.alexsophia.b2cgoodsprice.features.add.presenters.AddPresentersImpl;
+import com.alexsophia.b2cgoodsprice.features.add.presenters.impl.AddPresentersImpl;
 import com.alexsophia.b2cgoodsprice.features.add.ui.adapter.AttrAdapter;
 import com.alexsophia.b2cgoodsprice.features.base.executor.impl.ThreadExecutor;
 import com.alexsophia.b2cgoodsprice.features.base.threading.impl.MainThreadImpl;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragment;
 import com.alexsophia.b2cgoodsprice.share.DropEditText;
+import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 import com.alexsophia.b2cgoodsprice.utils.ToastUtil;
 
 import butterknife.Bind;
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
@@ -25,6 +27,8 @@ import butterknife.OnClick;
  * Created by Alexander on 2016/10/26.
  */
 public class AddMainFragment extends BaseFragment implements AddPresenters.View {
+    private String TAG = "AddMainFragment";
+
     @Bind(R.id.dropEdtTxt_add_type)
     DropEditText mDropEdtTxtType;
     @Bind(R.id.dropEdtTxt_add_brand)
@@ -45,6 +49,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     Button mBtnSubmit;
 
     private AddPresenters mPresenters;
+    private AttrAdapter mBrandAdapter;
 
     @Override
     protected void stop() {
@@ -73,25 +78,41 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
 
     @Override
     protected void initData() {
+        LogWrapper.e(TAG, "initData: ");
         mPresenters = new AddPresentersImpl(ThreadExecutor.getInstance(), MainThreadImpl
                 .getInstance(), this);
-        mDropEdtTxtBrand.setAdapter(new AttrAdapter(getContext(), AttrAdapter.ATTR_TYPE.BRAND));
+        mBrandAdapter = new AttrAdapter(getContext(), AttrAdapter.ATTR_TYPE.BRAND);
+        mDropEdtTxtType.setAdapter(new AttrAdapter(getContext(), AttrAdapter.ATTR_TYPE.TYPE));
+        mDropEdtTxtBrand.setAdapter(mBrandAdapter);
+        mDropEdtTxtName.setAdapter(new AttrAdapter(getContext(), AttrAdapter.ATTR_TYPE.NAME));
+        mDropEdtTxtType.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                LogWrapper.e(TAG, "mDropEdtTxtType afterTextChanged: " + s.toString());
+                mBrandAdapter.setExtra(s.toString());
+            }
+        });
     }
 
     public static AddMainFragment newInstance() {
         return new AddMainFragment();
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        ButterKnife.unbind(this);
-    }
-
     @OnClick(R.id.btn_add_submit)
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_add_submit:
+                LogWrapper.e(TAG, "Submit click!");
                 mPresenters.addNew();
                 break;
         }

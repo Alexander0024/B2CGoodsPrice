@@ -3,6 +3,7 @@ package com.alexsophia.b2cgoodsprice.share;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -88,6 +89,15 @@ public class DropEditText extends FrameLayout implements View.OnClickListener, A
         mPopup = new PopupWindow(mPopView, LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
 //        mPopup.setBackgroundDrawable(new ColorDrawable(R.color.transparent));
         mPopup.setFocusable(true); // 让popwin获取焦点
+    }
+
+    /**
+     * 添加事件改变的监听
+     *
+     * @param watcher 监听器
+     */
+    public void addTextChangedListener(TextWatcher watcher) {
+        mEditText.addTextChangedListener(watcher);
     }
 
     /**

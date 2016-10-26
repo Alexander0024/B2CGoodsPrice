@@ -1,6 +1,7 @@
-package com.alexsophia.b2cgoodsprice.features.add.presenters;
+package com.alexsophia.b2cgoodsprice.features.add.presenters.impl;
 
 import com.alexsophia.b2cgoodsprice.app.MyApplication;
+import com.alexsophia.b2cgoodsprice.features.add.presenters.AddPresenters;
 import com.alexsophia.b2cgoodsprice.features.base.executor.Executor;
 import com.alexsophia.b2cgoodsprice.features.base.presenters.AbstractPresenter;
 import com.alexsophia.b2cgoodsprice.features.base.threading.MainThread;

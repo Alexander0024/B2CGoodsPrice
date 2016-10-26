@@ -6,6 +6,9 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.alexsophia.b2cgoodsprice.app.MyApplication;
+import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,12 +18,18 @@ import java.util.List;
  * Created by Alexander on 2016/10/26.
  */
 public class AttrAdapter extends BaseAdapter {
+    private String TAG = "AttrAdapter";
     private final Context mContext;
     private List<String> mData;
+    private String mExtra;
 
-    public AttrAdapter(Context context, ATTR_TYPE attr_type) {
+    public AttrAdapter(Context context, ATTR_TYPE attrType) {
         this.mContext = context;
-        this.mData = getData(attr_type);
+        this.mData = getData(attrType);
+    }
+
+    public void setExtra(String extra) {
+        this.mExtra = extra;
     }
 
     @Override
@@ -46,21 +55,21 @@ public class AttrAdapter extends BaseAdapter {
     }
 
     public enum ATTR_TYPE {
-        BRAND, NAME;
+        TYPE, BRAND, NAME
     }
 
-    private List<String> getData(ATTR_TYPE attr_type) {
-        List<String> mList = new ArrayList<String>() {
-            {
-                add("常用选项 one");
-                add("常用选项 two");
-                add("常用选项 three");
-                add("常用选项 four");
-                add("常用选项 five");
-                add("常用选项 six");
-                add("常用选项 7怎么拼来着？");
-            }
-        };
-        return mList;
+    private List<String> getData(ATTR_TYPE attrType) {
+        LogWrapper.e(TAG, "getData: " + attrType.toString());
+        List<String> data;
+        if (attrType.equals(ATTR_TYPE.TYPE)) {
+            data = MyApplication.getInstance().getDataPresenters().getTypes();
+            LogWrapper.e(TAG, "get type with " + data.size() + " items.");
+        } else if (attrType.equals(ATTR_TYPE.BRAND)) {
+            LogWrapper.e(TAG, "get brand which under type " + mExtra);
+            data = MyApplication.getInstance().getDataPresenters().getBrand(mExtra);
+        } else if (attrType.equals(ATTR_TYPE.NAME)) {
+
+        }
+        return data;
     }
 }

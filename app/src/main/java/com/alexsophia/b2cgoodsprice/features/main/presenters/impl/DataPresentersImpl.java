@@ -28,8 +28,47 @@ public class DataPresentersImpl {
         return mGoods;
     }
 
+    /**
+     * 获取所有分类列表
+     *
+     * @return 分类列表
+     */
     public List<String> getTypes() {
         return mTypes;
+    }
+
+    /**
+     * 获取所有分类下的厂商信息
+     *
+     * @param type 分类名称
+     * @return 该分类下的厂商信息
+     */
+    public List<String> getBrand(final String type) {
+        final List<String> brands = new ArrayList<>();
+        Observable.from(mGoods)
+                .subscribe(new Action1<Goods>() {
+                    @Override
+                    public void call(Goods goods) {
+                        if (goods.getType().equals(type)) {
+                            if (!brands.contains(type)) {
+                                brands.add(type);
+                            }
+                        }
+                    }
+                });
+        return brands;
+    }
+
+    /**
+     * 获取厂家下所有商品信息
+     *
+     * @param brand 厂商信息
+     * @return 该厂商的商品信息
+     */
+    public List<String> getName(final String brand) {
+        final List<String> names = new ArrayList<>();
+        Observable.from(mGoods)
+
     }
 
     public void addGoods(final Goods newGood, final OnOperatorListener listener) {
@@ -63,13 +102,13 @@ public class DataPresentersImpl {
      */
     private void refreshAllData() {
         mGoods = MyApplication.getInstance().getDaoSession().getGoodsDao().loadAll();
-        refreshAllTypes();
+        refreshTypes();
     }
 
     /**
      * 获取所有分类信息
      */
-    private void refreshAllTypes() {
+    private void refreshTypes() {
         mTypes.clear();
         Observable.from(mGoods)
                 .subscribe(new Action1<Goods>() {
