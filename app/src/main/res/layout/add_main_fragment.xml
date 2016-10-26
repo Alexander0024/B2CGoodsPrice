@@ -2,7 +2,7 @@
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
                                      android:layout_width="match_parent"
                                      android:layout_height="match_parent"
-                                     android:orientation="horizontal">
+                                     android:orientation="vertical">
     <!-- brand -->
     <com.zhy.autolayout.AutoLinearLayout
         style="@style/AddNewItemStyle">
@@ -11,8 +11,21 @@
             style="@style/AddNewItemLeftStyle"
             android:text="@string/list_brand"/>
 
-        <EditText
-            android:id="@+id/edtTxt_add_brand"
+        <com.alexsophia.b2cgoodsprice.share.DropEditText
+            android:id="@+id/dropEdtTxt_add_brand"
+            style="@style/AddNewItemRightStyle"/>
+    </com.zhy.autolayout.AutoLinearLayout>
+
+    <!-- name -->
+    <com.zhy.autolayout.AutoLinearLayout
+        style="@style/AddNewItemStyle">
+
+        <TextView
+            style="@style/AddNewItemLeftStyle"
+            android:text="@string/list_name"/>
+
+        <com.alexsophia.b2cgoodsprice.share.DropEditText
+            android:id="@+id/dropEdtTxt_add_name"
             style="@style/AddNewItemRightStyle"/>
     </com.zhy.autolayout.AutoLinearLayout>
 </com.zhy.autolayout.AutoLinearLayout>

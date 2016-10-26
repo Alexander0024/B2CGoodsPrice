@@ -23,4 +23,13 @@
             <enum name="mirror" value="2"/>
         </attr>
     </declare-styleable>
+
+    <declare-styleable name="DropEditText">
+        <attr name="drawableRight" format="reference" />
+        <attr name="dropMode">
+            <enum name="flow_parent" value="0" />
+            <enum name="wrap_content" value="1" />
+        </attr>
+        <attr name="hint" format="string|reference" />
+    </declare-styleable>
 </resources>

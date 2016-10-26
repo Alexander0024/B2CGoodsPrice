@@ -97,7 +97,7 @@
 
     <!-- 添加新项目样式 -->
     <style name="AddNewItemStyle">
-        <item name="android:layout_height">30dp</item>
+        <item name="android:layout_height">45dp</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:paddingLeft">20dp</item>
         <item name="android:paddingRight">20dp</item>
