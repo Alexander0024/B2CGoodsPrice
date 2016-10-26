@@ -6,6 +6,10 @@ import com.alexsophia.b2cgoodsprice.features.base.presenters.BasePresenter;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseView;
 import com.alexsophia.b2cgoodsprice.features.main.entity.MovieEntity;
 
+import java.util.List;
+
+import greendao.Goods;
+
 /**
  * MainPresenters
  * <p>
@@ -28,10 +32,11 @@ public interface MainPresenters extends BasePresenter {
     }
 
     /**
-     * 获得价格
-     * @param url 地址
+     * 获得物品列表
+     *
+     * @return 物品信息列表
      */
-    void getPrice(String url);
+    List<Goods> getGoods();
 
     /**
      * 获取Top Movie

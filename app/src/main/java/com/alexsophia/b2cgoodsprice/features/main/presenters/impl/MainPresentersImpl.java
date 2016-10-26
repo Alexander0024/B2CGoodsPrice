@@ -2,6 +2,7 @@ package com.alexsophia.b2cgoodsprice.features.main.presenters.impl;
 
 import android.content.Context;
 
+import com.alexsophia.b2cgoodsprice.app.MyApplication;
 import com.alexsophia.b2cgoodsprice.features.base.executor.Executor;
 import com.alexsophia.b2cgoodsprice.features.base.presenters.AbstractPresenter;
 import com.alexsophia.b2cgoodsprice.features.base.threading.MainThread;
@@ -9,6 +10,10 @@ import com.alexsophia.b2cgoodsprice.features.main.entity.MovieEntity;
 import com.alexsophia.b2cgoodsprice.features.main.interactors.MovieTop250Interactors;
 import com.alexsophia.b2cgoodsprice.features.main.interactors.impl.MovieTop250InteractorsImpl;
 import com.alexsophia.b2cgoodsprice.features.main.presenters.MainPresenters;
+
+import java.util.List;
+
+import greendao.Goods;
 
 /**
  * MainPresentersImpl
@@ -25,8 +30,8 @@ public class MainPresentersImpl extends AbstractPresenter implements MainPresent
     }
 
     @Override
-    public void getPrice(String url) {
-
+    public List<Goods> getGoods() {
+        return MyApplication.getInstance().getDaoSession().getGoodsDao().loadAll();
     }
 
     @Override
