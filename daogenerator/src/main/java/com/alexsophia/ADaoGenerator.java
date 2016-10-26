@@ -13,17 +13,25 @@ public class ADaoGenerator {
     }
 
     private static void addGoodsEntity(Schema schema) {
-        Entity goods = schema.addEntity("goods");
+        Entity goods = schema.addEntity("Goods");
         goods.addIdProperty().primaryKey();
         Property goodsId = goods.addLongProperty("goodsId").getProperty();
+        goods.addStringProperty("brand");
         goods.addStringProperty("name");
-        goods.addStringProperty("url");
+        goods.addStringProperty("standard");
+        goods.addDoubleProperty("cheapest_online");
+        goods.addDoubleProperty("cheapest_offline");
 
-        Entity prices = schema.addEntity("goods_price");
+        Entity urls = schema.addEntity("GoodsUrls");
+        urls.addIdProperty().primaryKey();
+        urls.addStringProperty("url");
+        goods.addToMany(urls, goodsId).setName("urls");
+
+        Entity prices = schema.addEntity("GoodsPrices");
         prices.addIdProperty().primaryKey();
-        prices.addDoubleProperty("price");
         prices.addDateProperty("date");
-
-        goods.addToMany(goods, goodsId).setName("prices");
+        prices.addStringProperty("seller");
+        prices.addDoubleProperty("price");
+        goods.addToMany(prices, goodsId).setName("prices");
     }
 }
