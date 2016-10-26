@@ -25,7 +25,7 @@ public class ListPresentersImpl extends AbstractPresenter implements ListPresent
 
     @Override
     public List<Goods> getGoods() {
-        return MyApplication.getInstance().getDaoSession().getGoodsDao().loadAll();
+        return MyApplication.getInstance().getDataPresenters().getGoods();
     }
 
     @Override

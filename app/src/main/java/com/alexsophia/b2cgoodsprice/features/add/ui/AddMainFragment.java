@@ -1,21 +1,50 @@
 package com.alexsophia.b2cgoodsprice.features.add.ui;
 
+import android.view.View;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+
 import com.alexsophia.b2cgoodsprice.R;
+import com.alexsophia.b2cgoodsprice.features.add.presenters.AddPresenters;
+import com.alexsophia.b2cgoodsprice.features.add.presenters.AddPresentersImpl;
 import com.alexsophia.b2cgoodsprice.features.add.ui.adapter.AttrAdapter;
+import com.alexsophia.b2cgoodsprice.features.base.executor.impl.ThreadExecutor;
+import com.alexsophia.b2cgoodsprice.features.base.threading.impl.MainThreadImpl;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragment;
 import com.alexsophia.b2cgoodsprice.share.DropEditText;
+import com.alexsophia.b2cgoodsprice.utils.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * AddMainFragment
  * <p>
  * Created by Alexander on 2016/10/26.
  */
-public class AddMainFragment extends BaseFragment {
+public class AddMainFragment extends BaseFragment implements AddPresenters.View {
+    @Bind(R.id.dropEdtTxt_add_type)
+    DropEditText mDropEdtTxtType;
     @Bind(R.id.dropEdtTxt_add_brand)
     DropEditText mDropEdtTxtBrand;
+    @Bind(R.id.dropEdtTxt_add_name)
+    DropEditText mDropEdtTxtName;
+    @Bind(R.id.edtTxt_add_standard)
+    DropEditText mEdtTxtStandard;
+    @Bind(R.id.rb_add_online)
+    RadioButton mRbAddOnline;
+    @Bind(R.id.rb_add_offline)
+    RadioButton mRbAddOffline;
+    @Bind(R.id.rg_add_type_select)
+    RadioGroup mRgAddTypeSelect;
+    @Bind(R.id.edtTxt_add_price)
+    DropEditText mEdtTxtPrice;
+    @Bind(R.id.btn_add_submit)
+    Button mBtnSubmit;
+
+    private AddPresenters mPresenters;
 
     @Override
     protected void stop() {
@@ -44,6 +73,8 @@ public class AddMainFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+        mPresenters = new AddPresentersImpl(ThreadExecutor.getInstance(), MainThreadImpl
+                .getInstance(), this);
         mDropEdtTxtBrand.setAdapter(new AttrAdapter(getContext(), AttrAdapter.ATTR_TYPE.BRAND));
     }
 
@@ -55,5 +86,59 @@ public class AddMainFragment extends BaseFragment {
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
+    }
+
+    @OnClick(R.id.btn_add_submit)
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_add_submit:
+                mPresenters.addNew();
+                break;
+        }
+    }
+
+    @Override
+    public void showProgress() {
+        showLoadingProgress();
+    }
+
+    @Override
+    public void hideProgress() {
+        hideLoadingProgress();
+    }
+
+    @Override
+    public void showError(String message) {
+        ToastUtil.showLong(getContext(), message);
+    }
+
+    @Override
+    public String getType() {
+        return mDropEdtTxtType.getText();
+    }
+
+    @Override
+    public String getBrand() {
+        return mDropEdtTxtBrand.getText();
+    }
+
+    @Override
+    public String getName() {
+        return mDropEdtTxtName.getText();
+    }
+
+    @Override
+    public String getStandard() {
+        return mEdtTxtStandard.getText();
+    }
+
+    @Override
+    public boolean getOnlineOffline() {
+        return mRbAddOnline.isChecked();
+    }
+
+    @Override
+    public double getPrice() {
+        return Double.parseDouble(mEdtTxtPrice.getText());
     }
 }

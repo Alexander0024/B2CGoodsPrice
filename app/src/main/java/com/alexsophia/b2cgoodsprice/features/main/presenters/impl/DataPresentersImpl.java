@@ -1,0 +1,91 @@
+package com.alexsophia.b2cgoodsprice.features.main.presenters.impl;
+
+import com.alexsophia.b2cgoodsprice.app.MyApplication;
+import com.alexsophia.b2cgoodsprice.utils.StringUtil;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import greendao.Goods;
+import greendao.GoodsPrices;
+import rx.Observable;
+import rx.functions.Action1;
+
+/**
+ * DataPresentersImpl
+ * <p>
+ * Created by Alexander on 2016/10/26.
+ */
+public class DataPresentersImpl {
+    private List<Goods> mGoods; // 所有物品
+    private List<String> mTypes = new ArrayList<>(); // 分类信息
+
+    public DataPresentersImpl() {
+        refreshAllData();
+    }
+
+    public List<Goods> getGoods() {
+        return mGoods;
+    }
+
+    public List<String> getTypes() {
+        return mTypes;
+    }
+
+    public void addGoods(final Goods newGood, final OnOperatorListener listener) {
+        if (StringUtil.isEmpty(newGood.getType())
+                || StringUtil.isEmpty(newGood.getName())
+                || StringUtil.isEmpty(newGood.getStandard())) {
+            listener.onFailed("Goods information is not complete finished yet!");
+            return;
+        }
+        for (Goods goods : mGoods) {
+            if (goods.getType().equals(newGood.getType())
+                    && goods.getBrand().equals(newGood.getBrand())
+                    && goods.getStandard().equals(newGood.getStandard())) {
+                listener.onFailed("Add goods failed! A same one is exist in database!");
+                return;
+            }
+        }
+        long id = MyApplication.getInstance().getDaoSession().getGoodsDao().insert(newGood);
+        refreshAllData();
+        listener.onSuccess(id);
+    }
+
+    public long addPrice(GoodsPrices price) {
+        long id = price.getId();
+        MyApplication.getInstance().getDaoSession().getGoodsPricesDao().insert(price);
+        return id;
+    }
+
+    /**
+     * 刷新所有数据
+     */
+    private void refreshAllData() {
+        mGoods = MyApplication.getInstance().getDaoSession().getGoodsDao().loadAll();
+        refreshAllTypes();
+    }
+
+    /**
+     * 获取所有分类信息
+     */
+    private void refreshAllTypes() {
+        mTypes.clear();
+        Observable.from(mGoods)
+                .subscribe(new Action1<Goods>() {
+                    @Override
+                    public void call(Goods goods) {
+                        String type = goods.getType();
+                        if (!mTypes.contains(type)) {
+                            mTypes.add(type);
+                        }
+                    }
+                });
+    }
+
+    public interface OnOperatorListener {
+        void onSuccess(long id);
+
+        void onFailed(String message);
+    }
+}

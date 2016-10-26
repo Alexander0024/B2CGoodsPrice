@@ -7,6 +7,7 @@ package greendao;
 public class GoodsPrices {
 
     private Long id;
+    private Boolean type;
     private java.util.Date date;
     private String seller;
     private Double price;
@@ -18,8 +19,9 @@ public class GoodsPrices {
         this.id = id;
     }
 
-    public GoodsPrices(Long id, java.util.Date date, String seller, Double price) {
+    public GoodsPrices(Long id, Boolean type, java.util.Date date, String seller, Double price) {
         this.id = id;
+        this.type = type;
         this.date = date;
         this.seller = seller;
         this.price = price;
@@ -31,6 +33,14 @@ public class GoodsPrices {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Boolean getType() {
+        return type;
+    }
+
+    public void setType(Boolean type) {
+        this.type = type;
     }
 
     public java.util.Date getDate() {

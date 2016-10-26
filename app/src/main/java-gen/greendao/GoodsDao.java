@@ -49,7 +49,7 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"GOODS\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
                 "\"GOODS_ID\" INTEGER," + // 1: goodsId
                 "\"TYPE\" TEXT," + // 2: type
                 "\"BRAND\" TEXT," + // 3: brand

@@ -8,9 +8,13 @@
     <string name="menu_dialog_waiting">载入中，请稍后</string>
 
     <string name="list_item_count">共有%1$d个项目</string>
+    <string name="list_type">类别</string>
     <string name="list_brand">厂家</string>
     <string name="list_name">名称</string>
-    <string name="list_standard">格式</string>
+    <string name="list_standard">规格</string>
+    <string name="list_price">价格</string>
     <string name="list_cheapest_online">网店价</string>
     <string name="list_cheapest_offline">实体店价</string>
+    <string name="list_online">网店</string>
+    <string name="list_offline">实体店</string>
 </resources>

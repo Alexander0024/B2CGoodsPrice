@@ -27,10 +27,11 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Date = new Property(1, java.util.Date.class, "date", false, "DATE");
-        public final static Property Seller = new Property(2, String.class, "seller", false, "SELLER");
-        public final static Property Price = new Property(3, Double.class, "price", false, "PRICE");
-        public final static Property GoodsId = new Property(4, Long.class, "goodsId", false, "GOODS_ID");
+        public final static Property Type = new Property(1, Boolean.class, "type", false, "TYPE");
+        public final static Property Date = new Property(2, java.util.Date.class, "date", false, "DATE");
+        public final static Property Seller = new Property(3, String.class, "seller", false, "SELLER");
+        public final static Property Price = new Property(4, Double.class, "price", false, "PRICE");
+        public final static Property GoodsId = new Property(5, Long.class, "goodsId", false, "GOODS_ID");
     };
 
     private Query<GoodsPrices> goods_PricesQuery;
@@ -48,10 +49,11 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"GOODS_PRICES\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY ," + // 0: id
-                "\"DATE\" INTEGER," + // 1: date
-                "\"SELLER\" TEXT," + // 2: seller
-                "\"PRICE\" REAL," + // 3: price
-                "\"GOODS_ID\" INTEGER);"); // 4: goodsId
+                "\"TYPE\" INTEGER," + // 1: type
+                "\"DATE\" INTEGER," + // 2: date
+                "\"SELLER\" TEXT," + // 3: seller
+                "\"PRICE\" REAL," + // 4: price
+                "\"GOODS_ID\" INTEGER);"); // 5: goodsId
     }
 
     /** Drops the underlying database table. */
@@ -70,19 +72,24 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
             stmt.bindLong(1, id);
         }
  
+        Boolean type = entity.getType();
+        if (type != null) {
+            stmt.bindLong(2, type ? 1L: 0L);
+        }
+ 
         java.util.Date date = entity.getDate();
         if (date != null) {
-            stmt.bindLong(2, date.getTime());
+            stmt.bindLong(3, date.getTime());
         }
  
         String seller = entity.getSeller();
         if (seller != null) {
-            stmt.bindString(3, seller);
+            stmt.bindString(4, seller);
         }
  
         Double price = entity.getPrice();
         if (price != null) {
-            stmt.bindDouble(4, price);
+            stmt.bindDouble(5, price);
         }
     }
 
@@ -97,9 +104,10 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     public GoodsPrices readEntity(Cursor cursor, int offset) {
         GoodsPrices entity = new GoodsPrices( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)), // date
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // seller
-            cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3) // price
+            cursor.isNull(offset + 1) ? null : cursor.getShort(offset + 1) != 0, // type
+            cursor.isNull(offset + 2) ? null : new java.util.Date(cursor.getLong(offset + 2)), // date
+            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // seller
+            cursor.isNull(offset + 4) ? null : cursor.getDouble(offset + 4) // price
         );
         return entity;
     }
@@ -108,9 +116,10 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     @Override
     public void readEntity(Cursor cursor, GoodsPrices entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setDate(cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)));
-        entity.setSeller(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setPrice(cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3));
+        entity.setType(cursor.isNull(offset + 1) ? null : cursor.getShort(offset + 1) != 0);
+        entity.setDate(cursor.isNull(offset + 2) ? null : new java.util.Date(cursor.getLong(offset + 2)));
+        entity.setSeller(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
+        entity.setPrice(cursor.isNull(offset + 4) ? null : cursor.getDouble(offset + 4));
      }
     
     /** @inheritdoc */

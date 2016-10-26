@@ -50,7 +50,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
 
     @Override
     protected void resume() {
-
+        mPriceListAdapter.notifyDataSetChanged();
     }
 
     @Override

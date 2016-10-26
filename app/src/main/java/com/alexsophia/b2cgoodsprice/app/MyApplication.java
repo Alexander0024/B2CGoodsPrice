@@ -4,6 +4,7 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.alexsophia.b2cgoodsprice.database.DbHelper;
+import com.alexsophia.b2cgoodsprice.features.main.presenters.impl.DataPresentersImpl;
 
 import greendao.DaoMaster;
 import greendao.DaoSession;
@@ -16,6 +17,7 @@ import greendao.DaoSession;
 public class MyApplication extends Application {
     private static MyApplication myApplication;
     private DaoSession mDaoSession;
+    private DataPresentersImpl mDataPresenters;
 
     public MyApplication() {
         myApplication = MyApplication.this;
@@ -35,6 +37,10 @@ public class MyApplication extends Application {
         return mDaoSession;
     }
 
+    public DataPresentersImpl getDataPresenters() {
+        return mDataPresenters;
+    }
+
     private void setupDatabase() {
 //         通过 DaoMaster 的内部类 DevOpenHelper，你可以得到一个便利的 SQLiteOpenHelper 对象。
 //         可能你已经注意到了，你并不需要去编写「CREATE TABLE」这样的 SQL 语句，因为 greenDAO 已经帮你做了。
@@ -46,5 +52,7 @@ public class MyApplication extends Application {
         DaoMaster daoMaster = new DaoMaster(db);
 
         mDaoSession = daoMaster.newSession();
+
+        mDataPresenters = new DataPresentersImpl();
     }
 }

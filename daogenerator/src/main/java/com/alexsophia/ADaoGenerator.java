@@ -14,7 +14,7 @@ public class ADaoGenerator {
 
     private static void addGoodsEntity(Schema schema) {
         Entity goods = schema.addEntity("Goods");
-        goods.addIdProperty().primaryKey();
+        goods.addIdProperty().primaryKey().autoincrement();
         Property goodsId = goods.addLongProperty("goodsId").getProperty();
         goods.addStringProperty("type");
         goods.addStringProperty("brand");
@@ -30,6 +30,7 @@ public class ADaoGenerator {
 
         Entity prices = schema.addEntity("GoodsPrices");
         prices.addIdProperty().primaryKey();
+        prices.addBooleanProperty("type");
         prices.addDateProperty("date");
         prices.addStringProperty("seller");
         prices.addDoubleProperty("price");
