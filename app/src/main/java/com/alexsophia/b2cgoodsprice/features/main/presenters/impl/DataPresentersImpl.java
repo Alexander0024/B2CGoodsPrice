@@ -17,15 +17,29 @@ import rx.functions.Action1;
  * Created by Alexander on 2016/10/26.
  */
 public class DataPresentersImpl {
-    private GoodsDao mGoodsDao; // Goods操作类
-    private List<Goods> mGoods; // 所有Goods列表
-    private List<String> mTypes = new ArrayList<>(); // 分类信息
+    /**
+     * Goods操作类
+     */
+    private GoodsDao mGoodsDao;
+    /**
+     * 所有Goods列表
+     */
+    private List<Goods> mGoods;
+    /**
+     * 分类信息
+     */
+    private List<String> mTypes = new ArrayList<>();
 
     public DataPresentersImpl() {
         mGoodsDao = MyApplication.getInstance().getDaoSession().getGoodsDao();
         refreshAllData();
     }
 
+    /**
+     * 获取所有物品列表
+     *
+     * @return 物品列表
+     */
     public List<Goods> getGoods() {
         return mGoods;
     }
