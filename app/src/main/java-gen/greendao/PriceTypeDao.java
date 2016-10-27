@@ -27,6 +27,8 @@ public class PriceTypeDao extends AbstractDao<PriceType, Long> {
         public final static Property TypeName = new Property(1, String.class, "typeName", false, "TYPE_NAME");
     };
 
+    private DaoSession daoSession;
+
 
     public PriceTypeDao(DaoConfig config) {
         super(config);
@@ -34,6 +36,7 @@ public class PriceTypeDao extends AbstractDao<PriceType, Long> {
     
     public PriceTypeDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -64,6 +67,12 @@ public class PriceTypeDao extends AbstractDao<PriceType, Long> {
         if (typeName != null) {
             stmt.bindString(2, typeName);
         }
+    }
+
+    @Override
+    protected void attachEntity(PriceType entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
 
     /** @inheritdoc */

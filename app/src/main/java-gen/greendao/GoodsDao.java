@@ -1,12 +1,17 @@
 package greendao;
 
+import java.util.List;
+import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
+import de.greenrobot.dao.internal.SqlUtils;
 import de.greenrobot.dao.internal.DaoConfig;
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.QueryBuilder;
 
 import greendao.Goods;
 
@@ -24,14 +29,18 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Type = new Property(1, String.class, "type", false, "TYPE");
-        public final static Property Brand = new Property(2, String.class, "brand", false, "BRAND");
-        public final static Property Name = new Property(3, String.class, "name", false, "NAME");
-        public final static Property Standard = new Property(4, String.class, "standard", false, "STANDARD");
-        public final static Property CheapestOnline = new Property(5, Double.class, "cheapestOnline", false, "CHEAPEST_ONLINE");
-        public final static Property CheapestOffline = new Property(6, Double.class, "cheapestOffline", false, "CHEAPEST_OFFLINE");
+        public final static Property Name = new Property(1, String.class, "name", false, "NAME");
+        public final static Property Standard = new Property(2, String.class, "standard", false, "STANDARD");
+        public final static Property CheapestOnline = new Property(3, Double.class, "cheapestOnline", false, "CHEAPEST_ONLINE");
+        public final static Property CheapestOffline = new Property(4, Double.class, "cheapestOffline", false, "CHEAPEST_OFFLINE");
+        public final static Property Id = new Property(5, Long.class, "id", true, "_id");
+        public final static Property Id = new Property(6, Long.class, "id", true, "_id");
     };
 
+    private DaoSession daoSession;
+
+    private Query<Goods> goodsType_GoodsListQuery;
+    private Query<Goods> goodsBrand_GoodsListQuery;
 
     public GoodsDao(DaoConfig config) {
         super(config);
@@ -39,6 +48,7 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
     
     public GoodsDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -46,12 +56,12 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"GOODS\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"TYPE\" TEXT," + // 1: type
-                "\"BRAND\" TEXT," + // 2: brand
-                "\"NAME\" TEXT," + // 3: name
-                "\"STANDARD\" TEXT," + // 4: standard
-                "\"CHEAPEST_ONLINE\" REAL," + // 5: cheapestOnline
-                "\"CHEAPEST_OFFLINE\" REAL);"); // 6: cheapestOffline
+                "\"NAME\" TEXT," + // 1: name
+                "\"STANDARD\" TEXT," + // 2: standard
+                "\"CHEAPEST_ONLINE\" REAL," + // 3: cheapestOnline
+                "\"CHEAPEST_OFFLINE\" REAL," + // 4: cheapestOffline
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 5: id
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT );"); // 6: id
     }
 
     /** Drops the underlying database table. */
@@ -70,35 +80,31 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
             stmt.bindLong(1, id);
         }
  
-        String type = entity.getType();
-        if (type != null) {
-            stmt.bindString(2, type);
-        }
- 
-        String brand = entity.getBrand();
-        if (brand != null) {
-            stmt.bindString(3, brand);
-        }
- 
         String name = entity.getName();
         if (name != null) {
-            stmt.bindString(4, name);
+            stmt.bindString(2, name);
         }
  
         String standard = entity.getStandard();
         if (standard != null) {
-            stmt.bindString(5, standard);
+            stmt.bindString(3, standard);
         }
  
         Double cheapestOnline = entity.getCheapestOnline();
         if (cheapestOnline != null) {
-            stmt.bindDouble(6, cheapestOnline);
+            stmt.bindDouble(4, cheapestOnline);
         }
  
         Double cheapestOffline = entity.getCheapestOffline();
         if (cheapestOffline != null) {
-            stmt.bindDouble(7, cheapestOffline);
+            stmt.bindDouble(5, cheapestOffline);
         }
+    }
+
+    @Override
+    protected void attachEntity(Goods entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
 
     /** @inheritdoc */
@@ -112,12 +118,10 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
     public Goods readEntity(Cursor cursor, int offset) {
         Goods entity = new Goods( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // type
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // brand
-            cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3), // name
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // standard
-            cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5), // cheapestOnline
-            cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6) // cheapestOffline
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // standard
+            cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3), // cheapestOnline
+            cursor.isNull(offset + 4) ? null : cursor.getDouble(offset + 4) // cheapestOffline
         );
         return entity;
     }
@@ -126,12 +130,10 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
     @Override
     public void readEntity(Cursor cursor, Goods entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setType(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setBrand(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
-        entity.setName(cursor.isNull(offset + 3) ? null : cursor.getString(offset + 3));
-        entity.setStandard(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setCheapestOnline(cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5));
-        entity.setCheapestOffline(cursor.isNull(offset + 6) ? null : cursor.getDouble(offset + 6));
+        entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setStandard(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setCheapestOnline(cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3));
+        entity.setCheapestOffline(cursor.isNull(offset + 4) ? null : cursor.getDouble(offset + 4));
      }
     
     /** @inheritdoc */
@@ -157,4 +159,130 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
         return true;
     }
     
+    /** Internal query to resolve the "goodsList" to-many relationship of GoodsType. */
+    public List<Goods> _queryGoodsType_GoodsList(Long id) {
+        synchronized (this) {
+            if (goodsType_GoodsListQuery == null) {
+                QueryBuilder<Goods> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.Id.eq(null));
+                goodsType_GoodsListQuery = queryBuilder.build();
+            }
+        }
+        Query<Goods> query = goodsType_GoodsListQuery.forCurrentThread();
+        query.setParameter(0, id);
+        return query.list();
+    }
+
+    /** Internal query to resolve the "goodsList" to-many relationship of GoodsBrand. */
+    public List<Goods> _queryGoodsBrand_GoodsList(Long id) {
+        synchronized (this) {
+            if (goodsBrand_GoodsListQuery == null) {
+                QueryBuilder<Goods> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.Id.eq(null));
+                goodsBrand_GoodsListQuery = queryBuilder.build();
+            }
+        }
+        Query<Goods> query = goodsBrand_GoodsListQuery.forCurrentThread();
+        query.setParameter(0, id);
+        return query.list();
+    }
+
+    private String selectDeep;
+
+    protected String getSelectDeep() {
+        if (selectDeep == null) {
+            StringBuilder builder = new StringBuilder("SELECT ");
+            SqlUtils.appendColumns(builder, "T", getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T0", daoSession.getGoodsTypeDao().getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T1", daoSession.getGoodsBrandDao().getAllColumns());
+            builder.append(" FROM GOODS T");
+            builder.append(" LEFT JOIN GOODS_TYPE T0 ON T.\"_id\"=T0.\"_id\"");
+            builder.append(" LEFT JOIN GOODS_BRAND T1 ON T.\"_id\"=T1.\"_id\"");
+            builder.append(' ');
+            selectDeep = builder.toString();
+        }
+        return selectDeep;
+    }
+    
+    protected Goods loadCurrentDeep(Cursor cursor, boolean lock) {
+        Goods entity = loadCurrent(cursor, 0, lock);
+        int offset = getAllColumns().length;
+
+        GoodsType goodsType = loadCurrentOther(daoSession.getGoodsTypeDao(), cursor, offset);
+        entity.setGoodsType(goodsType);
+        offset += daoSession.getGoodsTypeDao().getAllColumns().length;
+
+        GoodsBrand goodsBrand = loadCurrentOther(daoSession.getGoodsBrandDao(), cursor, offset);
+        entity.setGoodsBrand(goodsBrand);
+
+        return entity;    
+    }
+
+    public Goods loadDeep(Long key) {
+        assertSinglePk();
+        if (key == null) {
+            return null;
+        }
+
+        StringBuilder builder = new StringBuilder(getSelectDeep());
+        builder.append("WHERE ");
+        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
+        String sql = builder.toString();
+        
+        String[] keyArray = new String[] { key.toString() };
+        Cursor cursor = db.rawQuery(sql, keyArray);
+        
+        try {
+            boolean available = cursor.moveToFirst();
+            if (!available) {
+                return null;
+            } else if (!cursor.isLast()) {
+                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
+            }
+            return loadCurrentDeep(cursor, true);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
+    public List<Goods> loadAllDeepFromCursor(Cursor cursor) {
+        int count = cursor.getCount();
+        List<Goods> list = new ArrayList<Goods>(count);
+        
+        if (cursor.moveToFirst()) {
+            if (identityScope != null) {
+                identityScope.lock();
+                identityScope.reserveRoom(count);
+            }
+            try {
+                do {
+                    list.add(loadCurrentDeep(cursor, false));
+                } while (cursor.moveToNext());
+            } finally {
+                if (identityScope != null) {
+                    identityScope.unlock();
+                }
+            }
+        }
+        return list;
+    }
+    
+    protected List<Goods> loadDeepAllAndCloseCursor(Cursor cursor) {
+        try {
+            return loadAllDeepFromCursor(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+
+    /** A raw-style query where you can pass any WHERE clause and arguments. */
+    public List<Goods> queryDeep(String where, String... selectionArg) {
+        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
+        return loadDeepAllAndCloseCursor(cursor);
+    }
+ 
 }

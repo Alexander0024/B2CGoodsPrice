@@ -1,12 +1,17 @@
 package greendao;
 
+import java.util.List;
+import java.util.ArrayList;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
 
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
+import de.greenrobot.dao.internal.SqlUtils;
 import de.greenrobot.dao.internal.DaoConfig;
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.QueryBuilder;
 
 import greendao.GoodsPrices;
 
@@ -24,14 +29,17 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property GoodsId = new Property(1, Long.class, "goodsId", false, "GOODS_ID");
-        public final static Property TypeId = new Property(2, Long.class, "typeId", false, "TYPE_ID");
-        public final static Property Date = new Property(3, java.util.Date.class, "date", false, "DATE");
-        public final static Property Seller = new Property(4, String.class, "seller", false, "SELLER");
-        public final static Property Price = new Property(5, Double.class, "price", false, "PRICE");
-        public final static Property Url = new Property(6, String.class, "url", false, "URL");
+        public final static Property Date = new Property(1, java.util.Date.class, "date", false, "DATE");
+        public final static Property Seller = new Property(2, String.class, "seller", false, "SELLER");
+        public final static Property Price = new Property(3, Double.class, "price", false, "PRICE");
+        public final static Property Url = new Property(4, String.class, "url", false, "URL");
+        public final static Property Id = new Property(5, Long.class, "id", true, "_id");
     };
 
+    private DaoSession daoSession;
+
+    private Query<GoodsPrices> goods_PriceListQuery;
+    private Query<GoodsPrices> priceType_PriceListQuery;
 
     public GoodsPricesDao(DaoConfig config) {
         super(config);
@@ -39,6 +47,7 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     
     public GoodsPricesDao(DaoConfig config, DaoSession daoSession) {
         super(config, daoSession);
+        this.daoSession = daoSession;
     }
 
     /** Creates the underlying database table. */
@@ -46,12 +55,11 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"GOODS_PRICES\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"GOODS_ID\" INTEGER," + // 1: goodsId
-                "\"TYPE_ID\" INTEGER," + // 2: typeId
-                "\"DATE\" INTEGER," + // 3: date
-                "\"SELLER\" TEXT," + // 4: seller
-                "\"PRICE\" REAL," + // 5: price
-                "\"URL\" TEXT);"); // 6: url
+                "\"DATE\" INTEGER," + // 1: date
+                "\"SELLER\" TEXT," + // 2: seller
+                "\"PRICE\" REAL," + // 3: price
+                "\"URL\" TEXT," + // 4: url
+                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT );"); // 5: id
     }
 
     /** Drops the underlying database table. */
@@ -70,35 +78,31 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
             stmt.bindLong(1, id);
         }
  
-        Long goodsId = entity.getGoodsId();
-        if (goodsId != null) {
-            stmt.bindLong(2, goodsId);
-        }
- 
-        Long typeId = entity.getTypeId();
-        if (typeId != null) {
-            stmt.bindLong(3, typeId);
-        }
- 
         java.util.Date date = entity.getDate();
         if (date != null) {
-            stmt.bindLong(4, date.getTime());
+            stmt.bindLong(2, date.getTime());
         }
  
         String seller = entity.getSeller();
         if (seller != null) {
-            stmt.bindString(5, seller);
+            stmt.bindString(3, seller);
         }
  
         Double price = entity.getPrice();
         if (price != null) {
-            stmt.bindDouble(6, price);
+            stmt.bindDouble(4, price);
         }
  
         String url = entity.getUrl();
         if (url != null) {
-            stmt.bindString(7, url);
+            stmt.bindString(5, url);
         }
+    }
+
+    @Override
+    protected void attachEntity(GoodsPrices entity) {
+        super.attachEntity(entity);
+        entity.__setDaoSession(daoSession);
     }
 
     /** @inheritdoc */
@@ -112,12 +116,10 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     public GoodsPrices readEntity(Cursor cursor, int offset) {
         GoodsPrices entity = new GoodsPrices( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // goodsId
-            cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2), // typeId
-            cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)), // date
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // seller
-            cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5), // price
-            cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6) // url
+            cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)), // date
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // seller
+            cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3), // price
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // url
         );
         return entity;
     }
@@ -126,12 +128,10 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     @Override
     public void readEntity(Cursor cursor, GoodsPrices entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setGoodsId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setTypeId(cursor.isNull(offset + 2) ? null : cursor.getLong(offset + 2));
-        entity.setDate(cursor.isNull(offset + 3) ? null : new java.util.Date(cursor.getLong(offset + 3)));
-        entity.setSeller(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
-        entity.setPrice(cursor.isNull(offset + 5) ? null : cursor.getDouble(offset + 5));
-        entity.setUrl(cursor.isNull(offset + 6) ? null : cursor.getString(offset + 6));
+        entity.setDate(cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)));
+        entity.setSeller(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setPrice(cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3));
+        entity.setUrl(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
      }
     
     /** @inheritdoc */
@@ -157,4 +157,123 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
         return true;
     }
     
+    /** Internal query to resolve the "priceList" to-many relationship of Goods. */
+    public List<GoodsPrices> _queryGoods_PriceList(Long id) {
+        synchronized (this) {
+            if (goods_PriceListQuery == null) {
+                QueryBuilder<GoodsPrices> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.Id.eq(null));
+                goods_PriceListQuery = queryBuilder.build();
+            }
+        }
+        Query<GoodsPrices> query = goods_PriceListQuery.forCurrentThread();
+        query.setParameter(0, id);
+        return query.list();
+    }
+
+    /** Internal query to resolve the "priceList" to-many relationship of PriceType. */
+    public List<GoodsPrices> _queryPriceType_PriceList(Long id) {
+        synchronized (this) {
+            if (priceType_PriceListQuery == null) {
+                QueryBuilder<GoodsPrices> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.Id.eq(null));
+                priceType_PriceListQuery = queryBuilder.build();
+            }
+        }
+        Query<GoodsPrices> query = priceType_PriceListQuery.forCurrentThread();
+        query.setParameter(0, id);
+        return query.list();
+    }
+
+    private String selectDeep;
+
+    protected String getSelectDeep() {
+        if (selectDeep == null) {
+            StringBuilder builder = new StringBuilder("SELECT ");
+            SqlUtils.appendColumns(builder, "T", getAllColumns());
+            builder.append(',');
+            SqlUtils.appendColumns(builder, "T0", daoSession.getPriceTypeDao().getAllColumns());
+            builder.append(" FROM GOODS_PRICES T");
+            builder.append(" LEFT JOIN PRICE_TYPE T0 ON T.\"_id\"=T0.\"_id\"");
+            builder.append(' ');
+            selectDeep = builder.toString();
+        }
+        return selectDeep;
+    }
+    
+    protected GoodsPrices loadCurrentDeep(Cursor cursor, boolean lock) {
+        GoodsPrices entity = loadCurrent(cursor, 0, lock);
+        int offset = getAllColumns().length;
+
+        PriceType priceType = loadCurrentOther(daoSession.getPriceTypeDao(), cursor, offset);
+        entity.setPriceType(priceType);
+
+        return entity;    
+    }
+
+    public GoodsPrices loadDeep(Long key) {
+        assertSinglePk();
+        if (key == null) {
+            return null;
+        }
+
+        StringBuilder builder = new StringBuilder(getSelectDeep());
+        builder.append("WHERE ");
+        SqlUtils.appendColumnsEqValue(builder, "T", getPkColumns());
+        String sql = builder.toString();
+        
+        String[] keyArray = new String[] { key.toString() };
+        Cursor cursor = db.rawQuery(sql, keyArray);
+        
+        try {
+            boolean available = cursor.moveToFirst();
+            if (!available) {
+                return null;
+            } else if (!cursor.isLast()) {
+                throw new IllegalStateException("Expected unique result, but count was " + cursor.getCount());
+            }
+            return loadCurrentDeep(cursor, true);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+    /** Reads all available rows from the given cursor and returns a list of new ImageTO objects. */
+    public List<GoodsPrices> loadAllDeepFromCursor(Cursor cursor) {
+        int count = cursor.getCount();
+        List<GoodsPrices> list = new ArrayList<GoodsPrices>(count);
+        
+        if (cursor.moveToFirst()) {
+            if (identityScope != null) {
+                identityScope.lock();
+                identityScope.reserveRoom(count);
+            }
+            try {
+                do {
+                    list.add(loadCurrentDeep(cursor, false));
+                } while (cursor.moveToNext());
+            } finally {
+                if (identityScope != null) {
+                    identityScope.unlock();
+                }
+            }
+        }
+        return list;
+    }
+    
+    protected List<GoodsPrices> loadDeepAllAndCloseCursor(Cursor cursor) {
+        try {
+            return loadAllDeepFromCursor(cursor);
+        } finally {
+            cursor.close();
+        }
+    }
+    
+
+    /** A raw-style query where you can pass any WHERE clause and arguments. */
+    public List<GoodsPrices> queryDeep(String where, String... selectionArg) {
+        Cursor cursor = db.rawQuery(getSelectDeep() + where, selectionArg);
+        return loadDeepAllAndCloseCursor(cursor);
+    }
+ 
 }

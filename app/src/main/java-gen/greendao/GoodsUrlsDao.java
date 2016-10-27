@@ -1,5 +1,6 @@
 package greendao;
 
+import java.util.List;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteStatement;
@@ -7,6 +8,8 @@ import android.database.sqlite.SQLiteStatement;
 import de.greenrobot.dao.AbstractDao;
 import de.greenrobot.dao.Property;
 import de.greenrobot.dao.internal.DaoConfig;
+import de.greenrobot.dao.query.Query;
+import de.greenrobot.dao.query.QueryBuilder;
 
 import greendao.GoodsUrls;
 
@@ -24,10 +27,10 @@ public class GoodsUrlsDao extends AbstractDao<GoodsUrls, Long> {
     */
     public static class Properties {
         public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property GoodsId = new Property(1, Long.class, "goodsId", false, "GOODS_ID");
-        public final static Property Url = new Property(2, String.class, "url", false, "URL");
+        public final static Property Url = new Property(1, String.class, "url", false, "URL");
     };
 
+    private Query<GoodsUrls> goods_UrlListQuery;
 
     public GoodsUrlsDao(DaoConfig config) {
         super(config);
@@ -42,8 +45,7 @@ public class GoodsUrlsDao extends AbstractDao<GoodsUrls, Long> {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"GOODS_URLS\" (" + //
                 "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"GOODS_ID\" INTEGER," + // 1: goodsId
-                "\"URL\" TEXT);"); // 2: url
+                "\"URL\" TEXT);"); // 1: url
     }
 
     /** Drops the underlying database table. */
@@ -62,14 +64,9 @@ public class GoodsUrlsDao extends AbstractDao<GoodsUrls, Long> {
             stmt.bindLong(1, id);
         }
  
-        Long goodsId = entity.getGoodsId();
-        if (goodsId != null) {
-            stmt.bindLong(2, goodsId);
-        }
- 
         String url = entity.getUrl();
         if (url != null) {
-            stmt.bindString(3, url);
+            stmt.bindString(2, url);
         }
     }
 
@@ -84,8 +81,7 @@ public class GoodsUrlsDao extends AbstractDao<GoodsUrls, Long> {
     public GoodsUrls readEntity(Cursor cursor, int offset) {
         GoodsUrls entity = new GoodsUrls( //
             cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1), // goodsId
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2) // url
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1) // url
         );
         return entity;
     }
@@ -94,8 +90,7 @@ public class GoodsUrlsDao extends AbstractDao<GoodsUrls, Long> {
     @Override
     public void readEntity(Cursor cursor, GoodsUrls entity, int offset) {
         entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setGoodsId(cursor.isNull(offset + 1) ? null : cursor.getLong(offset + 1));
-        entity.setUrl(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setUrl(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
      }
     
     /** @inheritdoc */
@@ -121,4 +116,18 @@ public class GoodsUrlsDao extends AbstractDao<GoodsUrls, Long> {
         return true;
     }
     
+    /** Internal query to resolve the "urlList" to-many relationship of Goods. */
+    public List<GoodsUrls> _queryGoods_UrlList(Long id) {
+        synchronized (this) {
+            if (goods_UrlListQuery == null) {
+                QueryBuilder<GoodsUrls> queryBuilder = queryBuilder();
+                queryBuilder.where(Properties.Id.eq(null));
+                goods_UrlListQuery = queryBuilder.build();
+            }
+        }
+        Query<GoodsUrls> query = goods_UrlListQuery.forCurrentThread();
+        query.setParameter(0, id);
+        return query.list();
+    }
+
 }

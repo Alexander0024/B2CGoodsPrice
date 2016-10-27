@@ -8,6 +8,7 @@ import java.util.List;
 
 import greendao.Goods;
 import greendao.GoodsDao;
+import greendao.GoodsUrls;
 import rx.Observable;
 import rx.functions.Action1;
 
