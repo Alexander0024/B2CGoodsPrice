@@ -7,10 +7,12 @@ package greendao;
 public class GoodsPrices {
 
     private Long id;
-    private Boolean type;
+    private Long goodsId;
+    private Long typeId;
     private java.util.Date date;
     private String seller;
     private Double price;
+    private String url;
 
     public GoodsPrices() {
     }
@@ -19,12 +21,14 @@ public class GoodsPrices {
         this.id = id;
     }
 
-    public GoodsPrices(Long id, Boolean type, java.util.Date date, String seller, Double price) {
+    public GoodsPrices(Long id, Long goodsId, Long typeId, java.util.Date date, String seller, Double price, String url) {
         this.id = id;
-        this.type = type;
+        this.goodsId = goodsId;
+        this.typeId = typeId;
         this.date = date;
         this.seller = seller;
         this.price = price;
+        this.url = url;
     }
 
     public Long getId() {
@@ -35,12 +39,20 @@ public class GoodsPrices {
         this.id = id;
     }
 
-    public Boolean getType() {
-        return type;
+    public Long getGoodsId() {
+        return goodsId;
     }
 
-    public void setType(Boolean type) {
-        this.type = type;
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
+    }
+
+    public Long getTypeId() {
+        return typeId;
+    }
+
+    public void setTypeId(Long typeId) {
+        this.typeId = typeId;
     }
 
     public java.util.Date getDate() {
@@ -65,6 +77,14 @@ public class GoodsPrices {
 
     public void setPrice(Double price) {
         this.price = price;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 
 }
