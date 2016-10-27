@@ -25,7 +25,8 @@ import com.alexsophia.b2cgoodsprice.R;
  * Created by Alexander on 2016/10/26.
  */
 
-public class DropEditText extends FrameLayout implements View.OnClickListener, AdapterView.OnItemClickListener {
+public class DropEditText extends FrameLayout implements View.OnClickListener, AdapterView
+        .OnItemClickListener {
     private final Context mContext;
     private EditText mEditText;  // 输入框
     private ImageView mDropImage; // 右边的图片按钮
@@ -44,10 +45,13 @@ public class DropEditText extends FrameLayout implements View.OnClickListener, A
         super(context, attrs, defStyle);
         this.mContext = context;
         LayoutInflater.from(context).inflate(R.layout.common_drop_edittext, this);
-        mPopView = (WrapListView) LayoutInflater.from(context).inflate(R.layout.common_drop_pop, null);
+        mPopView = (WrapListView) LayoutInflater.from(context).inflate(R.layout.common_drop_pop,
+                null);
 
-        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DropEditText, defStyle, 0);
-        mDrawableLeft = ta.getResourceId(R.styleable.DropEditText_drawableRight, R.drawable.common_drop);
+        TypedArray ta = context.obtainStyledAttributes(attrs, R.styleable.DropEditText, defStyle,
+                0);
+        mDrawableLeft = ta.getResourceId(R.styleable.DropEditText_drawableRight, R.drawable
+                .common_drop);
         mDropMode = ta.getInt(R.styleable.DropEditText_dropMode, 0);
         mHit = ta.getString(R.styleable.DropEditText_hint);
         ta.recycle();
@@ -63,7 +67,7 @@ public class DropEditText extends FrameLayout implements View.OnClickListener, A
         mEditText.setSelectAllOnFocus(true);
         mDropImage.setImageResource(mDrawableLeft);
 
-        if(!TextUtils.isEmpty(mHit)) {
+        if (!TextUtils.isEmpty(mHit)) {
             mEditText.setHint(mHit);
         }
 
@@ -72,19 +76,19 @@ public class DropEditText extends FrameLayout implements View.OnClickListener, A
     }
 
     @Override
-    protected void onLayout(boolean changed, int left, int top, int right,
-                            int bottom) {
+    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
         // 如果布局发生改
         // 并且dropMode是flower_parent
         // 则设置ListView的宽度
-        if(changed && 0 == mDropMode) {
+        if (changed && 0 == mDropMode) {
             mPopView.setListWidth(getMeasuredWidth());
         }
     }
 
     /**
      * 设置Adapter
+     *
      * @param adapter ListView的Adapter
      */
     public void setAdapter(BaseAdapter adapter) {
@@ -108,6 +112,7 @@ public class DropEditText extends FrameLayout implements View.OnClickListener, A
 
     /**
      * 获取输入框内的内容
+     *
      * @return String content
      */
     public String getText() {
@@ -116,8 +121,8 @@ public class DropEditText extends FrameLayout implements View.OnClickListener, A
 
     @Override
     public void onClick(View v) {
-        if(v.getId() == R.id.dv_iv) {
-            if(mPopup.isShowing()) {
+        if (v.getId() == R.id.dv_iv) {
+            if (mPopup.isShowing()) {
                 mPopup.dismiss();
                 return;
             }
@@ -126,8 +131,7 @@ public class DropEditText extends FrameLayout implements View.OnClickListener, A
     }
 
     @Override
-    public void onItemClick(AdapterView<?> parent, View view, int position,
-                            long id) {
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         mEditText.setText(mPopView.getAdapter().getItem(position).toString());
         mPopup.dismiss();
     }
