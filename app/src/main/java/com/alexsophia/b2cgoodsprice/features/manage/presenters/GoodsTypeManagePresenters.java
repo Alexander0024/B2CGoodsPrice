@@ -25,7 +25,12 @@ public interface GoodsTypeManagePresenters extends BasePresenter {
     /**
      * 添加一个新的分类
      */
-    void addNewType();
+    void addType();
+
+    /**
+     * 更新分类信息
+     */
+    void updateType(GoodsType goodsType);
 
     interface View extends BaseView {
         /**

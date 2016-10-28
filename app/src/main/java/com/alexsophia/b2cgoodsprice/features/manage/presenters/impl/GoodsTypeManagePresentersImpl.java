@@ -60,11 +60,15 @@ public class GoodsTypeManagePresentersImpl extends AbstractPresenter implements
     }
 
     @Override
-    public void addNewType() {
-        String typeName = mView.getNewTypeName();
-        if (StringUtil.isGoodsType(typeName)) {
-            GoodsType goodsType = new GoodsType();
-            goodsType.setGoodsTypeName(typeName);
+    public void addType() {
+        GoodsType goodsType = new GoodsType();
+        goodsType.setGoodsTypeName(mView.getNewTypeName());
+        updateType(goodsType);
+    }
+
+    @Override
+    public void updateType(GoodsType goodsType) {
+        if (StringUtil.isGoodsType(goodsType.getGoodsTypeName())) {
             long id = mDbMaster.addGoodsType(goodsType);
             if (id > 0) {
                 mView.onAddNewTypeSuccess(id);

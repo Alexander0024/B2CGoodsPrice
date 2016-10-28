@@ -14,6 +14,7 @@ import com.alexsophia.b2cgoodsprice.features.base.threading.impl.MainThreadImpl;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseActivity;
 import com.alexsophia.b2cgoodsprice.features.manage.presenters.GoodsTypeManagePresenters;
 import com.alexsophia.b2cgoodsprice.features.manage.presenters.impl.GoodsTypeManagePresentersImpl;
+import com.alexsophia.b2cgoodsprice.share.SimpleEditTextBox;
 import com.alexsophia.b2cgoodsprice.share.adapters.CommonAdapter;
 import com.alexsophia.b2cgoodsprice.share.adapters.ViewHolder;
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
@@ -31,13 +32,13 @@ import greendao.GoodsType;
 public class GoodsTypeManageActivity extends BaseActivity implements GoodsTypeManagePresenters
         .View {
     @Bind(R.id.tv_manage_goods_type_count)
-    TextView mTvManageGoodsTypeCount;
+    TextView mTvManageGoodsTypeCount; // 物品分类总计
     @Bind(R.id.lv_manage_goods_type)
-    ListView mLvManageGoodsType;
+    ListView mLvManageGoodsType; // 物品分类列表
     @Bind(R.id.edtTxt_manage_new_type_name)
-    EditText mEdtTxtManageNewTypeName;
+    EditText mEdtTxtManageNewTypeName; // 新分类输入框
     @Bind(R.id.btn_manage_add)
-    Button mBtnManageAdd;
+    Button mBtnManageAdd; // 添加按钮
 
     private String TAG = "GoodsTypeManageActivity";
     private GoodsTypeManagePresenters mPresenters;
@@ -68,15 +69,36 @@ public class GoodsTypeManageActivity extends BaseActivity implements GoodsTypeMa
         LogWrapper.e(TAG, "loadData: ");
         mPresenters = new GoodsTypeManagePresentersImpl(ThreadExecutor.getInstance(),
                 MainThreadImpl.getInstance(), this);
+        /**
+         * 设置分类列表的Adapter
+         */
         mAdapter = new CommonAdapter<GoodsType>(this, R.layout
                 .manage_goods_type_item, mPresenters.getGoodsType()) {
             @Override
-            public void covertView(ViewHolder viewholder, GoodsType goodsType) {
+            public void covertView(ViewHolder viewholder, final GoodsType goodsType) {
+                // 分类ID
                 viewholder.setText(R.id.tv_manage_goods_type_id, String.valueOf(goodsType
                         .getGoodsTypeId()));
+                // 分类名称
                 viewholder.setText(R.id.tv_manage_goods_type_name, goodsType.getGoodsTypeName());
+                viewholder.setClickListener(R.id.tv_manage_goods_type_name, new View
+                        .OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new SimpleEditTextBox(getContext(), "更新分类名称", "", goodsType
+                                .getGoodsTypeName(), new SimpleEditTextBox.OnClickListener() {
+                            @Override
+                            public void onPositiveButtonClicked(String value) {
+                                goodsType.setGoodsTypeName(value);
+                                mPresenters.updateType(goodsType);
+                            }
+                        });
+                    }
+                });
+                // 分类下厂商信息
                 viewholder.setText(R.id.tv_manage_goods_type_brand_count, String.valueOf
                         (goodsType.getBrandList().size()));
+                // 分类下物品信息
                 viewholder.setText(R.id.tv_manage_goods_type_goods_count, String.valueOf
                         (goodsType.getGoodsList().size()));
             }
@@ -94,7 +116,7 @@ public class GoodsTypeManageActivity extends BaseActivity implements GoodsTypeMa
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_manage_add:
-                mPresenters.addNewType();
+                mPresenters.addType();
                 break;
         }
     }
@@ -112,7 +134,7 @@ public class GoodsTypeManageActivity extends BaseActivity implements GoodsTypeMa
     @Override
     public void onAddNewTypeSuccess(long id) {
         LogWrapper.e(TAG, "onAddNewTypeSuccess: " + id);
-        ToastUtil.showLong(this, "添加分类成功，id = " + id);
+        ToastUtil.showLong(this, "分类编辑成功，id = " + id);
         refreshUI();
     }
 
