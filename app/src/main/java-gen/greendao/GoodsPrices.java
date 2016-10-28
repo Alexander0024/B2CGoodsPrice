@@ -9,11 +9,12 @@ import de.greenrobot.dao.DaoException;
  */
 public class GoodsPrices {
 
-    private Long id;
-    private java.util.Date date;
+    private Long goodsPriceId;
+    private java.util.Date addDate;
     private String seller;
     private Double price;
-    private String url;
+    private String urlAddress;
+    private Long priceTypeId;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -28,16 +29,17 @@ public class GoodsPrices {
     public GoodsPrices() {
     }
 
-    public GoodsPrices(Long id) {
-        this.id = id;
+    public GoodsPrices(Long goodsPriceId) {
+        this.goodsPriceId = goodsPriceId;
     }
 
-    public GoodsPrices(Long id, java.util.Date date, String seller, Double price, String url) {
-        this.id = id;
-        this.date = date;
+    public GoodsPrices(Long goodsPriceId, java.util.Date addDate, String seller, Double price, String urlAddress, Long priceTypeId) {
+        this.goodsPriceId = goodsPriceId;
+        this.addDate = addDate;
         this.seller = seller;
         this.price = price;
-        this.url = url;
+        this.urlAddress = urlAddress;
+        this.priceTypeId = priceTypeId;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -46,20 +48,20 @@ public class GoodsPrices {
         myDao = daoSession != null ? daoSession.getGoodsPricesDao() : null;
     }
 
-    public Long getId() {
-        return id;
+    public Long getGoodsPriceId() {
+        return goodsPriceId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setGoodsPriceId(Long goodsPriceId) {
+        this.goodsPriceId = goodsPriceId;
     }
 
-    public java.util.Date getDate() {
-        return date;
+    public java.util.Date getAddDate() {
+        return addDate;
     }
 
-    public void setDate(java.util.Date date) {
-        this.date = date;
+    public void setAddDate(java.util.Date addDate) {
+        this.addDate = addDate;
     }
 
     public String getSeller() {
@@ -78,17 +80,25 @@ public class GoodsPrices {
         this.price = price;
     }
 
-    public String getUrl() {
-        return url;
+    public String getUrlAddress() {
+        return urlAddress;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUrlAddress(String urlAddress) {
+        this.urlAddress = urlAddress;
+    }
+
+    public Long getPriceTypeId() {
+        return priceTypeId;
+    }
+
+    public void setPriceTypeId(Long priceTypeId) {
+        this.priceTypeId = priceTypeId;
     }
 
     /** To-one relationship, resolved on first access. */
     public PriceType getPriceType() {
-        Long __key = this.id;
+        Long __key = this.priceTypeId;
         if (priceType__resolvedKey == null || !priceType__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
@@ -106,8 +116,8 @@ public class GoodsPrices {
     public void setPriceType(PriceType priceType) {
         synchronized (this) {
             this.priceType = priceType;
-            id = priceType == null ? null : priceType.getId();
-            priceType__resolvedKey = id;
+            priceTypeId = priceType == null ? null : priceType.getPriceTypeId();
+            priceType__resolvedKey = priceTypeId;
         }
     }
 

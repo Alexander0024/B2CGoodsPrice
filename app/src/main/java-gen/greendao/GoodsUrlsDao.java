@@ -26,8 +26,8 @@ public class GoodsUrlsDao extends AbstractDao<GoodsUrls, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Url = new Property(1, String.class, "url", false, "URL");
+        public final static Property GoodsUrlId = new Property(0, Long.class, "goodsUrlId", true, "GOODS_URL_ID");
+        public final static Property UrlAddress = new Property(1, String.class, "urlAddress", false, "URL_ADDRESS");
     };
 
     private Query<GoodsUrls> goods_UrlListQuery;
@@ -44,8 +44,8 @@ public class GoodsUrlsDao extends AbstractDao<GoodsUrls, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"GOODS_URLS\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"URL\" TEXT);"); // 1: url
+                "\"GOODS_URL_ID\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: goodsUrlId
+                "\"URL_ADDRESS\" TEXT);"); // 1: urlAddress
     }
 
     /** Drops the underlying database table. */
@@ -59,14 +59,14 @@ public class GoodsUrlsDao extends AbstractDao<GoodsUrls, Long> {
     protected void bindValues(SQLiteStatement stmt, GoodsUrls entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
+        Long goodsUrlId = entity.getGoodsUrlId();
+        if (goodsUrlId != null) {
+            stmt.bindLong(1, goodsUrlId);
         }
  
-        String url = entity.getUrl();
-        if (url != null) {
-            stmt.bindString(2, url);
+        String urlAddress = entity.getUrlAddress();
+        if (urlAddress != null) {
+            stmt.bindString(2, urlAddress);
         }
     }
 
@@ -80,8 +80,8 @@ public class GoodsUrlsDao extends AbstractDao<GoodsUrls, Long> {
     @Override
     public GoodsUrls readEntity(Cursor cursor, int offset) {
         GoodsUrls entity = new GoodsUrls( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1) // url
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // goodsUrlId
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1) // urlAddress
         );
         return entity;
     }
@@ -89,14 +89,14 @@ public class GoodsUrlsDao extends AbstractDao<GoodsUrls, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, GoodsUrls entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setUrl(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setGoodsUrlId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setUrlAddress(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
      }
     
     /** @inheritdoc */
     @Override
     protected Long updateKeyAfterInsert(GoodsUrls entity, long rowId) {
-        entity.setId(rowId);
+        entity.setGoodsUrlId(rowId);
         return rowId;
     }
     
@@ -104,7 +104,7 @@ public class GoodsUrlsDao extends AbstractDao<GoodsUrls, Long> {
     @Override
     public Long getKey(GoodsUrls entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getGoodsUrlId();
         } else {
             return null;
         }
@@ -117,16 +117,16 @@ public class GoodsUrlsDao extends AbstractDao<GoodsUrls, Long> {
     }
     
     /** Internal query to resolve the "urlList" to-many relationship of Goods. */
-    public List<GoodsUrls> _queryGoods_UrlList(Long id) {
+    public List<GoodsUrls> _queryGoods_UrlList(Long goodsUrlId) {
         synchronized (this) {
             if (goods_UrlListQuery == null) {
                 QueryBuilder<GoodsUrls> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.Id.eq(null));
+                queryBuilder.where(Properties.GoodsUrlId.eq(null));
                 goods_UrlListQuery = queryBuilder.build();
             }
         }
         Query<GoodsUrls> query = goods_UrlListQuery.forCurrentThread();
-        query.setParameter(0, id);
+        query.setParameter(0, goodsUrlId);
         return query.list();
     }
 

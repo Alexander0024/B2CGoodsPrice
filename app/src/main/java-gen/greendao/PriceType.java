@@ -10,8 +10,8 @@ import de.greenrobot.dao.DaoException;
  */
 public class PriceType {
 
-    private Long id;
-    private String typeName;
+    private Long priceTypeId;
+    private String priceTypeName;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -24,13 +24,13 @@ public class PriceType {
     public PriceType() {
     }
 
-    public PriceType(Long id) {
-        this.id = id;
+    public PriceType(Long priceTypeId) {
+        this.priceTypeId = priceTypeId;
     }
 
-    public PriceType(Long id, String typeName) {
-        this.id = id;
-        this.typeName = typeName;
+    public PriceType(Long priceTypeId, String priceTypeName) {
+        this.priceTypeId = priceTypeId;
+        this.priceTypeName = priceTypeName;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -39,20 +39,20 @@ public class PriceType {
         myDao = daoSession != null ? daoSession.getPriceTypeDao() : null;
     }
 
-    public Long getId() {
-        return id;
+    public Long getPriceTypeId() {
+        return priceTypeId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setPriceTypeId(Long priceTypeId) {
+        this.priceTypeId = priceTypeId;
     }
 
-    public String getTypeName() {
-        return typeName;
+    public String getPriceTypeName() {
+        return priceTypeName;
     }
 
-    public void setTypeName(String typeName) {
-        this.typeName = typeName;
+    public void setPriceTypeName(String priceTypeName) {
+        this.priceTypeName = priceTypeName;
     }
 
     /** To-many relationship, resolved on first access (and after reset). Changes to to-many relations are not persisted, make changes to the target entity. */
@@ -62,7 +62,7 @@ public class PriceType {
                 throw new DaoException("Entity is detached from DAO context");
             }
             GoodsPricesDao targetDao = daoSession.getGoodsPricesDao();
-            List<GoodsPrices> priceListNew = targetDao._queryPriceType_PriceList(id);
+            List<GoodsPrices> priceListNew = targetDao._queryPriceType_PriceList(priceTypeId);
             synchronized (this) {
                 if(priceList == null) {
                     priceList = priceListNew;

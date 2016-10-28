@@ -10,11 +10,13 @@ import de.greenrobot.dao.DaoException;
  */
 public class Goods {
 
-    private Long id;
-    private String name;
-    private String standard;
+    private Long goodsId;
+    private String goodsName;
+    private String goodsStandard;
     private Double cheapestOnline;
     private Double cheapestOffline;
+    private Long goodsTypeId;
+    private Long goodsBrandId;
 
     /** Used to resolve relations */
     private transient DaoSession daoSession;
@@ -34,16 +36,18 @@ public class Goods {
     public Goods() {
     }
 
-    public Goods(Long id) {
-        this.id = id;
+    public Goods(Long goodsId) {
+        this.goodsId = goodsId;
     }
 
-    public Goods(Long id, String name, String standard, Double cheapestOnline, Double cheapestOffline) {
-        this.id = id;
-        this.name = name;
-        this.standard = standard;
+    public Goods(Long goodsId, String goodsName, String goodsStandard, Double cheapestOnline, Double cheapestOffline, Long goodsTypeId, Long goodsBrandId) {
+        this.goodsId = goodsId;
+        this.goodsName = goodsName;
+        this.goodsStandard = goodsStandard;
         this.cheapestOnline = cheapestOnline;
         this.cheapestOffline = cheapestOffline;
+        this.goodsTypeId = goodsTypeId;
+        this.goodsBrandId = goodsBrandId;
     }
 
     /** called by internal mechanisms, do not call yourself. */
@@ -52,28 +56,28 @@ public class Goods {
         myDao = daoSession != null ? daoSession.getGoodsDao() : null;
     }
 
-    public Long getId() {
-        return id;
+    public Long getGoodsId() {
+        return goodsId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setGoodsId(Long goodsId) {
+        this.goodsId = goodsId;
     }
 
-    public String getName() {
-        return name;
+    public String getGoodsName() {
+        return goodsName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGoodsName(String goodsName) {
+        this.goodsName = goodsName;
     }
 
-    public String getStandard() {
-        return standard;
+    public String getGoodsStandard() {
+        return goodsStandard;
     }
 
-    public void setStandard(String standard) {
-        this.standard = standard;
+    public void setGoodsStandard(String goodsStandard) {
+        this.goodsStandard = goodsStandard;
     }
 
     public Double getCheapestOnline() {
@@ -92,9 +96,25 @@ public class Goods {
         this.cheapestOffline = cheapestOffline;
     }
 
+    public Long getGoodsTypeId() {
+        return goodsTypeId;
+    }
+
+    public void setGoodsTypeId(Long goodsTypeId) {
+        this.goodsTypeId = goodsTypeId;
+    }
+
+    public Long getGoodsBrandId() {
+        return goodsBrandId;
+    }
+
+    public void setGoodsBrandId(Long goodsBrandId) {
+        this.goodsBrandId = goodsBrandId;
+    }
+
     /** To-one relationship, resolved on first access. */
     public GoodsType getGoodsType() {
-        Long __key = this.id;
+        Long __key = this.goodsTypeId;
         if (goodsType__resolvedKey == null || !goodsType__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
@@ -112,14 +132,14 @@ public class Goods {
     public void setGoodsType(GoodsType goodsType) {
         synchronized (this) {
             this.goodsType = goodsType;
-            id = goodsType == null ? null : goodsType.getId();
-            goodsType__resolvedKey = id;
+            goodsTypeId = goodsType == null ? null : goodsType.getGoodsTypeId();
+            goodsType__resolvedKey = goodsTypeId;
         }
     }
 
     /** To-one relationship, resolved on first access. */
     public GoodsBrand getGoodsBrand() {
-        Long __key = this.id;
+        Long __key = this.goodsBrandId;
         if (goodsBrand__resolvedKey == null || !goodsBrand__resolvedKey.equals(__key)) {
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
@@ -137,8 +157,8 @@ public class Goods {
     public void setGoodsBrand(GoodsBrand goodsBrand) {
         synchronized (this) {
             this.goodsBrand = goodsBrand;
-            id = goodsBrand == null ? null : goodsBrand.getId();
-            goodsBrand__resolvedKey = id;
+            goodsBrandId = goodsBrand == null ? null : goodsBrand.getGoodsBrandId();
+            goodsBrand__resolvedKey = goodsBrandId;
         }
     }
 
@@ -149,7 +169,7 @@ public class Goods {
                 throw new DaoException("Entity is detached from DAO context");
             }
             GoodsPricesDao targetDao = daoSession.getGoodsPricesDao();
-            List<GoodsPrices> priceListNew = targetDao._queryGoods_PriceList(id);
+            List<GoodsPrices> priceListNew = targetDao._queryGoods_PriceList(goodsId);
             synchronized (this) {
                 if(priceList == null) {
                     priceList = priceListNew;
@@ -171,7 +191,7 @@ public class Goods {
                 throw new DaoException("Entity is detached from DAO context");
             }
             GoodsUrlsDao targetDao = daoSession.getGoodsUrlsDao();
-            List<GoodsUrls> urlListNew = targetDao._queryGoods_UrlList(id);
+            List<GoodsUrls> urlListNew = targetDao._queryGoods_UrlList(goodsId);
             synchronized (this) {
                 if(urlList == null) {
                     urlList = urlListNew;

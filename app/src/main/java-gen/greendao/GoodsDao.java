@@ -28,13 +28,13 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Name = new Property(1, String.class, "name", false, "NAME");
-        public final static Property Standard = new Property(2, String.class, "standard", false, "STANDARD");
+        public final static Property GoodsId = new Property(0, Long.class, "goodsId", true, "GOODS_ID");
+        public final static Property GoodsName = new Property(1, String.class, "goodsName", false, "GOODS_NAME");
+        public final static Property GoodsStandard = new Property(2, String.class, "goodsStandard", false, "GOODS_STANDARD");
         public final static Property CheapestOnline = new Property(3, Double.class, "cheapestOnline", false, "CHEAPEST_ONLINE");
         public final static Property CheapestOffline = new Property(4, Double.class, "cheapestOffline", false, "CHEAPEST_OFFLINE");
-        public final static Property Id = new Property(5, Long.class, "id", true, "_id");
-        public final static Property Id = new Property(6, Long.class, "id", true, "_id");
+        public final static Property GoodsTypeId = new Property(5, Long.class, "goodsTypeId", false, "GOODS_TYPE_ID");
+        public final static Property GoodsBrandId = new Property(6, Long.class, "goodsBrandId", false, "GOODS_BRAND_ID");
     };
 
     private DaoSession daoSession;
@@ -55,13 +55,13 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"GOODS\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"NAME\" TEXT," + // 1: name
-                "\"STANDARD\" TEXT," + // 2: standard
+                "\"GOODS_ID\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: goodsId
+                "\"GOODS_NAME\" TEXT," + // 1: goodsName
+                "\"GOODS_STANDARD\" TEXT," + // 2: goodsStandard
                 "\"CHEAPEST_ONLINE\" REAL," + // 3: cheapestOnline
                 "\"CHEAPEST_OFFLINE\" REAL," + // 4: cheapestOffline
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 5: id
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT );"); // 6: id
+                "\"GOODS_TYPE_ID\" INTEGER," + // 5: goodsTypeId
+                "\"GOODS_BRAND_ID\" INTEGER);"); // 6: goodsBrandId
     }
 
     /** Drops the underlying database table. */
@@ -75,19 +75,19 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
     protected void bindValues(SQLiteStatement stmt, Goods entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
+        Long goodsId = entity.getGoodsId();
+        if (goodsId != null) {
+            stmt.bindLong(1, goodsId);
         }
  
-        String name = entity.getName();
-        if (name != null) {
-            stmt.bindString(2, name);
+        String goodsName = entity.getGoodsName();
+        if (goodsName != null) {
+            stmt.bindString(2, goodsName);
         }
  
-        String standard = entity.getStandard();
-        if (standard != null) {
-            stmt.bindString(3, standard);
+        String goodsStandard = entity.getGoodsStandard();
+        if (goodsStandard != null) {
+            stmt.bindString(3, goodsStandard);
         }
  
         Double cheapestOnline = entity.getCheapestOnline();
@@ -98,6 +98,16 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
         Double cheapestOffline = entity.getCheapestOffline();
         if (cheapestOffline != null) {
             stmt.bindDouble(5, cheapestOffline);
+        }
+ 
+        Long goodsTypeId = entity.getGoodsTypeId();
+        if (goodsTypeId != null) {
+            stmt.bindLong(6, goodsTypeId);
+        }
+ 
+        Long goodsBrandId = entity.getGoodsBrandId();
+        if (goodsBrandId != null) {
+            stmt.bindLong(7, goodsBrandId);
         }
     }
 
@@ -117,11 +127,13 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
     @Override
     public Goods readEntity(Cursor cursor, int offset) {
         Goods entity = new Goods( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // name
-            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // standard
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // goodsId
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1), // goodsName
+            cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // goodsStandard
             cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3), // cheapestOnline
-            cursor.isNull(offset + 4) ? null : cursor.getDouble(offset + 4) // cheapestOffline
+            cursor.isNull(offset + 4) ? null : cursor.getDouble(offset + 4), // cheapestOffline
+            cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5), // goodsTypeId
+            cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6) // goodsBrandId
         );
         return entity;
     }
@@ -129,17 +141,19 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, Goods entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
-        entity.setStandard(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
+        entity.setGoodsId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setGoodsName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setGoodsStandard(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setCheapestOnline(cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3));
         entity.setCheapestOffline(cursor.isNull(offset + 4) ? null : cursor.getDouble(offset + 4));
+        entity.setGoodsTypeId(cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5));
+        entity.setGoodsBrandId(cursor.isNull(offset + 6) ? null : cursor.getLong(offset + 6));
      }
     
     /** @inheritdoc */
     @Override
     protected Long updateKeyAfterInsert(Goods entity, long rowId) {
-        entity.setId(rowId);
+        entity.setGoodsId(rowId);
         return rowId;
     }
     
@@ -147,7 +161,7 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
     @Override
     public Long getKey(Goods entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getGoodsId();
         } else {
             return null;
         }
@@ -160,30 +174,30 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
     }
     
     /** Internal query to resolve the "goodsList" to-many relationship of GoodsType. */
-    public List<Goods> _queryGoodsType_GoodsList(Long id) {
+    public List<Goods> _queryGoodsType_GoodsList(Long goodsTypeId) {
         synchronized (this) {
             if (goodsType_GoodsListQuery == null) {
                 QueryBuilder<Goods> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.Id.eq(null));
+                queryBuilder.where(Properties.GoodsTypeId.eq(null));
                 goodsType_GoodsListQuery = queryBuilder.build();
             }
         }
         Query<Goods> query = goodsType_GoodsListQuery.forCurrentThread();
-        query.setParameter(0, id);
+        query.setParameter(0, goodsTypeId);
         return query.list();
     }
 
     /** Internal query to resolve the "goodsList" to-many relationship of GoodsBrand. */
-    public List<Goods> _queryGoodsBrand_GoodsList(Long id) {
+    public List<Goods> _queryGoodsBrand_GoodsList(Long goodsBrandId) {
         synchronized (this) {
             if (goodsBrand_GoodsListQuery == null) {
                 QueryBuilder<Goods> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.Id.eq(null));
+                queryBuilder.where(Properties.GoodsBrandId.eq(null));
                 goodsBrand_GoodsListQuery = queryBuilder.build();
             }
         }
         Query<Goods> query = goodsBrand_GoodsListQuery.forCurrentThread();
-        query.setParameter(0, id);
+        query.setParameter(0, goodsBrandId);
         return query.list();
     }
 
@@ -198,8 +212,8 @@ public class GoodsDao extends AbstractDao<Goods, Long> {
             builder.append(',');
             SqlUtils.appendColumns(builder, "T1", daoSession.getGoodsBrandDao().getAllColumns());
             builder.append(" FROM GOODS T");
-            builder.append(" LEFT JOIN GOODS_TYPE T0 ON T.\"_id\"=T0.\"_id\"");
-            builder.append(" LEFT JOIN GOODS_BRAND T1 ON T.\"_id\"=T1.\"_id\"");
+            builder.append(" LEFT JOIN GOODS_TYPE T0 ON T.\"GOODS_TYPE_ID\"=T0.\"GOODS_TYPE_ID\"");
+            builder.append(" LEFT JOIN GOODS_BRAND T1 ON T.\"GOODS_BRAND_ID\"=T1.\"GOODS_BRAND_ID\"");
             builder.append(' ');
             selectDeep = builder.toString();
         }

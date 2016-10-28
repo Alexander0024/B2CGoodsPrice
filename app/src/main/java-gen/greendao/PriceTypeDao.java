@@ -23,8 +23,8 @@ public class PriceTypeDao extends AbstractDao<PriceType, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property TypeName = new Property(1, String.class, "typeName", false, "TYPE_NAME");
+        public final static Property PriceTypeId = new Property(0, Long.class, "priceTypeId", true, "PRICE_TYPE_ID");
+        public final static Property PriceTypeName = new Property(1, String.class, "priceTypeName", false, "PRICE_TYPE_NAME");
     };
 
     private DaoSession daoSession;
@@ -43,8 +43,8 @@ public class PriceTypeDao extends AbstractDao<PriceType, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"PRICE_TYPE\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"TYPE_NAME\" TEXT);"); // 1: typeName
+                "\"PRICE_TYPE_ID\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: priceTypeId
+                "\"PRICE_TYPE_NAME\" TEXT);"); // 1: priceTypeName
     }
 
     /** Drops the underlying database table. */
@@ -58,14 +58,14 @@ public class PriceTypeDao extends AbstractDao<PriceType, Long> {
     protected void bindValues(SQLiteStatement stmt, PriceType entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
+        Long priceTypeId = entity.getPriceTypeId();
+        if (priceTypeId != null) {
+            stmt.bindLong(1, priceTypeId);
         }
  
-        String typeName = entity.getTypeName();
-        if (typeName != null) {
-            stmt.bindString(2, typeName);
+        String priceTypeName = entity.getPriceTypeName();
+        if (priceTypeName != null) {
+            stmt.bindString(2, priceTypeName);
         }
     }
 
@@ -85,8 +85,8 @@ public class PriceTypeDao extends AbstractDao<PriceType, Long> {
     @Override
     public PriceType readEntity(Cursor cursor, int offset) {
         PriceType entity = new PriceType( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1) // typeName
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // priceTypeId
+            cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1) // priceTypeName
         );
         return entity;
     }
@@ -94,14 +94,14 @@ public class PriceTypeDao extends AbstractDao<PriceType, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, PriceType entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setTypeName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
+        entity.setPriceTypeId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setPriceTypeName(cursor.isNull(offset + 1) ? null : cursor.getString(offset + 1));
      }
     
     /** @inheritdoc */
     @Override
     protected Long updateKeyAfterInsert(PriceType entity, long rowId) {
-        entity.setId(rowId);
+        entity.setPriceTypeId(rowId);
         return rowId;
     }
     
@@ -109,7 +109,7 @@ public class PriceTypeDao extends AbstractDao<PriceType, Long> {
     @Override
     public Long getKey(PriceType entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getPriceTypeId();
         } else {
             return null;
         }

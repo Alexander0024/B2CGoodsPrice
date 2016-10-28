@@ -6,35 +6,35 @@ package greendao;
  */
 public class GoodsUrls {
 
-    private Long id;
-    private String url;
+    private Long goodsUrlId;
+    private String urlAddress;
 
     public GoodsUrls() {
     }
 
-    public GoodsUrls(Long id) {
-        this.id = id;
+    public GoodsUrls(Long goodsUrlId) {
+        this.goodsUrlId = goodsUrlId;
     }
 
-    public GoodsUrls(Long id, String url) {
-        this.id = id;
-        this.url = url;
+    public GoodsUrls(Long goodsUrlId, String urlAddress) {
+        this.goodsUrlId = goodsUrlId;
+        this.urlAddress = urlAddress;
     }
 
-    public Long getId() {
-        return id;
+    public Long getGoodsUrlId() {
+        return goodsUrlId;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setGoodsUrlId(Long goodsUrlId) {
+        this.goodsUrlId = goodsUrlId;
     }
 
-    public String getUrl() {
-        return url;
+    public String getUrlAddress() {
+        return urlAddress;
     }
 
-    public void setUrl(String url) {
-        this.url = url;
+    public void setUrlAddress(String urlAddress) {
+        this.urlAddress = urlAddress;
     }
 
 }

@@ -28,12 +28,12 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
      * Can be used for QueryBuilder and for referencing column names.
     */
     public static class Properties {
-        public final static Property Id = new Property(0, Long.class, "id", true, "_id");
-        public final static Property Date = new Property(1, java.util.Date.class, "date", false, "DATE");
+        public final static Property GoodsPriceId = new Property(0, Long.class, "goodsPriceId", true, "GOODS_PRICE_ID");
+        public final static Property AddDate = new Property(1, java.util.Date.class, "addDate", false, "ADD_DATE");
         public final static Property Seller = new Property(2, String.class, "seller", false, "SELLER");
         public final static Property Price = new Property(3, Double.class, "price", false, "PRICE");
-        public final static Property Url = new Property(4, String.class, "url", false, "URL");
-        public final static Property Id = new Property(5, Long.class, "id", true, "_id");
+        public final static Property UrlAddress = new Property(4, String.class, "urlAddress", false, "URL_ADDRESS");
+        public final static Property PriceTypeId = new Property(5, Long.class, "priceTypeId", false, "PRICE_TYPE_ID");
     };
 
     private DaoSession daoSession;
@@ -54,12 +54,12 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     public static void createTable(SQLiteDatabase db, boolean ifNotExists) {
         String constraint = ifNotExists? "IF NOT EXISTS ": "";
         db.execSQL("CREATE TABLE " + constraint + "\"GOODS_PRICES\" (" + //
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: id
-                "\"DATE\" INTEGER," + // 1: date
+                "\"GOODS_PRICE_ID\" INTEGER PRIMARY KEY AUTOINCREMENT ," + // 0: goodsPriceId
+                "\"ADD_DATE\" INTEGER," + // 1: addDate
                 "\"SELLER\" TEXT," + // 2: seller
                 "\"PRICE\" REAL," + // 3: price
-                "\"URL\" TEXT," + // 4: url
-                "\"_id\" INTEGER PRIMARY KEY AUTOINCREMENT );"); // 5: id
+                "\"URL_ADDRESS\" TEXT," + // 4: urlAddress
+                "\"PRICE_TYPE_ID\" INTEGER);"); // 5: priceTypeId
     }
 
     /** Drops the underlying database table. */
@@ -73,14 +73,14 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     protected void bindValues(SQLiteStatement stmt, GoodsPrices entity) {
         stmt.clearBindings();
  
-        Long id = entity.getId();
-        if (id != null) {
-            stmt.bindLong(1, id);
+        Long goodsPriceId = entity.getGoodsPriceId();
+        if (goodsPriceId != null) {
+            stmt.bindLong(1, goodsPriceId);
         }
  
-        java.util.Date date = entity.getDate();
-        if (date != null) {
-            stmt.bindLong(2, date.getTime());
+        java.util.Date addDate = entity.getAddDate();
+        if (addDate != null) {
+            stmt.bindLong(2, addDate.getTime());
         }
  
         String seller = entity.getSeller();
@@ -93,9 +93,14 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
             stmt.bindDouble(4, price);
         }
  
-        String url = entity.getUrl();
-        if (url != null) {
-            stmt.bindString(5, url);
+        String urlAddress = entity.getUrlAddress();
+        if (urlAddress != null) {
+            stmt.bindString(5, urlAddress);
+        }
+ 
+        Long priceTypeId = entity.getPriceTypeId();
+        if (priceTypeId != null) {
+            stmt.bindLong(6, priceTypeId);
         }
     }
 
@@ -115,11 +120,12 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     @Override
     public GoodsPrices readEntity(Cursor cursor, int offset) {
         GoodsPrices entity = new GoodsPrices( //
-            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // id
-            cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)), // date
+            cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0), // goodsPriceId
+            cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)), // addDate
             cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2), // seller
             cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3), // price
-            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4) // url
+            cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4), // urlAddress
+            cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5) // priceTypeId
         );
         return entity;
     }
@@ -127,17 +133,18 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     /** @inheritdoc */
     @Override
     public void readEntity(Cursor cursor, GoodsPrices entity, int offset) {
-        entity.setId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
-        entity.setDate(cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)));
+        entity.setGoodsPriceId(cursor.isNull(offset + 0) ? null : cursor.getLong(offset + 0));
+        entity.setAddDate(cursor.isNull(offset + 1) ? null : new java.util.Date(cursor.getLong(offset + 1)));
         entity.setSeller(cursor.isNull(offset + 2) ? null : cursor.getString(offset + 2));
         entity.setPrice(cursor.isNull(offset + 3) ? null : cursor.getDouble(offset + 3));
-        entity.setUrl(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setUrlAddress(cursor.isNull(offset + 4) ? null : cursor.getString(offset + 4));
+        entity.setPriceTypeId(cursor.isNull(offset + 5) ? null : cursor.getLong(offset + 5));
      }
     
     /** @inheritdoc */
     @Override
     protected Long updateKeyAfterInsert(GoodsPrices entity, long rowId) {
-        entity.setId(rowId);
+        entity.setGoodsPriceId(rowId);
         return rowId;
     }
     
@@ -145,7 +152,7 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     @Override
     public Long getKey(GoodsPrices entity) {
         if(entity != null) {
-            return entity.getId();
+            return entity.getGoodsPriceId();
         } else {
             return null;
         }
@@ -158,30 +165,30 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     }
     
     /** Internal query to resolve the "priceList" to-many relationship of Goods. */
-    public List<GoodsPrices> _queryGoods_PriceList(Long id) {
+    public List<GoodsPrices> _queryGoods_PriceList(Long goodsPriceId) {
         synchronized (this) {
             if (goods_PriceListQuery == null) {
                 QueryBuilder<GoodsPrices> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.Id.eq(null));
+                queryBuilder.where(Properties.GoodsPriceId.eq(null));
                 goods_PriceListQuery = queryBuilder.build();
             }
         }
         Query<GoodsPrices> query = goods_PriceListQuery.forCurrentThread();
-        query.setParameter(0, id);
+        query.setParameter(0, goodsPriceId);
         return query.list();
     }
 
     /** Internal query to resolve the "priceList" to-many relationship of PriceType. */
-    public List<GoodsPrices> _queryPriceType_PriceList(Long id) {
+    public List<GoodsPrices> _queryPriceType_PriceList(Long priceTypeId) {
         synchronized (this) {
             if (priceType_PriceListQuery == null) {
                 QueryBuilder<GoodsPrices> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.Id.eq(null));
+                queryBuilder.where(Properties.PriceTypeId.eq(null));
                 priceType_PriceListQuery = queryBuilder.build();
             }
         }
         Query<GoodsPrices> query = priceType_PriceListQuery.forCurrentThread();
-        query.setParameter(0, id);
+        query.setParameter(0, priceTypeId);
         return query.list();
     }
 
@@ -194,7 +201,7 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
             builder.append(',');
             SqlUtils.appendColumns(builder, "T0", daoSession.getPriceTypeDao().getAllColumns());
             builder.append(" FROM GOODS_PRICES T");
-            builder.append(" LEFT JOIN PRICE_TYPE T0 ON T.\"_id\"=T0.\"_id\"");
+            builder.append(" LEFT JOIN PRICE_TYPE T0 ON T.\"PRICE_TYPE_ID\"=T0.\"PRICE_TYPE_ID\"");
             builder.append(' ');
             selectDeep = builder.toString();
         }
