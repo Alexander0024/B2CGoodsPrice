@@ -21,7 +21,7 @@ public class GoodsBrandManagePresentersImpl extends AbstractPresenter implements
     private final DbMaster mDbMaster;
     private ArrayList<String> typeStrings;
 
-    public GoodsBrandManagePresentersImpl(GoodsBrandManagePresenters.View view) {
+    public GoodsBrandManagePresentersImpl(View view) {
         super();
         this.mView = view;
         mDbMaster = MyApplication.getInstance().getDbMaster();

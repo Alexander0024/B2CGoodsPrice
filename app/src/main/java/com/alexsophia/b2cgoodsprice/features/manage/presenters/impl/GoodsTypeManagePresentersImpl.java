@@ -20,7 +20,7 @@ public class GoodsTypeManagePresentersImpl extends AbstractPresenter implements
     private final View mView;
     private final DbMaster mDbMaster;
 
-    public GoodsTypeManagePresentersImpl(GoodsTypeManagePresenters.View view) {
+    public GoodsTypeManagePresentersImpl(View view) {
         super();
         this.mView = view;
         mDbMaster = MyApplication.getInstance().getDbMaster();
