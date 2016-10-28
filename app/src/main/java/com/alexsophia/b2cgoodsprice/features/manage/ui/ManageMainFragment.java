@@ -10,7 +10,7 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * ManageMainFragment
+ * ManageMainFragment 管理主页
  * <p>
  * Created by Alexander on 2016/10/28.
  */

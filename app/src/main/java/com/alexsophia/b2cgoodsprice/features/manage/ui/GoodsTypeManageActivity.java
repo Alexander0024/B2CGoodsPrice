@@ -9,8 +9,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alexsophia.b2cgoodsprice.R;
-import com.alexsophia.b2cgoodsprice.features.base.executor.impl.ThreadExecutor;
-import com.alexsophia.b2cgoodsprice.features.base.threading.impl.MainThreadImpl;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseActivity;
 import com.alexsophia.b2cgoodsprice.features.manage.presenters.GoodsTypeManagePresenters;
 import com.alexsophia.b2cgoodsprice.features.manage.presenters.impl.GoodsTypeManagePresentersImpl;
@@ -25,7 +23,7 @@ import butterknife.OnClick;
 import greendao.GoodsType;
 
 /**
- * GoodsTypeManageActivity
+ * GoodsTypeManageActivity 管理 - 物品类别管理
  * <p>
  * Created by Alexander on 2016/10/28.
  */
@@ -67,8 +65,7 @@ public class GoodsTypeManageActivity extends BaseActivity implements GoodsTypeMa
     @Override
     protected void loadData() {
         LogWrapper.e(TAG, "loadData: ");
-        mPresenters = new GoodsTypeManagePresentersImpl(ThreadExecutor.getInstance(),
-                MainThreadImpl.getInstance(), this);
+        mPresenters = new GoodsTypeManagePresentersImpl(this);
         /**
          * 设置分类列表的Adapter
          */

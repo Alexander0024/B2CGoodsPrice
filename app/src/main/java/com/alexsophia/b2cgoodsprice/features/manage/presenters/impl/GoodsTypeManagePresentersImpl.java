@@ -2,9 +2,7 @@ package com.alexsophia.b2cgoodsprice.features.manage.presenters.impl;
 
 import com.alexsophia.b2cgoodsprice.app.MyApplication;
 import com.alexsophia.b2cgoodsprice.database.DbMaster;
-import com.alexsophia.b2cgoodsprice.features.base.executor.Executor;
 import com.alexsophia.b2cgoodsprice.features.base.presenters.AbstractPresenter;
-import com.alexsophia.b2cgoodsprice.features.base.threading.MainThread;
 import com.alexsophia.b2cgoodsprice.features.manage.presenters.GoodsTypeManagePresenters;
 import com.alexsophia.b2cgoodsprice.utils.StringUtil;
 
@@ -22,9 +20,8 @@ public class GoodsTypeManagePresentersImpl extends AbstractPresenter implements
     private final View mView;
     private final DbMaster mDbMaster;
 
-    public GoodsTypeManagePresentersImpl(Executor executor, MainThread mainThread,
-                                         GoodsTypeManagePresenters.View view) {
-        super(executor, mainThread);
+    public GoodsTypeManagePresentersImpl(GoodsTypeManagePresenters.View view) {
+        super();
         this.mView = view;
         mDbMaster = MyApplication.getInstance().getDbMaster();
     }
