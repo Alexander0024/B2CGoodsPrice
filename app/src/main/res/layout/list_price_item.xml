@@ -9,19 +9,19 @@
         android:id="@+id/tv_main_brand"
         style="@style/ListItemStyle"
         android:layout_weight="1"
-        android:text="@string/list_brand"/>
+        android:text="@string/brand"/>
 
     <TextView
         android:id="@+id/tv_main_name"
         style="@style/ListItemStyle"
         android:layout_weight="2"
-        android:text="@string/list_name"/>
+        android:text="@string/name"/>
 
     <TextView
         android:id="@+id/tv_main_standard"
         style="@style/ListItemStyle"
         android:layout_weight="1"
-        android:text="@string/list_standard"/>
+        android:text="@string/standard"/>
 
     <TextView
         android:id="@+id/tv_main_cheapest_online"

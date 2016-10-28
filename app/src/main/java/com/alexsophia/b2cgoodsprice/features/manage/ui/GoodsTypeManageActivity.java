@@ -155,7 +155,8 @@ public class GoodsTypeManageActivity extends BaseActivity implements GoodsTypeMa
 
     private void refreshUI() {
         mEdtTxtManageNewTypeName.setText("");
-        mTvManageGoodsTypeCount.setText(String.valueOf(mPresenters.getGoodsType().size()));
+        mTvManageGoodsTypeCount.setText(getString(R.string.total_count, mPresenters.getGoodsType
+                ().size()));
         mAdapter.reflushAdapter(mPresenters.getGoodsType());
     }
 }

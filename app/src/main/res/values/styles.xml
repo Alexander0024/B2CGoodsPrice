@@ -57,6 +57,15 @@
         <item name="android:background">#f8f8f8</item>
     </style>
 
+    <!-- ================ View ================ -->
+    <!-- 页面公共属性 -->
+    <style name="PageStyle">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:orientation">vertical</item>
+        <item name="android:padding">13dp</item>
+    </style>
+
     <!-- 自定义对话框 -->
     <style name="customDialogStyle" parent="@android:style/Theme.Dialog">
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -84,6 +93,7 @@
         <item name="android:backgroundDimEnabled">false</item><!--模糊-->
     </style>
 
+    <!-- ================ List ================ -->
     <!-- 价格列表项Item的格式 -->
     <style name="ListItemStyle">
         <item name="android:layout_height">match_parent</item>
@@ -96,6 +106,7 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <!-- ================ Add ================ -->
     <!-- 添加新项目样式 -->
     <style name="AddNewItemStyle">
         <item name="android:layout_height">45dp</item>
@@ -121,6 +132,9 @@
         <item name="android:layout_weight">5</item>
     </style>
 
+    <!-- ================ Unknown ================ -->
+
+    <!-- ================ Manage ================ -->
     <!-- 管理列表样式 -->
     <style name="ManageItemStyle">
         <item name="android:layout_height">wrap_content</item>

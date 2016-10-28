@@ -70,7 +70,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
                 .getInstance(), this);
         mPriceListAdapter = new PriceListAdapter(getContext(), mListPresenters.getGoods());
         mLVPrices.setAdapter(mPriceListAdapter);
-        mTvCount.setText(getString(R.string.list_item_count, mListPresenters.getGoods().size()));
+        mTvCount.setText(getString(R.string.total_count, mListPresenters.getGoods().size()));
     }
 
     @Override

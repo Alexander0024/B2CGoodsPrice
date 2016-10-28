@@ -1,15 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.zhy.autolayout.AutoLinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                     android:layout_width="match_parent"
-                                     android:layout_height="match_parent"
-                                     android:orientation="vertical">
+                                     style="@style/PageStyle">
     <!-- type -->
     <com.zhy.autolayout.AutoLinearLayout
         style="@style/AddNewItemStyle">
 
         <TextView
             style="@style/AddNewItemLeftStyle"
-            android:text="@string/list_type"/>
+            android:text="@string/type"/>
 
         <com.alexsophia.b2cgoodsprice.share.DropEditText
             android:id="@+id/dropEdtTxt_add_type"
@@ -22,7 +20,7 @@
 
         <TextView
             style="@style/AddNewItemLeftStyle"
-            android:text="@string/list_brand"/>
+            android:text="@string/brand"/>
 
         <com.alexsophia.b2cgoodsprice.share.DropEditText
             android:id="@+id/dropEdtTxt_add_brand"
@@ -35,7 +33,7 @@
 
         <TextView
             style="@style/AddNewItemLeftStyle"
-            android:text="@string/list_name"/>
+            android:text="@string/name"/>
 
         <com.alexsophia.b2cgoodsprice.share.DropEditText
             android:id="@+id/dropEdtTxt_add_name"
@@ -48,7 +46,7 @@
 
         <TextView
             style="@style/AddNewItemLeftStyle"
-            android:text="@string/list_standard"/>
+            android:text="@string/standard"/>
 
         <EditText
             android:id="@+id/edtTxt_add_standard"
@@ -87,7 +85,7 @@
 
         <TextView
             style="@style/AddNewItemLeftStyle"
-            android:text="@string/list_price"/>
+            android:text="@string/price"/>
 
         <EditText
             android:id="@+id/edtTxt_add_price"

@@ -7,23 +7,28 @@
     <string name="menu_dialog_waiting">载入中，请稍后</string>
 
 
-    <string name="list_item_count">共有%1$d个项目</string>
-    <string name="list_type">类别</string>
-    <string name="list_brand">厂家</string>
-    <string name="list_name">名称</string>
-    <string name="list_standard">规格</string>
-    <string name="list_price">价格</string>
-    <string name="list_cheapest_online">网店价</string>
-    <string name="list_cheapest_offline">实体店</string>
+    <string name="add">添加</string>
+    <string name="total_count">共有%1$d个项目</string>
+    <string name="id">ID</string>
+    <string name="name">名称</string>
+    <string name="type">类别</string>
+    <string name="brand">厂家</string>
+    <string name="standard">规格</string>
+    <string name="price">价格</string>
+    <string name="brand_count">厂家数</string>
+    <string name="goods_count">物品数</string>
+
+    <!-- List Main Page -->
     <string name="list_online">网店</string>
+    <string name="list_cheapest_online">网店价</string>
     <string name="list_offline">实体店</string>
+    <string name="list_cheapest_offline">实体店</string>
 
-
+    <!-- Manage Main Page -->
     <string name="manage_goods_manage">物品管理</string>
     <string name="manage_right_arrow"><![CDATA[>]]></string>
+    <!-- Manage Goods Page -->
     <string name="manage_goods_type_manage">物品类别管理</string>
     <string name="manage_goods_brand_manage">物品商家管理</string>
-    <string name="manage_total_pre">共有</string>
-    <string name="manage_total_end">条数据</string>
-    <string name="add">添加</string>
+    <!-- Manage Goods Type Page -->
 </resources>
