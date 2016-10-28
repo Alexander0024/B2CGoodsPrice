@@ -150,7 +150,8 @@ public class GoodsTypeManageActivity extends BaseActivity implements GoodsTypeMa
         ToastUtil.showLong(getContext(), message);
     }
 
-    private void refreshUI() {
+    @Override
+    public void refreshUI() {
         mEdtTxtManageNewTypeName.setText("");
         mTvManageGoodsTypeCount.setText(getString(R.string.total_count, mPresenters.getGoodsType
                 ().size()));

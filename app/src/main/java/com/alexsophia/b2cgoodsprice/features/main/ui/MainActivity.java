@@ -272,4 +272,9 @@ public class MainActivity extends BaseFragmentActivity implements MainPresenters
     public void showError(String message) {
 
     }
+
+    @Override
+    public void refreshUI() {
+
+    }
 }

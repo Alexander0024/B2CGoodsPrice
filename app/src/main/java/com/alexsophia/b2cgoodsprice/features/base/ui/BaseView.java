@@ -21,4 +21,9 @@ public interface BaseView {
      *显示错误信息
      */
     void showError(String message);
+
+    /**
+     * 刷新UI的方法
+     */
+    void refreshUI();
 }
