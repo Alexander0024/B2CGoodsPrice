@@ -36,8 +36,6 @@
         </activity>
 
         <!-- ================ 管理相关界面 ================ -->
-        <!-- 物品管理主界面 -->
-        <activity android:name=".features.manage.ui.GoodsManageActivity"/>
         <!-- Goods type 管理界面 -->
         <activity android:name=".features.manage.ui.GoodsTypeManageActivity"/>
     </application>
