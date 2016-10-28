@@ -61,6 +61,7 @@ public class ManageMainFragment extends BaseFragment {
                 startActivity(getActivity(), GoodsTypeManageActivity.class);
                 break;
             case R.id.rl_manage_goods_brand:
+                startActivity(getActivity(), GoodsBrandManageActivity.class);
                 break;
         }
     }

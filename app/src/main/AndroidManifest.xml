@@ -38,5 +38,7 @@
         <!-- ================ 管理相关界面 ================ -->
         <!-- Goods type 管理界面 -->
         <activity android:name=".features.manage.ui.GoodsTypeManageActivity"/>
+        <!-- Goods brand 管理界面 -->
+        <activity android:name=".features.manage.ui.GoodsBrandManageActivity"/>
     </application>
 </manifest>
