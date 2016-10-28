@@ -6,7 +6,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
-import com.alexsophia.b2cgoodsprice.app.MyApplication;
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 
 import java.util.ArrayList;
@@ -65,18 +64,19 @@ public class AttrAdapter extends BaseAdapter {
     private List<String> getData() {
         LogWrapper.e(TAG, "getData: " + mAttrType.toString());
         List<String> data;
-        if (mAttrType.equals(ATTR_TYPE.TYPE)) {
-            data = MyApplication.getInstance().getDataPresenters().getTypes();
-            LogWrapper.e(TAG, "get type with " + data.size() + " items.");
-        } else if (mAttrType.equals(ATTR_TYPE.BRAND)) {
-            LogWrapper.e(TAG, "get brand which under type = " + mExtra);
-            data = MyApplication.getInstance().getDataPresenters().getBrand(mExtra);
-        } else if (mAttrType.equals(ATTR_TYPE.NAME)) {
-            LogWrapper.e(TAG, "get name which under brand = " + mExtra);
-            data = MyApplication.getInstance().getDataPresenters().getName(mExtra);
-        } else {
-            data = new ArrayList<>();
-        }
+//        if (mAttrType.equals(ATTR_TYPE.TYPE)) {
+//            data = MyApplication.getInstance().getDbMaster().getGoodsTypes();
+//            LogWrapper.e(TAG, "get type with " + data.size() + " items.");
+//        } else if (mAttrType.equals(ATTR_TYPE.BRAND)) {
+//            LogWrapper.e(TAG, "get brand which under type = " + mExtra);
+//            data = MyApplication.getInstance().getDataPresenters().getBrand(mExtra);
+//        } else if (mAttrType.equals(ATTR_TYPE.NAME)) {
+//            LogWrapper.e(TAG, "get name which under brand = " + mExtra);
+//            data = MyApplication.getInstance().getDataPresenters().getName(mExtra);
+//        } else {
+//            data = new ArrayList<>();
+//        }
+        data = new ArrayList<>();
         return data;
     }
 }

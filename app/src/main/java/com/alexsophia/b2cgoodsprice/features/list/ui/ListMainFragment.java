@@ -4,7 +4,6 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.alexsophia.b2cgoodsprice.R;
-import com.alexsophia.b2cgoodsprice.app.MyApplication;
 import com.alexsophia.b2cgoodsprice.features.base.executor.impl.ThreadExecutor;
 import com.alexsophia.b2cgoodsprice.features.base.threading.impl.MainThreadImpl;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragment;
@@ -55,7 +54,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
     @Override
     protected void resume() {
         LogWrapper.e(TAG, "Resume: Refresh list");
-        mPriceListAdapter.updateListView(MyApplication.getInstance().getDataPresenters().getGoods());
+//        mPriceListAdapter.updateListView(MyApplication.getInstance().getDataPresenters().getGoods());
         mPriceListAdapter.notifyDataSetChanged();
     }
 
