@@ -3,6 +3,7 @@ package com.alexsophia.b2cgoodsprice.features.base.ui;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -94,6 +95,18 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
+    }
+
+    /**
+     * 页面跳转
+     *
+     * @param mActivity 当前Activity
+     * @param mClass    需要跳转的Activity的class
+     */
+    protected void startActivity(Activity mActivity, Class mClass) {
+        Intent intent = new Intent();
+        intent.setClass(mActivity, mClass);
+        startActivity(intent);
     }
 
     public void showLoadingProgress() {

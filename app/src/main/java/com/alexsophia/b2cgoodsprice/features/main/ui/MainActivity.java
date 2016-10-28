@@ -15,6 +15,7 @@ import com.alexsophia.b2cgoodsprice.features.add.ui.AddMainFragment;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragmentActivity;
 import com.alexsophia.b2cgoodsprice.features.list.ui.ListMainFragment;
 import com.alexsophia.b2cgoodsprice.features.main.presenters.MainPresenters;
+import com.alexsophia.b2cgoodsprice.features.manage.ui.ManageMainFragment;
 import com.alexsophia.b2cgoodsprice.share.RoundedImageView;
 
 import java.util.ArrayList;
@@ -112,6 +113,9 @@ public class MainActivity extends BaseFragmentActivity implements MainPresenters
         mFragmentsList.add(listMainFragment);
         AddMainFragment addMainFragment = AddMainFragment.newInstance();
         mFragmentsList.add(addMainFragment);
+        mFragmentsList.add(addMainFragment);
+        ManageMainFragment manageMainFragment = ManageMainFragment.newInstance();
+        mFragmentsList.add(manageMainFragment);
     }
 
     /**

@@ -49,4 +49,6 @@ dependencies {
     compile 'org.jsoup:jsoup:1.10.1'
     // Gson解析
     compile 'com.google.code.gson:gson:2.7'
+    // 图形载入ImageLoader
+    compile 'com.nostra13.universalimageloader:universal-image-loader:1.9.5'
 }

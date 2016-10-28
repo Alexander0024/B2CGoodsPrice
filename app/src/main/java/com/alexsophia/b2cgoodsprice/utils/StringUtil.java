@@ -93,6 +93,13 @@ public final class StringUtil {
     }
 
     /**
+     * 是否为物品分类名称
+     */
+    public static boolean isGoodsType(String str) {
+        return isNumberOrChar(str) || isChineseCharacters(str);
+    }
+
+    /**
      * 隐藏手机号码中的中间4位
      *
      * @param phone 11位手机号码
