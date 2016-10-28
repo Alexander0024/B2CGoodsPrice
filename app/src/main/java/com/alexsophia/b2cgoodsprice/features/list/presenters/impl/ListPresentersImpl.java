@@ -1,11 +1,11 @@
 package com.alexsophia.b2cgoodsprice.features.list.presenters.impl;
 
-import com.alexsophia.b2cgoodsprice.app.MyApplication;
 import com.alexsophia.b2cgoodsprice.features.base.executor.Executor;
 import com.alexsophia.b2cgoodsprice.features.base.presenters.AbstractPresenter;
 import com.alexsophia.b2cgoodsprice.features.base.threading.MainThread;
 import com.alexsophia.b2cgoodsprice.features.list.presenters.ListPresenters;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import greendao.Goods;
@@ -25,7 +25,7 @@ public class ListPresentersImpl extends AbstractPresenter implements ListPresent
 
     @Override
     public List<Goods> getGoods() {
-        return MyApplication.getInstance().getDataPresenters().getGoods();
+        return new ArrayList<>();
     }
 
     @Override

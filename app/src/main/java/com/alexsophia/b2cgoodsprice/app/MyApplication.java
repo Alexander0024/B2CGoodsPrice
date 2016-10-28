@@ -4,7 +4,7 @@ import android.app.Application;
 import android.database.sqlite.SQLiteDatabase;
 
 import com.alexsophia.b2cgoodsprice.database.DbHelper;
-import com.alexsophia.b2cgoodsprice.features.main.presenters.impl.DataPresentersImpl;
+import com.alexsophia.b2cgoodsprice.database.DbMaster;
 
 import greendao.DaoMaster;
 import greendao.DaoSession;
@@ -16,8 +16,7 @@ import greendao.DaoSession;
  */
 public class MyApplication extends Application {
     private static MyApplication myApplication;
-    private DaoSession mDaoSession;
-    private DataPresentersImpl mDataPresenters;
+    private DbMaster mDbMaster;
 
     public MyApplication() {
         myApplication = MyApplication.this;
@@ -33,12 +32,8 @@ public class MyApplication extends Application {
         setupDatabase();
     }
 
-    public DaoSession getDaoSession() {
-        return mDaoSession;
-    }
-
-    public DataPresentersImpl getDataPresenters() {
-        return mDataPresenters;
+    public DbMaster getDbMaster() {
+        return mDbMaster;
     }
 
     private void setupDatabase() {
@@ -51,8 +46,8 @@ public class MyApplication extends Application {
 //         注意：该数据库连接属于 DaoMaster，所以多个 Session 指的是相同的数据库连接。
         DaoMaster daoMaster = new DaoMaster(db);
 
-        mDaoSession = daoMaster.newSession();
+        DaoSession daoSession = daoMaster.newSession();
 
-        mDataPresenters = new DataPresentersImpl();
+        mDbMaster = new DbMaster(daoSession);
     }
 }
