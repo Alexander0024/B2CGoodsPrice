@@ -39,7 +39,6 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
     private DaoSession daoSession;
 
     private Query<GoodsPrices> goods_PriceListQuery;
-    private Query<GoodsPrices> priceType_PriceListQuery;
 
     public GoodsPricesDao(DaoConfig config) {
         super(config);
@@ -175,20 +174,6 @@ public class GoodsPricesDao extends AbstractDao<GoodsPrices, Long> {
         }
         Query<GoodsPrices> query = goods_PriceListQuery.forCurrentThread();
         query.setParameter(0, goodsPriceId);
-        return query.list();
-    }
-
-    /** Internal query to resolve the "priceList" to-many relationship of PriceType. */
-    public List<GoodsPrices> _queryPriceType_PriceList(Long priceTypeId) {
-        synchronized (this) {
-            if (priceType_PriceListQuery == null) {
-                QueryBuilder<GoodsPrices> queryBuilder = queryBuilder();
-                queryBuilder.where(Properties.PriceTypeId.eq(null));
-                priceType_PriceListQuery = queryBuilder.build();
-            }
-        }
-        Query<GoodsPrices> query = priceType_PriceListQuery.forCurrentThread();
-        query.setParameter(0, priceTypeId);
         return query.list();
     }
 

@@ -83,7 +83,6 @@ public class ADaoGenerator {
         goods.addToMany(prices, pricesId).setName("priceList");
         // Set relationship between goods price and goods price type
         prices.addToOne(priceType, priceTypeId).setName("priceType");
-        priceType.addToMany(prices, priceTypeId).setName("priceList");
 
 
         // Goods url table 物品关联URL地址表
