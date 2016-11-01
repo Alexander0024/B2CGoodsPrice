@@ -133,6 +133,7 @@ public class DbMaster {
      *
      * @param id 物品类别ID
      */
+    @Deprecated
     public void removeGoodsType(long id) {
         mGoodsTypeDao.deleteByKey(id);
     }
@@ -142,6 +143,7 @@ public class DbMaster {
      *
      * @param goodsType 物品类别
      */
+    @Deprecated
     public void removeGoodsType(GoodsType goodsType) {
         mGoodsTypeDao.delete(goodsType);
     }
@@ -185,6 +187,7 @@ public class DbMaster {
      *
      * @param id 厂商ID
      */
+    @Deprecated
     public void removeGoodsBrand(long id) {
         mGoodsBrandDao.deleteByKey(id);
     }
@@ -194,6 +197,7 @@ public class DbMaster {
      *
      * @param goodsBrand 厂商信息
      */
+    @Deprecated
     public void removeGoodsBrand(GoodsBrand goodsBrand) {
         mGoodsBrandDao.delete(goodsBrand);
     }
