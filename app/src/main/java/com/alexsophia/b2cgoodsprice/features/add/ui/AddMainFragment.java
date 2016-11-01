@@ -154,6 +154,11 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     }
 
     @Override
+    public void refreshUI() {
+
+    }
+
+    @Override
     public String getType() {
         return mDropEdtTxtType.getText();
     }

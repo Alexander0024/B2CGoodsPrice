@@ -15,10 +15,13 @@ import com.alexsophia.b2cgoodsprice.R;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseActivity;
 import com.alexsophia.b2cgoodsprice.features.manage.presenters.GoodsBrandManagePresenters;
 import com.alexsophia.b2cgoodsprice.features.manage.presenters.impl.GoodsBrandManagePresentersImpl;
+import com.alexsophia.b2cgoodsprice.share.adapters.CommonAdapter;
+import com.alexsophia.b2cgoodsprice.share.adapters.ViewHolder;
 import com.alexsophia.b2cgoodsprice.utils.ToastUtil;
 
 import butterknife.Bind;
 import butterknife.OnClick;
+import greendao.GoodsBrand;
 
 /**
  * GoodsBrandManageActivity
@@ -38,6 +41,7 @@ public class GoodsBrandManageActivity extends BaseActivity implements GoodsBrand
     @Bind(R.id.btn_manage_brand_add)
     Button mBtnBrandAdd;
     private GoodsBrandManagePresenters mPresenters;
+    private CommonAdapter<GoodsBrand> mAdapter;
 
     @Override
     protected void stop() {
@@ -63,15 +67,13 @@ public class GoodsBrandManageActivity extends BaseActivity implements GoodsBrand
     protected void loadData() {
         mPresenters = new GoodsBrandManagePresentersImpl(this);
         // Set Spinner Attributes
-        String[] types = mPresenters.getGoodsTypes();
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout
-                .simple_spinner_item, types);
+                .simple_spinner_item, mPresenters.getGoodsTypes());
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerTypes.setAdapter(adapter);
         mSpinnerTypes.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                ToastUtil.showLong(getContext(), "Select item = " + position + "; id = " + id);
                 mPresenters.selectType(position);
             }
 
@@ -80,16 +82,46 @@ public class GoodsBrandManageActivity extends BaseActivity implements GoodsBrand
 
             }
         });
+        // Set ListView Attributes
+        mAdapter = new CommonAdapter<GoodsBrand>(this, R.layout.manage_goods_brand_item,
+                mPresenters.getGoodsBrands()) {
+            @Override
+            public void covertView(ViewHolder viewholder, GoodsBrand goodsBrand) {
+                // 厂商ID
+                viewholder.setText(R.id.tv_manage_goods_brand_id, String.valueOf(goodsBrand
+                        .getGoodsBrandId()));
+                // 厂商所属分类名称
+                viewholder.setText(R.id.tv_manage_goods_brand_type_belows, goodsBrand
+                        .getGoodsType().getGoodsTypeName());
+                // 厂商名称
+                viewholder.setText(R.id.tv_manage_goods_brand_name, goodsBrand.getGoodsBrandName());
+                // 厂商下物品数目
+                viewholder.setText(R.id.tv_manage_goods_brand_goods_count, String.valueOf
+                        (goodsBrand.getGoodsList().size()));
+            }
+        };
+        mLvBrands.setAdapter(mAdapter);
     }
 
     @Override
     protected void resumeData() {
-
+        refreshUI();
     }
 
     @Override
     public Context getContext() {
         return this;
+    }
+
+    @Override
+    public String getBrandName() {
+        return mEdtTxtNewBrandName.getText().toString().trim();
+    }
+
+    @Override
+    public void onAddNewBrandSuccess(long id) {
+        ToastUtil.showLong(this, "添加厂商成功 ID = " + id);
+        refreshUI();
     }
 
     @Override
@@ -107,10 +139,18 @@ public class GoodsBrandManageActivity extends BaseActivity implements GoodsBrand
         ToastUtil.showLong(this, message);
     }
 
+    @Override
+    public void refreshUI() {
+        mEdtTxtNewBrandName.setText("");
+        mTvBrandCount.setText(getString(R.string.total_count, mPresenters.getGoodsBrands().size()));
+        mAdapter.reflushAdapter(mPresenters.getGoodsBrands());
+    }
+
     @OnClick({R.id.btn_manage_brand_add})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_manage_brand_add:
+                mPresenters.addNewBrand();
                 break;
         }
     }

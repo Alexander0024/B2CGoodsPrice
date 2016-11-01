@@ -89,6 +89,11 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
     }
 
     @Override
+    public void refreshUI() {
+
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         ButterKnife.unbind(this);
