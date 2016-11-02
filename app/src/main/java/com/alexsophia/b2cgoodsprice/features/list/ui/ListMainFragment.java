@@ -13,8 +13,11 @@ import com.alexsophia.b2cgoodsprice.features.list.ui.adapter.PriceListAdapter;
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 import com.alexsophia.b2cgoodsprice.utils.ToastUtil;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import greendao.Goods;
 
 /**
  * ListMainFragment
@@ -29,7 +32,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
     @Bind(R.id.tv_list_count)
     TextView mTvCount;
 
-    private ListPresentersImpl mListPresenters;
+    private ListPresentersImpl mPresenters;
     private PriceListAdapter mPriceListAdapter;
 
     public static ListMainFragment newInstance() {
@@ -54,7 +57,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
     @Override
     protected void resume() {
         LogWrapper.e(TAG, "Resume: Refresh list");
-//        mPriceListAdapter.updateListView(MyApplication.getInstance().getDataPresenters().getGoods());
+        mPriceListAdapter.updateListView(mPresenters.getGoods());
         mPriceListAdapter.notifyDataSetChanged();
     }
 
@@ -66,11 +69,11 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
     @Override
     protected void initData() {
         LogWrapper.e(TAG, "initData");
-        mListPresenters = new ListPresentersImpl(ThreadExecutor.getInstance(), MainThreadImpl
+        mPresenters = new ListPresentersImpl(ThreadExecutor.getInstance(), MainThreadImpl
                 .getInstance(), this);
-        mPriceListAdapter = new PriceListAdapter(getContext(), mListPresenters.getGoods());
+        mPriceListAdapter = new PriceListAdapter(getContext(), new ArrayList<Goods>());
         mLVPrices.setAdapter(mPriceListAdapter);
-        mTvCount.setText(getString(R.string.total_count, mListPresenters.getGoods().size()));
+        mTvCount.setText(getString(R.string.total_count, mPresenters.getGoods().size()));
     }
 
     @Override
