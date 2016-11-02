@@ -22,7 +22,6 @@ public class GoodsBrandManagePresentersImpl extends AbstractPresenter implements
     private String TAG = "GoodsBrandManagePresentersImpl";
     private final View mView;
     private final DbMaster mDbMaster;
-    private ArrayList<String> typeStrings;
     private GoodsType mSelectedType;
 
     public GoodsBrandManagePresentersImpl(View view) {
@@ -59,7 +58,7 @@ public class GoodsBrandManagePresentersImpl extends AbstractPresenter implements
     @Override
     public String[] getGoodsTypes() {
         List<GoodsType> types = mDbMaster.getGoodsTypes();
-        typeStrings = new ArrayList<>();
+        ArrayList<String> typeStrings = new ArrayList<>();
         for (GoodsType type : types) {
             typeStrings.add(type.getGoodsTypeName());
         }

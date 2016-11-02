@@ -64,7 +64,9 @@ public class DbMaster {
      * @return 添加后的物品ID
      */
     public long addOrUpdateGoods(Goods goods) {
-        return mGoodsDao.insertOrReplace(goods);
+        long id = mGoodsDao.insertOrReplace(goods);
+        mGoodsTypeDao.load(goods.getGoodsTypeId()).getGoodsList().add(goods);
+        return id;
     }
 
     /**
@@ -129,26 +131,6 @@ public class DbMaster {
     }
 
     /**
-     * 删除物品类别
-     *
-     * @param id 物品类别ID
-     */
-    @Deprecated
-    public void removeGoodsType(long id) {
-        mGoodsTypeDao.deleteByKey(id);
-    }
-
-    /**
-     * 删除物品类别
-     *
-     * @param goodsType 物品类别
-     */
-    @Deprecated
-    public void removeGoodsType(GoodsType goodsType) {
-        mGoodsTypeDao.delete(goodsType);
-    }
-
-    /**
      * ***************************** Goods Brand Operation *****************************
      */
     /**
@@ -177,29 +159,9 @@ public class DbMaster {
      * @return 插入或更新后的厂商ID
      */
     public long addGoodsBrand(GoodsBrand goodsBrand) {
-        // TODO: 一对多及多对一关系错误
-        mGoodsTypeDao.load(goodsBrand.getGoodsTypeId());
-        return mGoodsBrandDao.insertOrReplace(goodsBrand);
-    }
-
-    /**
-     * 删除一个厂商信息
-     *
-     * @param id 厂商ID
-     */
-    @Deprecated
-    public void removeGoodsBrand(long id) {
-        mGoodsBrandDao.deleteByKey(id);
-    }
-
-    /**
-     * 删除一个厂商信息
-     *
-     * @param goodsBrand 厂商信息
-     */
-    @Deprecated
-    public void removeGoodsBrand(GoodsBrand goodsBrand) {
-        mGoodsBrandDao.delete(goodsBrand);
+        long id = mGoodsBrandDao.insertOrReplace(goodsBrand);
+        mGoodsTypeDao.load(goodsBrand.getGoodsTypeId()).resetBrandList();
+        return id;
     }
 
     /**
