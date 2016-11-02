@@ -152,6 +152,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
 
     @Override
     public void refreshUI() {
+        LogWrapper.e(TAG, "refreshUI: ");
         mGoodsTypes = mPresenters.getGoodsTypes();
         mTypeAdapter.notifyDataSetChanged();
     }
