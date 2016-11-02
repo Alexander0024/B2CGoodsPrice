@@ -333,9 +333,9 @@ public class DbMaster {
     private String toString(GoodsBrand goodsBrand) {
         StringBuilder sb = new StringBuilder();
         sb.append("Goods Brand ID = ").append(goodsBrand.getGoodsBrandId()).append("; ")
-                .append("Name = ").append(goodsBrand.getGoodsBrandName()).append("; ")
-                .append("Type below = ").append(goodsBrand.getGoodsType().getGoodsTypeId())
-                .append(" : ").append(goodsBrand.getGoodsType().getGoodsTypeName()).append("; ");
+                .append("Name = ").append(goodsBrand.getGoodsBrandName()).append("; ");
+//                .append("Type below = ").append(goodsBrand.getGoodsType().getGoodsTypeId())
+//                .append(" : ").append(goodsBrand.getGoodsType().getGoodsTypeName()).append("; ");
 //                .append("Goods size = ").append(goodsBrand.getGoodsList().size()).append("; ");
         return sb.toString();
     }
