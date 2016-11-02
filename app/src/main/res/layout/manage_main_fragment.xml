@@ -38,4 +38,21 @@
             android:layout_alignParentRight="true"
             android:text="@string/manage_right_arrow"/>
     </com.zhy.autolayout.AutoRelativeLayout>
+
+    <!-- Price type manage -->
+    <com.zhy.autolayout.AutoRelativeLayout
+        android:id="@+id/rl_manage_price_type"
+        style="@style/ManageItemStyle">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/manage_price_type"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:text="@string/manage_right_arrow"/>
+    </com.zhy.autolayout.AutoRelativeLayout>
 </com.zhy.autolayout.AutoLinearLayout>

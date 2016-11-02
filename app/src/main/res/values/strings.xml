@@ -30,5 +30,6 @@
     <!-- Manage Goods Page -->
     <string name="manage_goods_type_manage">物品类别管理</string>
     <string name="manage_goods_brand_manage">物品商家管理</string>
+    <string name="manage_price_type">初始化价格类型</string>
     <!-- Manage Goods Type Page -->
 </resources>
