@@ -54,18 +54,21 @@ public class MainActivity extends AppCompatActivity implements MainPresenters.Vi
         actionBar.setDisplayHomeAsUpEnabled(true);
         //初始化TabLayout的title数据集
         List<String> titles = new ArrayList<>();
+        //初始化ViewPager的数据集
+        List<Fragment> fragments = new ArrayList<>();
+        // Item 1 - 列表
         titles.add(getString(R.string.menu_item));
+        fragments.add(ListMainFragment.newInstance());
+        // Item 2 - 添加
         titles.add(getString(R.string.menu_add));
+        fragments.add(AddMainFragment.newInstance());
+        // Item 3 - 管理
         titles.add(getString(R.string.menu_manage));
+        fragments.add(ManageMainFragment.newInstance());
         //初始化TabLayout的title
         for (String title : titles) {
             mTabLayout.addTab(mTabLayout.newTab().setText(title));
         }
-        //初始化ViewPager的数据集
-        List<Fragment> fragments = new ArrayList<>();
-        fragments.add(ListMainFragment.newInstance());
-        fragments.add(AddMainFragment.newInstance());
-        fragments.add(ManageMainFragment.newInstance());
         //创建ViewPager的adapter
         FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager(), fragments,
                 titles);
