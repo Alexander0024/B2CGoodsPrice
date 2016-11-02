@@ -51,6 +51,8 @@
         <EditText
             android:id="@+id/edtTxt_add_standard"
             style="@style/AddNewItemRightStyle"
+            android:inputType="text"
+            android:maxLines="1"
             android:paddingBottom="0dp"
             android:paddingTop="0dp"/>
     </com.zhy.autolayout.AutoLinearLayout>
@@ -91,6 +93,7 @@
             android:id="@+id/edtTxt_add_price"
             style="@style/AddNewItemRightStyle"
             android:inputType="numberDecimal"
+            android:maxLines="1"
             android:paddingBottom="0dp"
             android:paddingTop="0dp"/>
     </com.zhy.autolayout.AutoLinearLayout>
