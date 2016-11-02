@@ -50,6 +50,8 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     private String TAG = "AddMainFragment";
     private AddPresenters mPresenters;
     private GoodsNameAdapter mNameAdapter;
+    private ArrayAdapter<String> mTypeAdapter;
+    private String[] mGoodsTypes;
 
     public static AddMainFragment newInstance() {
         return new AddMainFragment();
@@ -72,7 +74,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
 
     @Override
     protected void resume() {
-
+        refreshUI();
     }
 
     @Override
@@ -86,10 +88,11 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
         mPresenters = new AddPresentersImpl(ThreadExecutor.getInstance(), MainThreadImpl
                 .getInstance(), this);
         // Type
-        ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(getContext(), android.R.layout
-                .simple_spinner_item, mPresenters.getGoodsTypes());
-        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinnerType.setAdapter(typeAdapter);
+        mGoodsTypes = mPresenters.getGoodsTypes();
+        mTypeAdapter = new ArrayAdapter<>(getContext(), android.R.layout
+                .simple_spinner_item, mGoodsTypes);
+        mTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerType.setAdapter(mTypeAdapter);
         mSpinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -149,7 +152,8 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
 
     @Override
     public void refreshUI() {
-
+        mGoodsTypes = mPresenters.getGoodsTypes();
+        mTypeAdapter.notifyDataSetChanged();
     }
 
     @Override
