@@ -41,10 +41,12 @@ public class AddPresentersImpl extends AbstractPresenter implements AddPresenter
     }
 
     @Override
-    public String[] getGoodsBrands() {
+    public String[] getGoodsBrands(long typeId) {
         List<String> brandStr = new ArrayList<>();
         for (GoodsBrand goodsBrand : mDbMaster.getGoodsBrands()) {
-            brandStr.add(goodsBrand.getGoodsBrandName());
+            if (typeId == goodsBrand.getGoodsTypeId()) {
+                brandStr.add(goodsBrand.getGoodsBrandName());
+            }
         }
         return brandStr.toArray(new String[brandStr.size()]);
     }
