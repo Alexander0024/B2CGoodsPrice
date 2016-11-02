@@ -142,6 +142,14 @@ public class DbMaster {
     }
 
     /**
+     * 清空Goods表
+     */
+    public void clearGoods() {
+        LogWrapper.i(TAG, "clearGoods: ");
+        mGoodsDao.deleteAll();
+    }
+
+    /**
      * ***************************** Goods Type Operation *****************************
      */
     /**
@@ -178,6 +186,14 @@ public class DbMaster {
         long id = mGoodsTypeDao.insertOrReplace(goodsType);
         LogWrapper.i(TAG, "addGoodsType: id = " + id);
         return id;
+    }
+
+    /**
+     * 清空GoodsType表
+     */
+    public void clearGoodsType() {
+        LogWrapper.i(TAG, "clearGoodsType: ");
+        mGoodsTypeDao.deleteAll();
     }
 
     /**
@@ -221,6 +237,14 @@ public class DbMaster {
     }
 
     /**
+     * 清空GoodsBrands表
+     */
+    public void clearGoodsBrands() {
+        LogWrapper.i(TAG, "clearGoodsBrands: ");
+        mGoodsBrandDao.deleteAll();
+    }
+
+    /**
      * ***************************** Price Type Operation *****************************
      */
 
@@ -246,6 +270,14 @@ public class DbMaster {
         long id = mPriceTypeDao.insert(priceType);
         LogWrapper.i(TAG, "addPriceType: id = " + id);
         return id;
+    }
+
+    /**
+     * 清空PriceType表
+     */
+    public void clearPriceType() {
+        LogWrapper.i(TAG, "clearPriceType: ");
+        mPriceTypeDao.deleteAll();
     }
 
     /**
@@ -292,9 +324,9 @@ public class DbMaster {
     private String toString(GoodsType goodsType) {
         StringBuilder sb = new StringBuilder();
         sb.append("Goods Type ID = ").append(goodsType.getGoodsTypeId()).append("; ")
-                .append("Name = ").append(goodsType.getGoodsTypeName()).append("; ")
-                .append("Brand size = ").append(goodsType.getBrandList().size()).append("; ")
-                .append("Goods size = ").append(goodsType.getBrandList().size()).append("; ");
+                .append("Name = ").append(goodsType.getGoodsTypeName()).append("; ");
+//                .append("Brand size = ").append(goodsType.getBrandList().size()).append("; ")
+//                .append("Goods size = ").append(goodsType.getBrandList().size()).append("; ");
         return sb.toString();
     }
 
@@ -303,8 +335,8 @@ public class DbMaster {
         sb.append("Goods Brand ID = ").append(goodsBrand.getGoodsBrandId()).append("; ")
                 .append("Name = ").append(goodsBrand.getGoodsBrandName()).append("; ")
                 .append("Type below = ").append(goodsBrand.getGoodsType().getGoodsTypeId())
-                .append(" : ").append(goodsBrand.getGoodsType().getGoodsTypeName()).append("; ")
-                .append("Goods size = ").append(goodsBrand.getGoodsList().size()).append("; ");
+                .append(" : ").append(goodsBrand.getGoodsType().getGoodsTypeName()).append("; ");
+//                .append("Goods size = ").append(goodsBrand.getGoodsList().size()).append("; ");
         return sb.toString();
     }
 

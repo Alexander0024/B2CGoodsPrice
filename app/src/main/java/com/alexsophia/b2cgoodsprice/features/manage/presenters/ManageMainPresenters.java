@@ -13,9 +13,9 @@ import com.alexsophia.b2cgoodsprice.features.base.ui.BaseView;
 public interface ManageMainPresenters extends BasePresenter {
 
     /**
-     * 初始化PriceType
+     * 初始化
      */
-    void initPriceType();
+    void initDatabase();
 
     interface View extends BaseView {
         /**
@@ -25,6 +25,6 @@ public interface ManageMainPresenters extends BasePresenter {
          */
         Context getContext();
 
-        void onInitPriceTypeSuccess(String message);
+        void onInitSuccess(String message);
     }
 }

@@ -35,8 +35,6 @@
     <color name="edt_black">#404040</color>
     <!-- 输入框提示文字颜色 -->
     <color name="edt_hint">#BBBBBB</color>
-    <!-- 红色提示文字 RGB(255,0,0) -->
-    <color name="tv_red">#FF0000</color>
     <!-- 灰色提示文字 RGB(145,145,145) -->
     <color name="tv_hint">#919191</color>
     <!-- 浅灰色提示文字 RGB(170,170,170) -->

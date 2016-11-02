@@ -22,8 +22,8 @@ public class ManageMainFragment extends BaseFragment implements ManageMainPresen
     AutoRelativeLayout mRlManageGoodsType;
     @Bind(R.id.rl_manage_goods_brand)
     AutoRelativeLayout mRlManageGoodsBrand;
-    @Bind(R.id.rl_manage_price_type)
-    AutoRelativeLayout mRlManagePriceType;
+    @Bind(R.id.rl_manage_init_database)
+    AutoRelativeLayout mRlInitGoodsType;
     private ManageMainPresenters mPresenters;
 
     public static ManageMainFragment newInstance() {
@@ -60,7 +60,8 @@ public class ManageMainFragment extends BaseFragment implements ManageMainPresen
         mPresenters = new ManageMainPresentersImpl(this);
     }
 
-    @OnClick({R.id.rl_manage_goods_type, R.id.rl_manage_goods_brand, R.id.rl_manage_price_type})
+    @OnClick({R.id.rl_manage_goods_type, R.id.rl_manage_goods_brand, R.id
+            .rl_manage_init_database})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.rl_manage_goods_type:
@@ -69,8 +70,8 @@ public class ManageMainFragment extends BaseFragment implements ManageMainPresen
             case R.id.rl_manage_goods_brand:
                 startActivity(getActivity(), GoodsBrandManageActivity.class);
                 break;
-            case R.id.rl_manage_price_type:
-                mPresenters.initPriceType();
+            case R.id.rl_manage_init_database:
+                mPresenters.initDatabase();
                 break;
         }
     }
@@ -96,7 +97,7 @@ public class ManageMainFragment extends BaseFragment implements ManageMainPresen
     }
 
     @Override
-    public void onInitPriceTypeSuccess(String message) {
+    public void onInitSuccess(String message) {
         ToastUtil.showLong(getContext(), message);
     }
 }
