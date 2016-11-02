@@ -44,6 +44,13 @@ public class GoodsNameAdapter extends BaseAdapter {
         getData();
     }
 
+    public void addData(String name) {
+        if (!mData.contains(name)) {
+            mData.add(name);
+            notifyDataSetChanged();
+        }
+    }
+
     @Override
     public int getCount() {
         return mData.size();
@@ -73,5 +80,6 @@ public class GoodsNameAdapter extends BaseAdapter {
         for (Goods good : goods) {
             mData.add(good.getGoodsName());
         }
+        notifyDataSetChanged();
     }
 }

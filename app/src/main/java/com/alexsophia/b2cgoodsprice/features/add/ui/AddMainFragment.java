@@ -129,6 +129,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
         switch (view.getId()) {
             case R.id.btn_add_submit:
                 LogWrapper.e(TAG, "Submit click!");
+                mNameAdapter.addData(getName());
                 mPresenters.addNew();
                 break;
         }
@@ -177,6 +178,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     @Override
     public void onTypeSelected(Long goodsTypeId) {
         mNameAdapter.setType(goodsTypeId);
+        mDropEdtTxtName.setAdapter(mNameAdapter);
         // 选择类别后刷新厂家
         mBrandAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,
                 mPresenters.getGoodsBrands(goodsTypeId));
@@ -187,6 +189,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     @Override
     public void onBrandSelected(Long goodsBrandId) {
         mNameAdapter.setBrand(goodsBrandId);
+        mDropEdtTxtName.setAdapter(mNameAdapter);
     }
 
     @Override
