@@ -2,8 +2,10 @@ package com.alexsophia.b2cgoodsprice.database;
 
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 import greendao.DaoSession;
 import greendao.Goods;
@@ -43,7 +45,6 @@ public class DbMaster {
      * @return id为所查询的物品
      */
     public Goods getGoods(long id) {
-        LogWrapper.i(TAG, "getGoods: id = " + id);
         Goods goods = mGoodsDao.load(id);
         LogWrapper.i(TAG, "getGoods: " + toString(goods));
         return goods;
@@ -55,7 +56,6 @@ public class DbMaster {
      * @return 所有物品
      */
     public List<Goods> getGoodsList() {
-        LogWrapper.i(TAG, "getGoodsList: ");
         List<Goods> goods = mGoodsDao.loadAll();
         LogWrapper.i(TAG, "getGoodsList: size = " + goods.size());
         return goods;
@@ -68,10 +68,32 @@ public class DbMaster {
      * @return 所有type为所选typeId的物品
      */
     public List<Goods> getGoodsList(long typeId) {
-        LogWrapper.i(TAG, "getGoodsList: typeId = " + typeId);
-        List<Goods> goods = mGoodsTypeDao.load(typeId).getGoodsList();
+        GoodsType type = mGoodsTypeDao.load(typeId);
+        List<Goods> goods = new ArrayList<>();
+        if (null != type) {
+            goods = type.getGoodsList();
+        }
         LogWrapper.i(TAG, "getGoodsList: size = " + goods.size());
         return goods;
+    }
+
+    /**
+     * 根据TypeId和BrandId获取物品列表
+     *
+     * @param typeId  typeId
+     * @param brandId brandId
+     * @return 所有本类的物品列表
+     */
+    public List<Goods> getGoodsList(Long typeId, Long brandId) {
+        List<Goods> goods = getGoodsList(typeId);
+        List<Goods> brandGoods = new ArrayList<>();
+        for (Goods good : goods) {
+            if (Objects.equals(good.getGoodsBrandId(), brandId)) {
+                brandGoods.add(good);
+            }
+        }
+        LogWrapper.i(TAG, "getGoodsList: size = " + brandGoods.size());
+        return brandGoods;
     }
 
     /**
@@ -128,7 +150,6 @@ public class DbMaster {
      * @return 物品类别列表
      */
     public List<GoodsType> getGoodsTypes() {
-        LogWrapper.i(TAG, "getGoodsTypes: ");
         List<GoodsType> goodsType = mGoodsTypeDao.loadAll();
         LogWrapper.i(TAG, "getGoodsTypes: size = " + goodsType.size());
         return goodsType;
@@ -141,7 +162,6 @@ public class DbMaster {
      * @return 该类别
      */
     public GoodsType getGoodsType(long id) {
-        LogWrapper.i(TAG, "getGoodsType: id = " + id);
         GoodsType goodsType = mGoodsTypeDao.load(id);
         LogWrapper.i(TAG, "getGoodsType: " + toString(goodsType));
         return goodsType;
@@ -169,7 +189,6 @@ public class DbMaster {
      * @return 所有厂商信息
      */
     public List<GoodsBrand> getGoodsBrands() {
-        LogWrapper.i(TAG, "getGoodsBrands: ");
         List<GoodsBrand> goodsBrand = mGoodsBrandDao.loadAll();
         LogWrapper.i(TAG, "getGoodsBrands: size = " + goodsBrand.size());
         return goodsBrand;
@@ -182,7 +201,6 @@ public class DbMaster {
      * @return 厂商信息
      */
     public GoodsBrand getGoodsBrand(long id) {
-        LogWrapper.i(TAG, "getGoodsBrand: id = " + id);
         GoodsBrand goodsBrand = mGoodsBrandDao.load(id);
         LogWrapper.i(TAG, "getGoodsBrand: " + toString(goodsBrand));
         return goodsBrand;
@@ -212,7 +230,6 @@ public class DbMaster {
      * @return priceType list
      */
     public List<PriceType> getPriceTypes() {
-        LogWrapper.i(TAG, "getPriceTypes: ");
         List<PriceType> priceType = mPriceTypeDao.loadAll();
         LogWrapper.i(TAG, "getPriceTypes: size = " + priceType.size());
         return priceType;
@@ -232,7 +249,7 @@ public class DbMaster {
     }
 
     /**
-     * *****************************  Operation *****************************
+     * ***************************** Goods Price Operation *****************************
      */
 
     /**
@@ -262,9 +279,13 @@ public class DbMaster {
                 .append("Brand = ").append(goods.getGoodsBrand().getGoodsTypeId())
                 .append(" : ").append(goods.getGoodsBrand().getGoodsBrandName()).append("; ")
                 .append("Cheapest online = ").append(goods.getCheapestOnline()).append("; ")
-                .append("Cheapest offline = ").append(goods.getCheapestOffline()).append("; ")
-                .append("Price list size = ").append(goods.getPriceList().size()).append("; ")
-                .append("Url list size = ").append(goods.getUrlList().size()).append(";");
+                .append("Cheapest offline = ").append(goods.getCheapestOffline()).append("; ");
+//        if (null != goods.getPriceList()) {
+//            sb.append("Price list size = ").append(goods.getPriceList().size()).append("; ");
+//        }
+//        if (null != goods.getUrlList()) {
+//            sb.append("Url list size = ").append(goods.getUrlList().size()).append(";");
+//        }
         return sb.toString();
     }
 

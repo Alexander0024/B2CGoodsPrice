@@ -1,17 +1,18 @@
 package com.alexsophia.b2cgoodsprice.features.add.ui;
 
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.Spinner;
 
 import com.alexsophia.b2cgoodsprice.R;
 import com.alexsophia.b2cgoodsprice.features.add.presenters.AddPresenters;
 import com.alexsophia.b2cgoodsprice.features.add.presenters.impl.AddPresentersImpl;
-import com.alexsophia.b2cgoodsprice.features.add.ui.adapter.AttrAdapter;
+import com.alexsophia.b2cgoodsprice.features.add.ui.adapter.GoodsNameAdapter;
 import com.alexsophia.b2cgoodsprice.features.base.executor.impl.ThreadExecutor;
 import com.alexsophia.b2cgoodsprice.features.base.threading.impl.MainThreadImpl;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragment;
@@ -28,12 +29,10 @@ import butterknife.OnClick;
  * Created by Alexander on 2016/10/26.
  */
 public class AddMainFragment extends BaseFragment implements AddPresenters.View {
-    private String TAG = "AddMainFragment";
-
-    @Bind(R.id.dropEdtTxt_add_type)
-    DropEditText mDropEdtTxtType;
-    @Bind(R.id.dropEdtTxt_add_brand)
-    DropEditText mDropEdtTxtBrand;
+    @Bind(R.id.spinner_add_type)
+    Spinner mSpinnerType;
+    @Bind(R.id.spinner_add_brand)
+    Spinner mSpinnerBrand;
     @Bind(R.id.dropEdtTxt_add_name)
     DropEditText mDropEdtTxtName;
     @Bind(R.id.edtTxt_add_standard)
@@ -48,10 +47,13 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     EditText mEdtTxtPrice;
     @Bind(R.id.btn_add_submit)
     Button mBtnSubmit;
-
+    private String TAG = "AddMainFragment";
     private AddPresenters mPresenters;
-    private AttrAdapter mBrandAdapter;
-    private AttrAdapter mNameAdapter;
+    private GoodsNameAdapter mNameAdapter;
+
+    public static AddMainFragment newInstance() {
+        return new AddMainFragment();
+    }
 
     @Override
     protected void stop() {
@@ -83,49 +85,41 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
         LogWrapper.e(TAG, "initData: ");
         mPresenters = new AddPresentersImpl(ThreadExecutor.getInstance(), MainThreadImpl
                 .getInstance(), this);
-        mBrandAdapter = new AttrAdapter(getContext(), AttrAdapter.ATTR_TYPE.BRAND);
-        mNameAdapter = new AttrAdapter(getContext(), AttrAdapter.ATTR_TYPE.NAME);
-        mDropEdtTxtType.setAdapter(new AttrAdapter(getContext(), AttrAdapter.ATTR_TYPE.TYPE));
-        mDropEdtTxtType.addTextChangedListener(new TextWatcher() {
+        // Type
+        ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(getContext(), android.R.layout
+                .simple_spinner_item, mPresenters.getGoodsTypes());
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerType.setAdapter(typeAdapter);
+        mSpinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mPresenters.selectType(position);
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                LogWrapper.e(TAG, "mDropEdtTxtType afterTextChanged: " + s.toString());
-                mBrandAdapter.setExtra(s.toString());
             }
         });
-        mDropEdtTxtBrand.setAdapter(mBrandAdapter);
-        mDropEdtTxtBrand.addTextChangedListener(new TextWatcher() {
+        // Brand
+        ArrayAdapter<String> brandAdapter = new ArrayAdapter<>(getContext(), android.R.layout
+                .simple_spinner_item, mPresenters.getGoodsBrands());
+        brandAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerBrand.setAdapter(brandAdapter);
+        mSpinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                mPresenters.selectBrand(position);
             }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            public void onNothingSelected(AdapterView<?> parent) {
 
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                LogWrapper.e(TAG, "mDropEdtTxtBrand afterTextChanged: " + s.toString());
-                mNameAdapter.setExtra(s.toString());
             }
         });
+        // Name
+        mNameAdapter = new GoodsNameAdapter(getContext());
         mDropEdtTxtName.setAdapter(mNameAdapter);
-    }
-
-    public static AddMainFragment newInstance() {
-        return new AddMainFragment();
     }
 
     @OnClick(R.id.btn_add_submit)
@@ -159,16 +153,6 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     }
 
     @Override
-    public String getType() {
-        return mDropEdtTxtType.getText();
-    }
-
-    @Override
-    public String getBrand() {
-        return mDropEdtTxtBrand.getText();
-    }
-
-    @Override
     public String getName() {
         return mDropEdtTxtName.getText();
     }
@@ -186,5 +170,20 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     @Override
     public double getPrice() {
         return Double.parseDouble(mEdtTxtPrice.getText().toString());
+    }
+
+    @Override
+    public void onTypeSelected(Long goodsTypeId) {
+        mNameAdapter.setType(goodsTypeId);
+    }
+
+    @Override
+    public void onBrandSelected(Long goodsBrandId) {
+        mNameAdapter.setBrand(goodsBrandId);
+    }
+
+    @Override
+    public void onAddGoodsSuccess(long id) {
+        ToastUtil.showLong(getContext(), "添加成功！id = " + id);
     }
 }

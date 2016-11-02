@@ -9,8 +9,8 @@
             style="@style/AddNewItemLeftStyle"
             android:text="@string/type"/>
 
-        <com.alexsophia.b2cgoodsprice.share.DropEditText
-            android:id="@+id/dropEdtTxt_add_type"
+        <Spinner
+            android:id="@+id/spinner_add_type"
             style="@style/AddNewItemRightStyle"/>
     </com.zhy.autolayout.AutoLinearLayout>
 
@@ -22,8 +22,8 @@
             style="@style/AddNewItemLeftStyle"
             android:text="@string/brand"/>
 
-        <com.alexsophia.b2cgoodsprice.share.DropEditText
-            android:id="@+id/dropEdtTxt_add_brand"
+        <Spinner
+            android:id="@+id/spinner_add_brand"
             style="@style/AddNewItemRightStyle"/>
     </com.zhy.autolayout.AutoLinearLayout>
 

@@ -11,6 +11,35 @@ import com.alexsophia.b2cgoodsprice.features.base.ui.BaseView;
  * Created by Alexander on 2016/10/26.
  */
 public interface AddPresenters extends BasePresenter {
+    /**
+     * 获取types
+     */
+    String[] getGoodsTypes();
+
+    /**
+     * 获取brands
+     */
+    String[] getGoodsBrands();
+
+    /**
+     * 选择Type
+     *
+     * @param position index
+     */
+    void selectType(int position);
+
+    /**
+     * 选择Brand
+     *
+     * @param position index
+     */
+    void selectBrand(int position);
+
+    /**
+     * 添加一个新记录
+     */
+    void addNew();
+
     interface View extends BaseView {
         /**
          * 获取当前Activity的Context
@@ -19,10 +48,6 @@ public interface AddPresenters extends BasePresenter {
          */
         Context getContext();
 
-        String getType();
-
-        String getBrand();
-
         String getName();
 
         String getStandard();
@@ -30,10 +55,11 @@ public interface AddPresenters extends BasePresenter {
         boolean getOnlineOffline();
 
         double getPrice();
-    }
 
-    /**
-     * 添加一个新记录
-     */
-    void addNew();
+        void onTypeSelected(Long goodsTypeId);
+
+        void onBrandSelected(Long goodsBrandId);
+
+        void onAddGoodsSuccess(long id);
+    }
 }

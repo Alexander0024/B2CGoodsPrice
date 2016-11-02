@@ -1,9 +1,18 @@
 package com.alexsophia.b2cgoodsprice.features.add.presenters.impl;
 
+import com.alexsophia.b2cgoodsprice.app.MyApplication;
+import com.alexsophia.b2cgoodsprice.database.DbMaster;
 import com.alexsophia.b2cgoodsprice.features.add.presenters.AddPresenters;
 import com.alexsophia.b2cgoodsprice.features.base.executor.Executor;
 import com.alexsophia.b2cgoodsprice.features.base.presenters.AbstractPresenter;
 import com.alexsophia.b2cgoodsprice.features.base.threading.MainThread;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import greendao.Goods;
+import greendao.GoodsBrand;
+import greendao.GoodsType;
 
 /**
  * AddPresentersImpl
@@ -12,38 +21,68 @@ import com.alexsophia.b2cgoodsprice.features.base.threading.MainThread;
  */
 public class AddPresentersImpl extends AbstractPresenter implements AddPresenters {
     private final View mView;
+    private final DbMaster mDbMaster;
+    private GoodsType mSelectedGoodsType;
+    private GoodsBrand mSelectedBrand;
 
     public AddPresentersImpl(Executor executor, MainThread mainThread, View view) {
         super(executor, mainThread);
         this.mView = view;
+        this.mDbMaster = MyApplication.getInstance().getDbMaster();
+    }
+
+    @Override
+    public String[] getGoodsTypes() {
+        List<String> typeStr = new ArrayList<>();
+        for (GoodsType goodsType : mDbMaster.getGoodsTypes()) {
+            typeStr.add(goodsType.getGoodsTypeName());
+        }
+        return typeStr.toArray(new String[typeStr.size()]);
+    }
+
+    @Override
+    public String[] getGoodsBrands() {
+        List<String> brandStr = new ArrayList<>();
+        for (GoodsBrand goodsBrand : mDbMaster.getGoodsBrands()) {
+            brandStr.add(goodsBrand.getGoodsBrandName());
+        }
+        return brandStr.toArray(new String[brandStr.size()]);
+    }
+
+    @Override
+    public void selectType(int position) {
+        mSelectedGoodsType = mDbMaster.getGoodsTypes().get(position);
+        mView.onTypeSelected(mSelectedGoodsType.getGoodsTypeId());
+    }
+
+    @Override
+    public void selectBrand(int position) {
+        mSelectedBrand = mDbMaster.getGoodsBrands().get(position);
+        mView.onBrandSelected(mSelectedBrand.getGoodsBrandId());
     }
 
     @Override
     public void addNew() {
-//        Goods newGood = new Goods();
-//        newGood.setGoodsType(mView.getType());
-//        newGood.setBrand(mView.getBrand());
-//        newGood.setName(mView.getName());
-//        newGood.setStandard(mView.getStandard());
-//        if (mView.getOnlineOffline()) {
-//            newGood.setCheapest_online(mView.getPrice());
-//            newGood.setCheapest_offline(-1d);
-//        } else {
-//            newGood.setCheapest_online(-1d);
-//            newGood.setCheapest_offline(mView.getPrice());
-//        }
-//        MyApplication.getInstance().getDataPresenters().addGoods(newGood, new DataPresentersImpl
-//                .OnOperatorListener() {
-//            @Override
-//            public void onSuccess(long id) {
-//                ToastUtil.showLong(mView.getContext(), "Add Success, item id = " + id);
-//            }
-//
-//            @Override
-//            public void onFailed(String message) {
-//                ToastUtil.showLong(mView.getContext(), "Add Failed, " + message);
-//            }
-//        });
+        Goods newGood = new Goods();
+//        newGood.setGoodsTypeId(mSelectedGoodsType.getGoodsTypeId());
+        newGood.setGoodsType(mSelectedGoodsType);
+//        newGood.setGoodsBrandId(mSelectedBrand.getGoodsBrandId());
+        newGood.setGoodsBrand(mSelectedBrand);
+        newGood.setGoodsName(mView.getName());
+        newGood.setGoodsStandard(mView.getStandard());
+        if (mView.getOnlineOffline()) {
+            newGood.setCheapestOnline(mView.getPrice());
+            newGood.setCheapestOffline(-1d);
+        } else {
+            newGood.setCheapestOnline(-1d);
+            newGood.setCheapestOffline(mView.getPrice());
+        }
+        long id = mDbMaster.addOrUpdateGoods(newGood);
+        if (id > 0) {
+            mView.onAddGoodsSuccess(id);
+        } else {
+            mView.showError("Add failed");
+        }
     }
 
     @Override
