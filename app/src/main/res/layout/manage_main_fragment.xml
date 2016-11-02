@@ -42,6 +42,7 @@
     <!-- Goods type manage -->
     <com.zhy.autolayout.AutoRelativeLayout
         android:id="@+id/rl_manage_init_database"
+        android:layout_marginTop="40dp"
         style="@style/ManageItemStyle"
         android:background="@color/red">
 
