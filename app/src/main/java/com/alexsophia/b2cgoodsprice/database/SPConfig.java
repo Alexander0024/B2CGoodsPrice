@@ -1,4 +1,4 @@
-package com.alexsophia.b2cgoodsprice.app;
+package com.alexsophia.b2cgoodsprice.database;
 
 import android.content.Context;
 

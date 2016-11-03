@@ -8,8 +8,6 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.alexsophia.b2cgoodsprice.R;
-import com.alexsophia.b2cgoodsprice.features.base.executor.impl.ThreadExecutor;
-import com.alexsophia.b2cgoodsprice.features.base.threading.impl.MainThreadImpl;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragment;
 import com.alexsophia.b2cgoodsprice.features.list.presenters.ListPresenters;
 import com.alexsophia.b2cgoodsprice.features.list.presenters.impl.ListPresentersImpl;
@@ -36,8 +34,6 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
     TextView mTvCount;
     private String TAG = "ListMainFragment";
     private ListPresentersImpl mPresenters;
-    // Type Spinner的Adapter
-    private ArrayAdapter<String> mTypeAdapter;
     // ListView的Adapter
     private PriceListAdapter mPriceListAdapter;
 
@@ -74,13 +70,12 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
     @Override
     protected void initData() {
         LogWrapper.e(TAG, "initData");
-        mPresenters = new ListPresentersImpl(ThreadExecutor.getInstance(), MainThreadImpl
-                .getInstance(), this);
+        mPresenters = new ListPresentersImpl(this);
         // Init spinner
-        mTypeAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,
-                mPresenters.getGoodsTypes());
-        mTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinnerFilter.setAdapter(mTypeAdapter);
+        ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(getContext(), android.R.layout
+                .simple_spinner_item, mPresenters.getGoodsTypes());
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerFilter.setAdapter(typeAdapter);
         mSpinnerFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

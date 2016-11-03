@@ -16,13 +16,13 @@ import java.util.List;
 import greendao.Goods;
 
 /**
- * GoodsNameAdapter
+ * GoodsNameAdapter for dropdown edit text view
  * <p>
  * Created by Alexander on 2016/10/26.
  */
 public class GoodsNameAdapter extends BaseAdapter {
-    private String TAG = "GoodsNameAdapter";
     private final Context mContext;
+    private String TAG = "GoodsNameAdapter";
     private DbMaster mDbMaster;
     private List<String> mData = new ArrayList<>();
     private long mTypeId;
@@ -34,16 +34,29 @@ public class GoodsNameAdapter extends BaseAdapter {
         getData();
     }
 
+    /**
+     * 设置分类信息
+     *
+     * @param typeId 类别ID
+     */
     public void setType(long typeId) {
         this.mTypeId = typeId;
         getData();
     }
 
+    /**
+     * 设置厂商信息
+     *
+     * @param brandId 厂商ID
+     */
     public void setBrand(long brandId) {
         this.mBrandId = brandId;
         getData();
     }
 
+    /**
+     * 添加新数据
+     */
     public void addData(String name) {
         if (!mData.contains(name)) {
             mData.add(name);
@@ -75,7 +88,7 @@ public class GoodsNameAdapter extends BaseAdapter {
 
     private void getData() {
         LogWrapper.e(TAG, "getData: ");
-        List<Goods> goods = mDbMaster.getGoodsList(mTypeId, mBrandId);
+        List<Goods> goods = mDbMaster.getGoodsListByTypeBrandId(mTypeId, mBrandId);
         mData.clear();
         for (Goods good : goods) {
             mData.add(good.getGoodsName());

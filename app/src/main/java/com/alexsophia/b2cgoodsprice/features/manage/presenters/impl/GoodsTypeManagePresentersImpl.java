@@ -23,7 +23,7 @@ public class GoodsTypeManagePresentersImpl extends AbstractPresenter implements
     public GoodsTypeManagePresentersImpl(View view) {
         super();
         this.mView = view;
-        mDbMaster = MyApplication.getInstance().getDbMaster();
+        this.mDbMaster = MyApplication.getInstance().getDbMaster();
     }
 
     @Override
@@ -58,9 +58,7 @@ public class GoodsTypeManagePresentersImpl extends AbstractPresenter implements
 
     @Override
     public void addType() {
-        GoodsType goodsType = new GoodsType();
-        goodsType.setGoodsTypeName(mView.getNewTypeName());
-        updateType(goodsType);
+        updateType(new GoodsType(null, mView.getNewTypeName()));
     }
 
     @Override

@@ -18,7 +18,8 @@ public interface AddPresenters extends BasePresenter {
 
     /**
      * 获取brands
-     * @param typeId
+     *
+     * @param typeId 获取类型下的厂商list
      */
     String[] getGoodsBrands(long typeId);
 

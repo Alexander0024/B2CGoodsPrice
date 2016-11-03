@@ -1,17 +1,15 @@
 package com.alexsophia.b2cgoodsprice.features.list.ui.adapter;
 
 import android.content.Context;
-import android.content.DialogInterface;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.alexsophia.b2cgoodsprice.R;
 import com.alexsophia.b2cgoodsprice.app.MyApplication;
+import com.alexsophia.b2cgoodsprice.share.SimpleEditTextBox;
 
 import java.util.List;
 
@@ -86,15 +84,11 @@ public class PriceListAdapter extends BaseAdapter {
         viewHolder.mCheapestOnline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText input = new EditText(mContext);
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle(R.string.list_online);
-                builder.setView(input);
-                builder.setNegativeButton("Cancel", null);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                new SimpleEditTextBox(mContext, R.string.list_online, 0, new SimpleEditTextBox
+                        .OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        double price = Double.parseDouble(input.getText().toString());
+                    public void onPositiveButtonClicked(String value) {
+                        double price = Double.parseDouble(value);
                         if (price < goods.getCheapestOnline() || goods.getCheapestOnline() == -1) {
                             goods.setCheapestOnline(price);
                             MyApplication.getInstance().getDbMaster().addGoods(goods);
@@ -102,22 +96,17 @@ public class PriceListAdapter extends BaseAdapter {
                         }
                     }
                 });
-                builder.show();
             }
         });
         viewHolder.mCheapestOffline.setText(String.valueOf(goods.getCheapestOffline()));
         viewHolder.mCheapestOffline.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final EditText input = new EditText(mContext);
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
-                builder.setTitle(R.string.list_offline);
-                builder.setView(input);
-                builder.setNegativeButton("Cancel", null);
-                builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                new SimpleEditTextBox(mContext, R.string.list_offline, 0, new SimpleEditTextBox
+                        .OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        double price = Double.parseDouble(input.getText().toString());
+                    public void onPositiveButtonClicked(String value) {
+                        double price = Double.parseDouble(value);
                         if (price < goods.getCheapestOffline() || goods.getCheapestOffline() == -1) {
                             goods.setCheapestOffline(price);
                             MyApplication.getInstance().getDbMaster().addGoods(goods);
@@ -125,7 +114,6 @@ public class PriceListAdapter extends BaseAdapter {
                         }
                     }
                 });
-                builder.show();
             }
         });
         return view;

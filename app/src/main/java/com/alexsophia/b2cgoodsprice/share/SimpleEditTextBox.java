@@ -16,11 +16,11 @@ public class SimpleEditTextBox {
         this(context, context.getString(title), context.getString(message), null, onClickListener);
     }
 
-    public SimpleEditTextBox(Context context, String title, String message, String extra, final
-    OnClickListener onClickListener) {
+    public SimpleEditTextBox(Context context, String title, String message, String defaultValue,
+                             final OnClickListener onClickListener) {
         final EditText input = new EditText(context);
-        if (null != extra) {
-            input.setText(extra);
+        if (null != defaultValue) {
+            input.setText(defaultValue);
         }
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setTitle(title);

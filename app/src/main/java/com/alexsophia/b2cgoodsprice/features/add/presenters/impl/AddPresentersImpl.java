@@ -3,16 +3,9 @@ package com.alexsophia.b2cgoodsprice.features.add.presenters.impl;
 import com.alexsophia.b2cgoodsprice.app.MyApplication;
 import com.alexsophia.b2cgoodsprice.database.DbMaster;
 import com.alexsophia.b2cgoodsprice.features.add.presenters.AddPresenters;
-import com.alexsophia.b2cgoodsprice.features.base.executor.Executor;
 import com.alexsophia.b2cgoodsprice.features.base.presenters.AbstractPresenter;
-import com.alexsophia.b2cgoodsprice.features.base.threading.MainThread;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import greendao.Goods;
-import greendao.GoodsBrand;
-import greendao.GoodsType;
 
 /**
  * AddPresentersImpl
@@ -22,60 +15,61 @@ import greendao.GoodsType;
 public class AddPresentersImpl extends AbstractPresenter implements AddPresenters {
     private final View mView;
     private final DbMaster mDbMaster;
-    private GoodsType mSelectedGoodsType;
-    private GoodsBrand mSelectedBrand;
+    private long mSelectedGoodsTypeId;
+    private long mSelectedBrandId;
 
-    public AddPresentersImpl(Executor executor, MainThread mainThread, View view) {
-        super(executor, mainThread);
+    public AddPresentersImpl(View view) {
+        super();
         this.mView = view;
         this.mDbMaster = MyApplication.getInstance().getDbMaster();
     }
 
+    /**
+     * 获取所有的类别
+     */
     @Override
     public String[] getGoodsTypes() {
-        List<String> typeStr = new ArrayList<>();
-        for (GoodsType goodsType : mDbMaster.getGoodsTypes()) {
-            typeStr.add(goodsType.getGoodsTypeName());
-        }
-        return typeStr.toArray(new String[typeStr.size()]);
+        return mDbMaster.getGoodsTypesArray();
     }
 
+    /**
+     * 获取所选类别下的所有厂商
+     *
+     * @param typeId 类别ID
+     */
     @Override
     public String[] getGoodsBrands(long typeId) {
-        List<String> brandStr = new ArrayList<>();
-        for (GoodsBrand goodsBrand : mDbMaster.getGoodsBrands()) {
-            if (typeId == goodsBrand.getGoodsTypeId()) {
-                brandStr.add(goodsBrand.getGoodsBrandName());
-            }
-        }
-        return brandStr.toArray(new String[brandStr.size()]);
+        return mDbMaster.getGoodsBrandsArrayByTypeId(typeId);
     }
 
+    /**
+     * 设置分类
+     *
+     * @param position index
+     */
     @Override
     public void selectType(int position) {
-        mSelectedGoodsType = mDbMaster.getGoodsTypes().get(position);
-        mView.onTypeSelected(mSelectedGoodsType.getGoodsTypeId());
+        mSelectedGoodsTypeId = mDbMaster.getGoodsTypeByRowId(position + 1).getGoodsTypeId();
+        mView.onTypeSelected(mSelectedGoodsTypeId);
     }
 
+    /**
+     * 设置厂商
+     *
+     * @param position index 该分类下的厂商列表的index
+     */
     @Override
     public void selectBrand(int position) {
-        List<GoodsBrand> brands = new ArrayList<>();
-        for (GoodsBrand brand : mDbMaster.getGoodsBrands()) {
-            if (brand.getGoodsType().getGoodsTypeId().equals(mSelectedGoodsType.getGoodsTypeId())) {
-                brands.add(brand);
-            }
-        }
-        mSelectedBrand = brands.get(position);
-        mView.onBrandSelected(mSelectedBrand.getGoodsBrandId());
+        mSelectedBrandId = mDbMaster.getGoodsBrandByTypeRowId(mSelectedGoodsTypeId, position)
+                .getGoodsBrandId();
+        mView.onBrandSelected(mSelectedBrandId);
     }
 
     @Override
     public void addNew() {
         Goods newGood = new Goods();
-//        newGood.setGoodsTypeId(mSelectedGoodsType.getGoodsTypeId());
-        newGood.setGoodsType(mSelectedGoodsType);
-//        newGood.setGoodsBrandId(mSelectedBrand.getGoodsBrandId());
-        newGood.setGoodsBrand(mSelectedBrand);
+        newGood.setGoodsType(mDbMaster.getGoodsType(mSelectedGoodsTypeId));
+        newGood.setGoodsBrand(mDbMaster.getGoodsBrand(mSelectedBrandId));
         newGood.setGoodsName(mView.getName());
         newGood.setGoodsStandard(mView.getStandard());
         if (mView.getOnlineOffline()) {
@@ -85,7 +79,7 @@ public class AddPresentersImpl extends AbstractPresenter implements AddPresenter
             newGood.setCheapestOnline(-1d);
             newGood.setCheapestOffline(mView.getPrice());
         }
-        long id = mDbMaster.addOrUpdateGoods(newGood);
+        long id = mDbMaster.addGoods(newGood);
         if (id > 0) {
             mView.onAddGoodsSuccess(id);
         } else {

@@ -175,14 +175,6 @@ public class CustomDialog extends Dialog {
                 layout.findViewById(R.id.tv_negative_button).setVisibility(View.GONE);
                 layout.findViewById(R.id.v_split_line).setVisibility(View.GONE);
             }
-            // set the first button to bold
-//            if (mNegativeButtonText != null) {
-//                ((TextView) layout.findViewById(R.id.negativeButton)).getPaint().setFakeBoldText
-//                        (true);
-//            } else {
-//                ((TextView) layout.findViewById(R.id.positiveButton)).getPaint().setFakeBoldText
-//                        (true);
-//            }
             dialog.setContentView(layout);
             // 所有弹出框禁止点击外面后自动消失
             dialog.setCancelable(false);

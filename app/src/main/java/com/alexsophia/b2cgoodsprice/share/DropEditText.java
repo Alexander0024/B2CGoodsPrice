@@ -24,7 +24,6 @@ import com.alexsophia.b2cgoodsprice.R;
  * <p>
  * Created by Alexander on 2016/10/26.
  */
-
 public class DropEditText extends FrameLayout implements View.OnClickListener, AdapterView
         .OnItemClickListener {
     private final Context mContext;

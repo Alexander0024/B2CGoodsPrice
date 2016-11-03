@@ -6,8 +6,4 @@ public class ViewActionException extends RuntimeException {
     public ViewActionException(String msg) {
         super(msg);
     }
-
-    public ViewActionException() {
-        super();
-    }
 }

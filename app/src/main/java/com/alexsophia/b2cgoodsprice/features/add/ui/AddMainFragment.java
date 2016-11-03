@@ -30,29 +30,28 @@ import butterknife.OnClick;
  */
 public class AddMainFragment extends BaseFragment implements AddPresenters.View {
     @Bind(R.id.spinner_add_type)
-    Spinner mSpinnerType;
+    Spinner mSpinnerType; // 类别的下拉列表
     @Bind(R.id.spinner_add_brand)
-    Spinner mSpinnerBrand;
+    Spinner mSpinnerBrand; // 厂家的下拉列表
     @Bind(R.id.dropEdtTxt_add_name)
-    DropEditText mDropEdtTxtName;
+    DropEditText mDropEdtTxtName; // 名称的下拉列表
     @Bind(R.id.edtTxt_add_standard)
-    EditText mEdtTxtStandard;
-    @Bind(R.id.rb_add_online)
-    RadioButton mRbAddOnline;
-    @Bind(R.id.rb_add_offline)
-    RadioButton mRbAddOffline;
+    EditText mEdtTxtStandard; // 规格信息
     @Bind(R.id.rg_add_type_select)
-    RadioGroup mRgAddTypeSelect;
+    RadioGroup mRgAddTypeSelect; // 价格选择框体
+    @Bind(R.id.rb_add_online)
+    RadioButton mRbAddOnline; // Online Price
+    @Bind(R.id.rb_add_offline)
+    RadioButton mRbAddOffline; // Offline Price
     @Bind(R.id.edtTxt_add_price)
-    EditText mEdtTxtPrice;
+    EditText mEdtTxtPrice; // 价格输入框
     @Bind(R.id.btn_add_submit)
-    Button mBtnSubmit;
+    Button mBtnSubmit; // 提交按钮
     @Bind(R.id.btn_add_reset)
-    Button mBtnReset;
+    Button mBtnReset; // 重置按钮
     private String TAG = "AddMainFragment";
     private AddPresenters mPresenters;
     private GoodsNameAdapter mNameAdapter;
-    private ArrayAdapter<String> mTypeAdapter;
     private ArrayAdapter<String> mBrandAdapter;
 
     public static AddMainFragment newInstance() {
@@ -87,13 +86,9 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     @Override
     protected void initData() {
         LogWrapper.e(TAG, "initData: ");
-        mPresenters = new AddPresentersImpl(ThreadExecutor.getInstance(), MainThreadImpl
-                .getInstance(), this);
+        mPresenters = new AddPresentersImpl(this);
         // Type
-        mTypeAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,
-                mPresenters.getGoodsTypes());
-        mTypeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinnerType.setAdapter(mTypeAdapter);
+        setSpinnerType();
         mSpinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -106,10 +101,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
             }
         });
         // Brand
-        mBrandAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,
-                mPresenters.getGoodsBrands(1));
-        mBrandAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinnerBrand.setAdapter(mBrandAdapter);
+        setSpinnerBrand(1);
         mSpinnerBrand.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -193,10 +185,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
         mNameAdapter.setType(goodsTypeId);
         mDropEdtTxtName.setAdapter(mNameAdapter);
         // 选择类别后刷新厂家
-        mBrandAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,
-                mPresenters.getGoodsBrands(goodsTypeId));
-        mBrandAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        mSpinnerBrand.setAdapter(mBrandAdapter);
+        setSpinnerBrand(goodsTypeId);
     }
 
     @Override
@@ -208,5 +197,19 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     @Override
     public void onAddGoodsSuccess(long id) {
         ToastUtil.showLong(getContext(), "添加成功！id = " + id);
+    }
+
+    private void setSpinnerType() {
+        ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(getContext(), android.R.layout
+                .simple_spinner_item, mPresenters.getGoodsTypes());
+        typeAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerType.setAdapter(typeAdapter);
+    }
+
+    private void setSpinnerBrand(long goodsTypeId) {
+        mBrandAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,
+                mPresenters.getGoodsBrands(goodsTypeId));
+        mBrandAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        mSpinnerBrand.setAdapter(mBrandAdapter);
     }
 }

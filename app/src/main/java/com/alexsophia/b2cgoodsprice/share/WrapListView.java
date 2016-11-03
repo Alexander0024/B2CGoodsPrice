@@ -9,7 +9,6 @@ import android.widget.ListView;
  * <p>
  * Created by Alexander on 2016/10/26.
  */
-
 public class WrapListView extends ListView {
     private int mWidth = 0;
 

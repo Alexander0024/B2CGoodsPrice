@@ -15,6 +15,7 @@ import com.alexsophia.b2cgoodsprice.R;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseActivity;
 import com.alexsophia.b2cgoodsprice.features.manage.presenters.GoodsBrandManagePresenters;
 import com.alexsophia.b2cgoodsprice.features.manage.presenters.impl.GoodsBrandManagePresentersImpl;
+import com.alexsophia.b2cgoodsprice.share.SimpleEditTextBox;
 import com.alexsophia.b2cgoodsprice.share.adapters.CommonAdapter;
 import com.alexsophia.b2cgoodsprice.share.adapters.ViewHolder;
 import com.alexsophia.b2cgoodsprice.utils.ToastUtil;
@@ -31,15 +32,15 @@ import greendao.GoodsBrand;
 public class GoodsBrandManageActivity extends BaseActivity implements GoodsBrandManagePresenters
         .View {
     @Bind(R.id.tv_manage_goods_brand_count)
-    TextView mTvBrandCount;
+    TextView mTvBrandCount; // Count
     @Bind(R.id.lv_manage_goods_brand)
-    ListView mLvBrands;
+    ListView mLvBrands; // ListView
     @Bind(R.id.spinner_manage_types)
-    Spinner mSpinnerTypes;
+    Spinner mSpinnerTypes; // 类别下拉选择
     @Bind(R.id.edtTxt_manage_new_brand_name)
-    EditText mEdtTxtNewBrandName;
+    EditText mEdtTxtNewBrandName; // 新厂商名字
     @Bind(R.id.btn_manage_brand_add)
-    Button mBtnBrandAdd;
+    Button mBtnBrandAdd; // 添加按键
     private GoodsBrandManagePresenters mPresenters;
     private CommonAdapter<GoodsBrand> mAdapter;
 
@@ -86,7 +87,7 @@ public class GoodsBrandManageActivity extends BaseActivity implements GoodsBrand
         mAdapter = new CommonAdapter<GoodsBrand>(this, R.layout.manage_goods_brand_item,
                 mPresenters.getGoodsBrands()) {
             @Override
-            public void covertView(ViewHolder viewholder, GoodsBrand goodsBrand) {
+            public void covertView(ViewHolder viewholder, final GoodsBrand goodsBrand) {
                 // 厂商ID
                 viewholder.setText(R.id.tv_manage_goods_brand_id, String.valueOf(goodsBrand
                         .getGoodsBrandId()));
@@ -95,6 +96,20 @@ public class GoodsBrandManageActivity extends BaseActivity implements GoodsBrand
                         .getGoodsType().getGoodsTypeName());
                 // 厂商名称
                 viewholder.setText(R.id.tv_manage_goods_brand_name, goodsBrand.getGoodsBrandName());
+                viewholder.setClickListener(R.id.tv_manage_goods_brand_name, new View
+                        .OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        new SimpleEditTextBox(getContext(), "更新厂商名称", "", goodsBrand
+                                .getGoodsBrandName(), new SimpleEditTextBox.OnClickListener() {
+                            @Override
+                            public void onPositiveButtonClicked(String value) {
+                                goodsBrand.setGoodsBrandName(value);
+                                mPresenters.updateBrand(goodsBrand);
+                            }
+                        });
+                    }
+                });
                 // 厂商下物品数目
                 viewholder.setText(R.id.tv_manage_goods_brand_goods_count, String.valueOf
                         (goodsBrand.getGoodsList().size()));
@@ -143,7 +158,7 @@ public class GoodsBrandManageActivity extends BaseActivity implements GoodsBrand
     public void refreshUI() {
         mEdtTxtNewBrandName.setText("");
         mTvBrandCount.setText(getString(R.string.total_count, mPresenters.getGoodsBrands().size()));
-        mAdapter.reflushAdapter(mPresenters.getGoodsBrands());
+        mAdapter.refreshAdapter(mPresenters.getGoodsBrands());
     }
 
     @OnClick({R.id.btn_manage_brand_add})

@@ -155,6 +155,6 @@ public class GoodsTypeManageActivity extends BaseActivity implements GoodsTypeMa
         mEdtTxtManageNewTypeName.setText("");
         mTvManageGoodsTypeCount.setText(getString(R.string.total_count, mPresenters.getGoodsType
                 ().size()));
-        mAdapter.reflushAdapter(mPresenters.getGoodsType());
+        mAdapter.refreshAdapter(mPresenters.getGoodsType());
     }
 }

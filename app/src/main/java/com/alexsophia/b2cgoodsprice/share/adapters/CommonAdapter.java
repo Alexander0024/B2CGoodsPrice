@@ -13,11 +13,11 @@ import java.util.List;
  * @param <T>
  */
 public abstract class CommonAdapter<T> extends BaseAdapter {
-	protected Context mContext;
-	protected List<T> mData;
-	protected int mItemLayoutId;
+	private Context mContext;
+	private List<T> mData;
+	private int mItemLayoutId;
 
-	public CommonAdapter(Context context, int itemLayoutId, List<T> data) {
+	protected CommonAdapter(Context context, int itemLayoutId, List<T> data) {
 		this.mContext = context;
 		this.mData = data;
 		this.mItemLayoutId = itemLayoutId;
@@ -26,7 +26,7 @@ public abstract class CommonAdapter<T> extends BaseAdapter {
 	/**
 	 * 使用数据集刷新adapter
 	 */
-	public void reflushAdapter(List<T> data) {
+	public void refreshAdapter(List<T> data) {
 		if (data != null && !data.isEmpty()) {
 			this.mData = data;
 		} else {

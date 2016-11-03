@@ -1,14 +1,11 @@
 package com.alexsophia.b2cgoodsprice.network;
 
-import com.alexsophia.b2cgoodsprice.features.main.entity.MovieEntity;
-
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
-import rx.Observable;
 
 /**
  * ApiManager
@@ -50,14 +47,5 @@ public class ApiManager {
      */
     public static ApiManager getInstance() {
         return SingletonHolder.INSTANCE;
-    }
-
-    /**
-     * 用于获取豆瓣电影Top250的数据
-     * @param start 起始位置
-     * @param count 获取长度
-     */
-    public Observable<MovieEntity> getTopMovie(int start, int count){
-        return mApiInterface.getTopMovie(start, count);
     }
 }

@@ -2,9 +2,7 @@ package com.alexsophia.b2cgoodsprice.features.list.presenters.impl;
 
 import com.alexsophia.b2cgoodsprice.app.MyApplication;
 import com.alexsophia.b2cgoodsprice.database.DbMaster;
-import com.alexsophia.b2cgoodsprice.features.base.executor.Executor;
 import com.alexsophia.b2cgoodsprice.features.base.presenters.AbstractPresenter;
-import com.alexsophia.b2cgoodsprice.features.base.threading.MainThread;
 import com.alexsophia.b2cgoodsprice.features.list.presenters.ListPresenters;
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 
@@ -25,8 +23,8 @@ public class ListPresentersImpl extends AbstractPresenter implements ListPresent
     private final DbMaster mDbMaster;
     private GoodsType mSelectedType;
 
-    public ListPresentersImpl(Executor executor, MainThread mainThread, ListPresenters.View view) {
-        super(executor, mainThread);
+    public ListPresentersImpl(ListPresenters.View view) {
+        super();
         this.mView = view;
         this.mDbMaster = MyApplication.getInstance().getDbMaster();
     }

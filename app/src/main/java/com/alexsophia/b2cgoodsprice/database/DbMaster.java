@@ -45,6 +45,7 @@ public class DbMaster {
      * @return id为所查询的物品
      */
     public Goods getGoods(long id) {
+        // TODO: 2016/11/3
         Goods goods = mGoodsDao.load(id);
         LogWrapper.i(TAG, "getGoods: " + toString(goods));
         return goods;
@@ -56,6 +57,7 @@ public class DbMaster {
      * @return 所有物品
      */
     public List<Goods> getGoodsList() {
+        // TODO: 2016/11/3
         List<Goods> goods = mGoodsDao.loadAll();
         LogWrapper.i(TAG, "getGoodsList: size = " + goods.size());
         return goods;
@@ -67,13 +69,14 @@ public class DbMaster {
      * @param typeId 物品的typeId
      * @return 所有type为所选typeId的物品
      */
-    public List<Goods> getGoodsList(long typeId) {
+    public List<Goods> getGoodsListByTypeId(long typeId) {
+        // TODO: 2016/11/3
         GoodsType type = mGoodsTypeDao.load(typeId);
         List<Goods> goods = new ArrayList<>();
         if (null != type) {
             goods = type.getGoodsList();
         }
-        LogWrapper.i(TAG, "getGoodsList: size = " + goods.size());
+        LogWrapper.i(TAG, "getGoodsListByTypeId: size = " + goods.size());
         return goods;
     }
 
@@ -84,15 +87,16 @@ public class DbMaster {
      * @param brandId brandId
      * @return 所有本类的物品列表
      */
-    public List<Goods> getGoodsList(Long typeId, Long brandId) {
-        List<Goods> goods = getGoodsList(typeId);
+    public List<Goods> getGoodsListByTypeBrandId(long typeId, long brandId) {
+        // TODO: 2016/11/3
+        List<Goods> goods = getGoodsListByTypeId(typeId);
         List<Goods> brandGoods = new ArrayList<>();
         for (Goods good : goods) {
             if (Objects.equals(good.getGoodsBrandId(), brandId)) {
                 brandGoods.add(good);
             }
         }
-        LogWrapper.i(TAG, "getGoodsList: size = " + brandGoods.size());
+        LogWrapper.i(TAG, "getGoodsListByTypeBrandId: size = " + brandGoods.size());
         return brandGoods;
     }
 
@@ -102,10 +106,11 @@ public class DbMaster {
      * @param goods 新物品
      * @return 添加后的物品ID
      */
-    public long addOrUpdateGoods(Goods goods) {
-        LogWrapper.i(TAG, "addOrUpdateGoods: " + toString(goods));
+    public long addGoods(Goods goods) {
+        // TODO: 2016/11/3
+        LogWrapper.i(TAG, "addGoods: " + toString(goods));
         long id = mGoodsDao.insertOrReplace(goods);
-        LogWrapper.i(TAG, "addOrUpdateGoods: id = " + id);
+        LogWrapper.i(TAG, "addGoods: id = " + id);
         return id;
     }
 
@@ -115,6 +120,7 @@ public class DbMaster {
      * @param id 物品ID
      */
     public void removeGoods(long id) {
+        // TODO: 2016/11/3
         LogWrapper.i(TAG, "removeGoods: id = " + id);
         mGoodsDao.deleteByKey(id);
     }
@@ -125,6 +131,7 @@ public class DbMaster {
      * @param ids 物品ID集合
      */
     public void removeGoods(long... ids) {
+        // TODO: 2016/11/3
         LogWrapper.i(TAG, "removeGoods: ids = " + Arrays.toString(ids));
         for (long id : ids) {
             removeGoods(id);
@@ -137,6 +144,7 @@ public class DbMaster {
      * @param goods 物品对象
      */
     public void removeGoods(Goods goods) {
+        // TODO: 2016/11/3
         LogWrapper.i(TAG, "removeGoods: " + toString(goods));
         mGoodsDao.delete(goods);
     }
@@ -144,8 +152,9 @@ public class DbMaster {
     /**
      * 清空Goods表
      */
-    public void clearGoods() {
-        LogWrapper.i(TAG, "clearGoods: ");
+    public void removeAllGoods() {
+        // TODO: 2016/11/3
+        LogWrapper.i(TAG, "removeAllGoods: ");
         mGoodsDao.deleteAll();
     }
 
@@ -158,20 +167,46 @@ public class DbMaster {
      * @return 物品类别列表
      */
     public List<GoodsType> getGoodsTypes() {
-        List<GoodsType> goodsType = mGoodsTypeDao.loadAll();
-        LogWrapper.i(TAG, "getGoodsTypes: size = " + goodsType.size());
-        return goodsType;
+        List<GoodsType> goodsTypes = mGoodsTypeDao.loadAll();
+        LogWrapper.i(TAG, "getGoodsTypes: size = " + goodsTypes.size());
+        return goodsTypes;
+    }
+
+    /**
+     * 获得所有的物品类别的String名称数组
+     *
+     * @return 物品类别名称的String数组
+     */
+    public String[] getGoodsTypesArray() {
+        List<String> goodsTypesList = new ArrayList<>();
+        for (GoodsType goodsType : getGoodsTypes()) {
+            goodsTypesList.add(goodsType.getGoodsTypeName());
+        }
+        return goodsTypesList.toArray(new String[goodsTypesList.size()]);
     }
 
     /**
      * 获得物品类别
      *
-     * @param id 类别ID
+     * @param typeId 类别ID
      * @return 该类别
      */
-    public GoodsType getGoodsType(long id) {
-        GoodsType goodsType = mGoodsTypeDao.load(id);
+    public GoodsType getGoodsType(long typeId) {
+        // TODO: 2016/11/3
+        GoodsType goodsType = mGoodsTypeDao.load(typeId);
         LogWrapper.i(TAG, "getGoodsType: " + toString(goodsType));
+        return goodsType;
+    }
+
+    /**
+     * 根据位置获取物品类别
+     *
+     * @param rowId 行号
+     * @return 类别
+     */
+    public GoodsType getGoodsTypeByRowId(int rowId) {
+        GoodsType goodsType = mGoodsTypeDao.loadByRowId(rowId);
+        LogWrapper.i(TAG, "getGoodsTypeByRowId: " + toString(goodsType));
         return goodsType;
     }
 
@@ -182,6 +217,7 @@ public class DbMaster {
      * @return 新加的物品类别ID
      */
     public long addGoodsType(GoodsType goodsType) {
+        // TODO: 2016/11/3
         LogWrapper.i(TAG, "addGoodsType: " + toString(goodsType));
         long id = mGoodsTypeDao.insertOrReplace(goodsType);
         LogWrapper.i(TAG, "addGoodsType: id = " + id);
@@ -191,8 +227,9 @@ public class DbMaster {
     /**
      * 清空GoodsType表
      */
-    public void clearGoodsType() {
-        LogWrapper.i(TAG, "clearGoodsType: ");
+    public void removeAllGoodsType() {
+        // TODO: 2016/11/3
+        LogWrapper.i(TAG, "removeAllGoodsType: ");
         mGoodsTypeDao.deleteAll();
     }
 
@@ -206,20 +243,56 @@ public class DbMaster {
      */
     public List<GoodsBrand> getGoodsBrands() {
         List<GoodsBrand> goodsBrand = mGoodsBrandDao.loadAll();
-        LogWrapper.i(TAG, "getGoodsBrands: size = " + goodsBrand.size());
+        LogWrapper.i(TAG, "getGoodsBrandsByTypeId: size = " + goodsBrand.size());
         return goodsBrand;
+    }
+
+    /**
+     * 根据类别信息获取所属的厂商信息
+     *
+     * @param typeId 类别ID
+     * @return 厂商列表
+     */
+    public List<GoodsBrand> getGoodsBrandsByTypeId(long typeId) {
+        GoodsType type = mGoodsTypeDao.load(typeId);
+        if (null == type) {
+            return new ArrayList<>();
+        }
+        List<GoodsBrand> brands = type.getBrandList();
+        LogWrapper.i(TAG, "getGoodsBrandsByTypeId: size = " + brands.size());
+        return brands;
+    }
+
+    /**
+     * 根据类别信息获取所属的厂商信息名称列表
+     *
+     * @param typeId 类别ID
+     * @return 厂商列表
+     */
+    public String[] getGoodsBrandsArrayByTypeId(long typeId) {
+        List<String> brands = new ArrayList<>();
+        for (GoodsBrand goodsBrand : getGoodsBrandsByTypeId(typeId)) {
+            brands.add(goodsBrand.getGoodsBrandName());
+        }
+        return brands.toArray(new String[brands.size()]);
     }
 
     /**
      * 根据厂商ID获取厂商信息
      *
-     * @param id 厂商ID
+     * @param brandId 厂商ID
      * @return 厂商信息
      */
-    public GoodsBrand getGoodsBrand(long id) {
-        GoodsBrand goodsBrand = mGoodsBrandDao.load(id);
+    public GoodsBrand getGoodsBrand(long brandId) {
+        GoodsBrand goodsBrand = mGoodsBrandDao.load(brandId);
         LogWrapper.i(TAG, "getGoodsBrand: " + toString(goodsBrand));
         return goodsBrand;
+    }
+
+    public GoodsBrand getGoodsBrandByTypeRowId(long typeId, int rowId) {
+        GoodsBrand brand = getGoodsBrandsByTypeId(typeId).get(rowId);
+        LogWrapper.i(TAG, "getGoodsBrandByTypeRowId: " + toString(brand));
+        return brand;
     }
 
     /**
@@ -229,6 +302,7 @@ public class DbMaster {
      * @return 插入或更新后的厂商ID
      */
     public long addGoodsBrand(GoodsBrand goodsBrand) {
+        // TODO: 2016/11/3
         LogWrapper.i(TAG, "addGoodsBrand: " + toString(goodsBrand));
         long id = mGoodsBrandDao.insertOrReplace(goodsBrand);
         mGoodsTypeDao.load(goodsBrand.getGoodsTypeId()).resetBrandList();
@@ -239,8 +313,9 @@ public class DbMaster {
     /**
      * 清空GoodsBrands表
      */
-    public void clearGoodsBrands() {
-        LogWrapper.i(TAG, "clearGoodsBrands: ");
+    public void removeAllGoodsBrands() {
+        // TODO: 2016/11/3
+        LogWrapper.i(TAG, "removeAllGoodsBrands: ");
         mGoodsBrandDao.deleteAll();
     }
 
@@ -254,6 +329,7 @@ public class DbMaster {
      * @return priceType list
      */
     public List<PriceType> getPriceTypes() {
+        // TODO: 2016/11/3
         List<PriceType> priceType = mPriceTypeDao.loadAll();
         LogWrapper.i(TAG, "getPriceTypes: size = " + priceType.size());
         return priceType;
@@ -266,6 +342,7 @@ public class DbMaster {
      * @return 新添加的type ID
      */
     public long addPriceType(PriceType priceType) {
+        // TODO: 2016/11/3
         LogWrapper.i(TAG, "addPriceType: " + toString(priceType));
         long id = mPriceTypeDao.insert(priceType);
         LogWrapper.i(TAG, "addPriceType: id = " + id);
@@ -275,8 +352,9 @@ public class DbMaster {
     /**
      * 清空PriceType表
      */
-    public void clearPriceType() {
-        LogWrapper.i(TAG, "clearPriceType: ");
+    public void removePriceType() {
+        // TODO: 2016/11/3
+        LogWrapper.i(TAG, "removePriceType: ");
         mPriceTypeDao.deleteAll();
     }
 
@@ -303,6 +381,9 @@ public class DbMaster {
      * 获取物品描述信息
      */
     private String toString(Goods goods) {
+        if (null == goods) {
+            return "null";
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("Goods ID = ").append(goods.getGoodsId()).append("; ")
                 .append("Name = ").append(goods.getGoodsName()).append("; ")
@@ -322,6 +403,9 @@ public class DbMaster {
     }
 
     private String toString(GoodsType goodsType) {
+        if (null == goodsType) {
+            return "null";
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("Goods Type ID = ").append(goodsType.getGoodsTypeId()).append("; ")
                 .append("Name = ").append(goodsType.getGoodsTypeName()).append("; ");
@@ -331,6 +415,9 @@ public class DbMaster {
     }
 
     private String toString(GoodsBrand goodsBrand) {
+        if (null == goodsBrand) {
+            return "null";
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("Goods Brand ID = ").append(goodsBrand.getGoodsBrandId()).append("; ")
                 .append("Name = ").append(goodsBrand.getGoodsBrandName()).append("; ");
@@ -341,6 +428,9 @@ public class DbMaster {
     }
 
     private String toString(PriceType priceType) {
+        if (null == priceType) {
+            return "null";
+        }
         StringBuilder sb = new StringBuilder();
         sb.append("Price Type ID = ").append(priceType.getPriceTypeId()).append("; ")
                 .append("Name = ").append(priceType.getPriceTypeName()).append("; ");

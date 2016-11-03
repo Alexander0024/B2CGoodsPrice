@@ -35,6 +35,12 @@ public interface GoodsBrandManagePresenters extends BasePresenter {
     void addNewBrand();
 
     /**
+     * 更新厂商信息
+     * @param goodsBrand 新信息
+     */
+    void updateBrand(GoodsBrand goodsBrand);
+
+    /**
      * 获得厂商信息列表
      *
      * @return 厂商信息列表

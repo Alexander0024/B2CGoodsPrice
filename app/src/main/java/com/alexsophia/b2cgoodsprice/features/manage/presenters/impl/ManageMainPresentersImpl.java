@@ -4,6 +4,7 @@ import com.alexsophia.b2cgoodsprice.app.MyApplication;
 import com.alexsophia.b2cgoodsprice.database.DbMaster;
 import com.alexsophia.b2cgoodsprice.features.base.presenters.AbstractPresenter;
 import com.alexsophia.b2cgoodsprice.features.manage.presenters.ManageMainPresenters;
+import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 
 import greendao.GoodsBrand;
 import greendao.GoodsType;
@@ -52,12 +53,14 @@ public class ManageMainPresentersImpl extends AbstractPresenter implements Manag
     @Override
     public void initDatabase() {
         // Init goods type
-        mDbMaster.clearGoodsType();
+        LogWrapper.i(TAG, "initDatabase: Init goods types");
+        mDbMaster.removeAllGoodsType();
         mDbMaster.addGoodsType(new GoodsType(1L, "身体护理"));
         mDbMaster.addGoodsType(new GoodsType(2L, "清洁用品"));
         mDbMaster.addGoodsType(new GoodsType(3L, "运动健身"));
         // Init goods brand
-        mDbMaster.clearGoodsBrands();
+        LogWrapper.i(TAG, "initDatabase: Init goods brands");
+        mDbMaster.removeAllGoodsBrands();
         mDbMaster.addGoodsBrand(new GoodsBrand(null, "海飞丝", 1L));
         mDbMaster.addGoodsBrand(new GoodsBrand(null, "潘婷", 1L));
         mDbMaster.addGoodsBrand(new GoodsBrand(null, "清扬", 1L));
@@ -80,10 +83,12 @@ public class ManageMainPresentersImpl extends AbstractPresenter implements Manag
         mDbMaster.addGoodsBrand(new GoodsBrand(null, "双鱼", 3L));
 
         // Init goods
-        mDbMaster.clearGoods();
+        LogWrapper.i(TAG, "initDatabase: Init goods");
+        mDbMaster.removeAllGoods();
 
         // Init price type
-        mDbMaster.clearPriceType();
+        LogWrapper.i(TAG, "initDatabase: Init price type");
+        mDbMaster.removePriceType();
         mDbMaster.addPriceType(new PriceType(null, "网店"));
         mDbMaster.addPriceType(new PriceType(null, "实体店"));
         mView.onInitSuccess("初始化成功！");

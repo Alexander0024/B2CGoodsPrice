@@ -19,11 +19,11 @@ import butterknife.OnClick;
  */
 public class ManageMainFragment extends BaseFragment implements ManageMainPresenters.View {
     @Bind(R.id.rl_manage_goods_type)
-    AutoRelativeLayout mRlManageGoodsType;
+    AutoRelativeLayout mRlManageGoodsType; // 管理分类
     @Bind(R.id.rl_manage_goods_brand)
-    AutoRelativeLayout mRlManageGoodsBrand;
+    AutoRelativeLayout mRlManageGoodsBrand; // 管理厂商
     @Bind(R.id.rl_manage_init_database)
-    AutoRelativeLayout mRlInitGoodsType;
+    AutoRelativeLayout mRlInitDatabase; // 初始化数据库
     private ManageMainPresenters mPresenters;
 
     public static ManageMainFragment newInstance() {
