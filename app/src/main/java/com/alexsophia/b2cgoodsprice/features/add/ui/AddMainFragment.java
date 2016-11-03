@@ -47,6 +47,8 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     EditText mEdtTxtPrice;
     @Bind(R.id.btn_add_submit)
     Button mBtnSubmit;
+    @Bind(R.id.btn_add_reset)
+    Button mBtnReset;
     private String TAG = "AddMainFragment";
     private AddPresenters mPresenters;
     private GoodsNameAdapter mNameAdapter;
@@ -124,7 +126,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
         mDropEdtTxtName.setAdapter(mNameAdapter);
     }
 
-    @OnClick(R.id.btn_add_submit)
+    @OnClick({R.id.btn_add_submit, R.id.btn_add_reset})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_add_submit:
@@ -132,7 +134,17 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
                 mNameAdapter.addData(getName());
                 mPresenters.addNew();
                 break;
+            case R.id.btn_add_reset:
+                LogWrapper.e(TAG, "Reset click!");
+                resetUI();
+                break;
         }
+    }
+
+    private void resetUI() {
+        mEdtTxtStandard.setText("");
+        mRbAddOnline.setSelected(true);
+        mEdtTxtPrice.setText("");
     }
 
     @Override
