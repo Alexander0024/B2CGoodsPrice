@@ -57,6 +57,7 @@ public class PriceListAdapter extends BaseAdapter {
         if (view == null) {
             viewHolder = new ViewHolder();
             view = LayoutInflater.from(mContext).inflate(R.layout.list_price_item, null);
+            viewHolder.mType = (TextView) view.findViewById(R.id.tv_main_type);
             viewHolder.mBrand = (TextView) view.findViewById(R.id.tv_main_brand);
             viewHolder.mName = (TextView) view.findViewById(R.id.tv_main_name);
             viewHolder.mStandard = (TextView) view.findViewById(R.id.tv_main_standard);
@@ -71,6 +72,7 @@ public class PriceListAdapter extends BaseAdapter {
          * display data
          */
         final Goods goods = mGoods.get(position);
+        viewHolder.mType.setText(goods.getGoodsType().getGoodsTypeName());
         viewHolder.mBrand.setText(goods.getGoodsBrand().getGoodsBrandName());
         viewHolder.mName.setText(goods.getGoodsName());
         viewHolder.mStandard.setText(goods.getGoodsStandard());
@@ -95,7 +97,7 @@ public class PriceListAdapter extends BaseAdapter {
                         double price = Double.parseDouble(input.getText().toString());
                         if (price < goods.getCheapestOnline() || goods.getCheapestOnline() == -1) {
                             goods.setCheapestOnline(price);
-                            MyApplication.getInstance().getDbMaster().addOrUpdateGoods(goods);
+                            MyApplication.getInstance().getDbMaster().addGoods(goods);
                             notifyDataSetChanged();
                         }
                     }
@@ -118,7 +120,7 @@ public class PriceListAdapter extends BaseAdapter {
                         double price = Double.parseDouble(input.getText().toString());
                         if (price < goods.getCheapestOffline() || goods.getCheapestOffline() == -1) {
                             goods.setCheapestOffline(price);
-                            MyApplication.getInstance().getDbMaster().addOrUpdateGoods(goods);
+                            MyApplication.getInstance().getDbMaster().addGoods(goods);
                             notifyDataSetChanged();
                         }
                     }
@@ -130,6 +132,7 @@ public class PriceListAdapter extends BaseAdapter {
     }
 
     private class ViewHolder {
+        TextView mType;
         TextView mBrand;
         TextView mName;
         TextView mStandard;

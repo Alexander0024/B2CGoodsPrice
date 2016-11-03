@@ -56,7 +56,7 @@ public class ListPresentersImpl extends AbstractPresenter implements ListPresent
         if (mSelectedType == null) {
             return mDbMaster.getGoodsList();
         } else {
-            return mDbMaster.getGoodsList(mSelectedType.getGoodsTypeId());
+            return mDbMaster.getGoodsListByTypeId(mSelectedType.getGoodsTypeId());
         }
     }
 
