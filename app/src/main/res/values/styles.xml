@@ -8,55 +8,6 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
-    <style name="Main_base_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-
-    </style>
-
-    <style name="Main_tab_img_style" parent="Main_base_style">
-        <item name="android:layout_height">30dp</item>
-        <item name="android:layout_width">30dp</item>
-        <item name="android:layout_centerInParent">true</item>
-    </style>
-
-    <style name="Main_tab_tv_style" parent="Main_base_style">
-        <item name="android:layout_centerInParent">true</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/tv_light_hint</item>
-    </style>
-
-    <style name="Main_tab_img_rl_style">
-        <item name="android:layout_width">76dp</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-    </style>
-
-    <style name="Main_tab_tv_rl_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_gravity">center_horizontal</item>
-        <item name="android:layout_marginBottom">4dp</item>
-    </style>
-
-    <style name="Main_tab_ll_style">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_gravity">center</item>
-        <item name="android:gravity">center</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:paddingLeft">20dp</item>
-        <item name="android:paddingRight">20dp</item>
-    </style>
-
-    <style name="Main_tab_bg_ll_style">
-        <item name="android:layout_width">0dp</item>
-        <item name="android:layout_height">match_parent</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:background">#f8f8f8</item>
-    </style>
-
     <!-- ================ View ================ -->
     <!-- 页面公共属性 -->
     <style name="PageStyle">
