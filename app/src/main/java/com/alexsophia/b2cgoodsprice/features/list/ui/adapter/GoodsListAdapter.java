@@ -16,15 +16,15 @@ import java.util.List;
 import greendao.Goods;
 
 /**
- * PriceListAdapter
+ * GoodsListAdapter
  * <p>
  * Created by Alexander on 2016/10/26.
  */
-public class PriceListAdapter extends BaseAdapter {
+public class GoodsListAdapter extends BaseAdapter {
     private final Context mContext;
     private List<Goods> mGoods;
 
-    public PriceListAdapter(Context context, List<Goods> goods) {
+    public GoodsListAdapter(Context context, List<Goods> goods) {
         this.mContext = context;
         this.mGoods = goods;
     }

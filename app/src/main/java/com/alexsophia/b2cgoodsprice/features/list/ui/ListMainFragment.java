@@ -11,7 +11,7 @@ import com.alexsophia.b2cgoodsprice.R;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragment;
 import com.alexsophia.b2cgoodsprice.features.list.presenters.ListPresenters;
 import com.alexsophia.b2cgoodsprice.features.list.presenters.impl.ListPresentersImpl;
-import com.alexsophia.b2cgoodsprice.features.list.ui.adapter.PriceListAdapter;
+import com.alexsophia.b2cgoodsprice.features.list.ui.adapter.GoodsListAdapter;
 import com.alexsophia.b2cgoodsprice.share.events.UpdateGoodsEvents;
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 import com.alexsophia.b2cgoodsprice.utils.ToastUtil;
@@ -33,14 +33,14 @@ import greendao.Goods;
 public class ListMainFragment extends BaseFragment implements ListPresenters.View {
     @Bind(R.id.spinner_filter)
     Spinner mSpinnerFilter;
-    @Bind(R.id.lVi_list_prices)
-    ListView mLVPrices;
+    @Bind(R.id.lVi_list_goods)
+    ListView mLVGoods;
     @Bind(R.id.tv_list_count)
     TextView mTvCount;
     private String TAG = "ListMainFragment";
     private ListPresentersImpl mPresenters;
     // ListView的Adapter
-    private PriceListAdapter mPriceListAdapter;
+    private GoodsListAdapter mGoodsListAdapter;
 
     public static ListMainFragment newInstance() {
         return new ListMainFragment();
@@ -94,8 +94,8 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
             }
         });
         // Init list view
-        mPriceListAdapter = new PriceListAdapter(getContext(), new ArrayList<Goods>());
-        mLVPrices.setAdapter(mPriceListAdapter);
+        mGoodsListAdapter = new GoodsListAdapter(getContext(), new ArrayList<Goods>());
+        mLVGoods.setAdapter(mGoodsListAdapter);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -122,7 +122,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
     @Override
     public void refreshUI() {
         mTvCount.setText(getString(R.string.total_count, mPresenters.getGoods().size()));
-        mPriceListAdapter.updateListView(mPresenters.getGoods());
-        mPriceListAdapter.notifyDataSetChanged();
+        mGoodsListAdapter.updateListView(mPresenters.getGoods());
+        mGoodsListAdapter.notifyDataSetChanged();
     }
 }

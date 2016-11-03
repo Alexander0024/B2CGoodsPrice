@@ -24,7 +24,7 @@
     <include layout="@layout/list_price_item"/>
 
     <ListView
-        android:id="@+id/lVi_list_prices"
+        android:id="@+id/lVi_list_goods"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
