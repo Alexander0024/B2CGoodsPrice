@@ -12,8 +12,13 @@ import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragment;
 import com.alexsophia.b2cgoodsprice.features.list.presenters.ListPresenters;
 import com.alexsophia.b2cgoodsprice.features.list.presenters.impl.ListPresentersImpl;
 import com.alexsophia.b2cgoodsprice.features.list.ui.adapter.PriceListAdapter;
+import com.alexsophia.b2cgoodsprice.share.events.UpdateGoodsEvents;
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 import com.alexsophia.b2cgoodsprice.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -53,7 +58,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
 
     @Override
     protected void createView() {
-
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -64,7 +69,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
 
     @Override
     protected void destroyView() {
-
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -91,6 +96,12 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
         // Init list view
         mPriceListAdapter = new PriceListAdapter(getContext(), new ArrayList<Goods>());
         mLVPrices.setAdapter(mPriceListAdapter);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    @SuppressWarnings("unused")
+    public void onMessageEvent(UpdateGoodsEvents event) {
+        refreshUI();
     }
 
     @Override

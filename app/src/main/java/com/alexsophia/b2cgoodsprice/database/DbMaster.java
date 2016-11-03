@@ -110,6 +110,7 @@ public class DbMaster {
         // TODO: 2016/11/3
         LogWrapper.i(TAG, "addGoods: " + toString(goods));
         long id = mGoodsDao.insertOrReplace(goods);
+        mGoodsDao.refresh(goods);
         LogWrapper.i(TAG, "addGoods: id = " + id);
         return id;
     }

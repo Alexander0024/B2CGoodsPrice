@@ -13,12 +13,13 @@ import com.alexsophia.b2cgoodsprice.R;
 import com.alexsophia.b2cgoodsprice.features.add.presenters.AddPresenters;
 import com.alexsophia.b2cgoodsprice.features.add.presenters.impl.AddPresentersImpl;
 import com.alexsophia.b2cgoodsprice.features.add.ui.adapter.GoodsNameAdapter;
-import com.alexsophia.b2cgoodsprice.features.base.executor.impl.ThreadExecutor;
-import com.alexsophia.b2cgoodsprice.features.base.threading.impl.MainThreadImpl;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragment;
 import com.alexsophia.b2cgoodsprice.share.DropEditText;
+import com.alexsophia.b2cgoodsprice.share.events.UpdateGoodsEvents;
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 import com.alexsophia.b2cgoodsprice.utils.ToastUtil;
+
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -197,6 +198,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     @Override
     public void onAddGoodsSuccess(long id) {
         ToastUtil.showLong(getContext(), "添加成功！id = " + id);
+        EventBus.getDefault().post(new UpdateGoodsEvents());
     }
 
     private void setSpinnerType() {

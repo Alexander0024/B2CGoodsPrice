@@ -45,6 +45,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:7.0.1'
     // 屏幕适配
     compile 'com.zhy:autolayout:1.4.1'
+    // EventBus 事件
+    compile 'org.greenrobot:eventbus:3.0.0'
     // 数据库操作GreenDao
     compile 'de.greenrobot:greendao:2.1.0'
     // Jsoup网络抓取
