@@ -6,6 +6,12 @@
                                      android:orientation="horizontal">
 
     <TextView
+        android:id="@+id/tv_main_type"
+        style="@style/ListItemStyle"
+        android:layout_weight="1"
+        android:text="@string/type"/>
+
+    <TextView
         android:id="@+id/tv_main_brand"
         style="@style/ListItemStyle"
         android:layout_weight="1"
