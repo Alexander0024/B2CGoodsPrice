@@ -59,7 +59,13 @@ public class AddPresentersImpl extends AbstractPresenter implements AddPresenter
 
     @Override
     public void selectBrand(int position) {
-        mSelectedBrand = mDbMaster.getGoodsBrands().get(position);
+        List<GoodsBrand> brands = new ArrayList<>();
+        for (GoodsBrand brand : mDbMaster.getGoodsBrands()) {
+            if (brand.getGoodsType().getGoodsTypeId().equals(mSelectedGoodsType.getGoodsTypeId())) {
+                brands.add(brand);
+            }
+        }
+        mSelectedBrand = brands.get(position);
         mView.onBrandSelected(mSelectedBrand.getGoodsBrandId());
     }
 

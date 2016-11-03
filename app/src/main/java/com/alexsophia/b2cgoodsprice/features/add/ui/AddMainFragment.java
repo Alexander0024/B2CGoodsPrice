@@ -133,6 +133,7 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
                 LogWrapper.e(TAG, "Submit click!");
                 mNameAdapter.addData(getName());
                 mPresenters.addNew();
+                resetUI();
                 break;
             case R.id.btn_add_reset:
                 LogWrapper.e(TAG, "Reset click!");
