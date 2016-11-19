@@ -1,8 +1,7 @@
 <resources>
-    <string name="app_name">B2CGoodsPrice</string>
-    <string name="menu_item">列表</string>
-    <string name="menu_add">添加</string>
-    <string name="menu_future">留空</string>
+    <string name="app_name">AlexSophiaUtils</string>
+    <string name="menu_goods">物品</string>
+    <string name="menu_device">设备</string>
     <string name="menu_manage">管理</string>
     <string name="menu_dialog_waiting">载入中，请稍后</string>
 
