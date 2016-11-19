@@ -1,9 +1,9 @@
-package com.alexsophia.b2cgoodsprice.features.list.presenters.impl;
+package com.alexsophia.b2cgoodsprice.features.goods.presenters.impl;
 
 import com.alexsophia.b2cgoodsprice.app.MyApplication;
 import com.alexsophia.b2cgoodsprice.database.DbMaster;
 import com.alexsophia.b2cgoodsprice.features.base.presenters.AbstractPresenter;
-import com.alexsophia.b2cgoodsprice.features.list.presenters.ListPresenters;
+import com.alexsophia.b2cgoodsprice.features.goods.presenters.ListPresenters;
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 
 import java.util.ArrayList;

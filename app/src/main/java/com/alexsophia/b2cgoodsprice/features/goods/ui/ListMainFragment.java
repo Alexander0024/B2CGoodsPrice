@@ -1,4 +1,4 @@
-package com.alexsophia.b2cgoodsprice.features.list.ui;
+package com.alexsophia.b2cgoodsprice.features.goods.ui;
 
 import android.view.View;
 import android.widget.AdapterView;
@@ -9,9 +9,9 @@ import android.widget.TextView;
 
 import com.alexsophia.b2cgoodsprice.R;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragment;
-import com.alexsophia.b2cgoodsprice.features.list.presenters.ListPresenters;
-import com.alexsophia.b2cgoodsprice.features.list.presenters.impl.ListPresentersImpl;
-import com.alexsophia.b2cgoodsprice.features.list.ui.adapter.GoodsListAdapter;
+import com.alexsophia.b2cgoodsprice.features.goods.presenters.ListPresenters;
+import com.alexsophia.b2cgoodsprice.features.goods.presenters.impl.ListPresentersImpl;
+import com.alexsophia.b2cgoodsprice.features.goods.ui.adapter.GoodsListAdapter;
 import com.alexsophia.b2cgoodsprice.share.events.UpdateGoodsEvents;
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 import com.alexsophia.b2cgoodsprice.utils.ToastUtil;

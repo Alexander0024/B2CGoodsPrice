@@ -15,7 +15,7 @@ import android.view.MenuItem;
 
 import com.alexsophia.b2cgoodsprice.R;
 import com.alexsophia.b2cgoodsprice.features.add.ui.AddMainFragment;
-import com.alexsophia.b2cgoodsprice.features.list.ui.ListMainFragment;
+import com.alexsophia.b2cgoodsprice.features.goods.ui.ListMainFragment;
 import com.alexsophia.b2cgoodsprice.features.main.presenters.MainPresenters;
 import com.alexsophia.b2cgoodsprice.features.main.ui.adapter.FragmentAdapter;
 import com.alexsophia.b2cgoodsprice.features.manage.ui.ManageMainFragment;
