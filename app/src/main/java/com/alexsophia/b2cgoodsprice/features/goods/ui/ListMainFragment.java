@@ -3,6 +3,7 @@ package com.alexsophia.b2cgoodsprice.features.goods.ui;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -23,6 +24,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import greendao.Goods;
 
 /**
@@ -31,12 +33,18 @@ import greendao.Goods;
  * Created by Alexander on 2016/10/26.
  */
 public class ListMainFragment extends BaseFragment implements ListPresenters.View {
-    @Bind(R.id.spinner_filter)
-    Spinner mSpinnerFilter;
-    @Bind(R.id.lVi_list_goods)
-    ListView mLVGoods;
+    // Header 统计数字
     @Bind(R.id.tv_list_count)
     TextView mTvCount;
+    // Header 添加新项目
+    @Bind(R.id.btn_add_new)
+    Button btnAddNew;
+    // Header 下拉过滤栏
+    @Bind(R.id.spinner_filter)
+    Spinner mSpinnerFilter;
+    // Content ListView
+    @Bind(R.id.lVi_list_goods)
+    ListView mLVGoods;
     private String TAG = "ListMainFragment";
     private ListPresentersImpl mPresenters;
     // ListView的Adapter
@@ -124,5 +132,15 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
         mTvCount.setText(getString(R.string.total_count, mPresenters.getGoods().size()));
         mGoodsListAdapter.updateListView(mPresenters.getGoods());
         mGoodsListAdapter.notifyDataSetChanged();
+    }
+
+    @OnClick(R.id.btn_add_new)
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_add_new:
+                startActivity(getActivity(), AddNewGoodsActivity.class);
+                break;
+            default:
+        }
     }
 }

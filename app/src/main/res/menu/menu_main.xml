@@ -6,12 +6,6 @@
         android:title="@string/menu_item"/>
 
     <item
-        android:id="@+id/menu_add"
-        android:checked="true"
-        android:icon="@android:drawable/ic_menu_share"
-        android:title="@string/menu_add"/>
-
-    <item
         android:id="@+id/menu_manage"
         android:checked="true"
         android:icon="@android:drawable/ic_menu_agenda"

@@ -1,4 +1,4 @@
-package com.alexsophia.b2cgoodsprice.features.add.presenters;
+package com.alexsophia.b2cgoodsprice.features.goods.presenters;
 
 import android.content.Context;
 

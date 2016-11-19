@@ -1,8 +1,8 @@
-package com.alexsophia.b2cgoodsprice.features.add.presenters.impl;
+package com.alexsophia.b2cgoodsprice.features.goods.presenters.impl;
 
 import com.alexsophia.b2cgoodsprice.app.MyApplication;
 import com.alexsophia.b2cgoodsprice.database.DbMaster;
-import com.alexsophia.b2cgoodsprice.features.add.presenters.AddPresenters;
+import com.alexsophia.b2cgoodsprice.features.goods.presenters.AddPresenters;
 import com.alexsophia.b2cgoodsprice.features.base.presenters.AbstractPresenter;
 
 import greendao.Goods;

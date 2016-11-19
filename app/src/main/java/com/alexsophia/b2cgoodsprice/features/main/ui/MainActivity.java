@@ -14,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.alexsophia.b2cgoodsprice.R;
-import com.alexsophia.b2cgoodsprice.features.add.ui.AddMainFragment;
 import com.alexsophia.b2cgoodsprice.features.goods.ui.ListMainFragment;
 import com.alexsophia.b2cgoodsprice.features.main.presenters.MainPresenters;
 import com.alexsophia.b2cgoodsprice.features.main.ui.adapter.FragmentAdapter;
@@ -56,13 +55,10 @@ public class MainActivity extends AppCompatActivity implements MainPresenters.Vi
         List<String> titles = new ArrayList<>();
         //初始化ViewPager的数据集
         List<Fragment> fragments = new ArrayList<>();
-        // Item 1 - 列表
+        // Item 0 - 物品列表
         titles.add(getString(R.string.menu_item));
         fragments.add(ListMainFragment.newInstance());
-        // Item 2 - 添加
-        titles.add(getString(R.string.menu_add));
-        fragments.add(AddMainFragment.newInstance());
-        // Item 3 - 管理
+        // Item 1 - 管理
         titles.add(getString(R.string.menu_manage));
         fragments.add(ManageMainFragment.newInstance());
         //初始化TabLayout的title
@@ -118,11 +114,8 @@ public class MainActivity extends AppCompatActivity implements MainPresenters.Vi
             case R.id.menu_item:
                 mViewPager.setCurrentItem(0);
                 break;
-            case R.id.menu_add:
-                mViewPager.setCurrentItem(1);
-                break;
             case R.id.menu_manage:
-                mViewPager.setCurrentItem(2);
+                mViewPager.setCurrentItem(1);
                 break;
             case android.R.id.home:
                 //主界面左上角的icon点击反应

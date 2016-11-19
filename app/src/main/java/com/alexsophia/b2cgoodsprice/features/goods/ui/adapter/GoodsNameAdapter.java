@@ -1,4 +1,4 @@
-package com.alexsophia.b2cgoodsprice.features.add.ui.adapter;
+package com.alexsophia.b2cgoodsprice.features.goods.ui.adapter;
 
 import android.content.Context;
 import android.view.View;

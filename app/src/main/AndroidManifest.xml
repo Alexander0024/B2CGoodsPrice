@@ -34,6 +34,9 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        <!-- ================ 物品相关界面 ================ -->
+        <!-- Add Goods 添加界面 -->
+        <activity android:name=".features.goods.ui.AddNewGoodsActivity"/>
 
         <!-- ================ 管理相关界面 ================ -->
         <!-- Goods type 管理界面 -->

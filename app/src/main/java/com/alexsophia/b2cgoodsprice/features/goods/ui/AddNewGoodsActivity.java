@@ -1,5 +1,7 @@
-package com.alexsophia.b2cgoodsprice.features.add.ui;
+package com.alexsophia.b2cgoodsprice.features.goods.ui;
 
+import android.app.Activity;
+import android.content.Context;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -10,10 +12,10 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.alexsophia.b2cgoodsprice.R;
-import com.alexsophia.b2cgoodsprice.features.add.presenters.AddPresenters;
-import com.alexsophia.b2cgoodsprice.features.add.presenters.impl.AddPresentersImpl;
-import com.alexsophia.b2cgoodsprice.features.add.ui.adapter.GoodsNameAdapter;
-import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragment;
+import com.alexsophia.b2cgoodsprice.features.goods.presenters.AddPresenters;
+import com.alexsophia.b2cgoodsprice.features.goods.presenters.impl.AddPresentersImpl;
+import com.alexsophia.b2cgoodsprice.features.goods.ui.adapter.GoodsNameAdapter;
+import com.alexsophia.b2cgoodsprice.features.base.ui.BaseActivity;
 import com.alexsophia.b2cgoodsprice.share.DropEditText;
 import com.alexsophia.b2cgoodsprice.share.events.UpdateGoodsEvents;
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
@@ -25,11 +27,11 @@ import butterknife.Bind;
 import butterknife.OnClick;
 
 /**
- * AddMainFragment
+ * Add new goods page
  * <p>
- * Created by Alexander on 2016/10/26.
+ * Created by Alexander on 2016/11/19.
  */
-public class AddMainFragment extends BaseFragment implements AddPresenters.View {
+public class AddNewGoodsActivity extends BaseActivity implements AddPresenters.View {
     @Bind(R.id.spinner_add_type)
     Spinner mSpinnerType; // 类别的下拉列表
     @Bind(R.id.spinner_add_brand)
@@ -50,14 +52,10 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     Button mBtnSubmit; // 提交按钮
     @Bind(R.id.btn_add_reset)
     Button mBtnReset; // 重置按钮
-    private String TAG = "AddMainFragment";
+    private static final String TAG = "AddNewGoodsActivity";
     private AddPresenters mPresenters;
     private GoodsNameAdapter mNameAdapter;
     private ArrayAdapter<String> mBrandAdapter;
-
-    public static AddMainFragment newInstance() {
-        return new AddMainFragment();
-    }
 
     @Override
     protected void stop() {
@@ -65,28 +63,23 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     }
 
     @Override
-    protected int getLayoutRes() {
+    protected void destroy() {
+
+    }
+
+    @Override
+    protected int getContentViewRes() {
         return R.layout.add_main_fragment;
     }
 
     @Override
-    protected void createView() {
-
+    protected Activity getTarget() {
+        return this;
     }
 
     @Override
-    protected void resume() {
-
-    }
-
-    @Override
-    protected void destroyView() {
-
-    }
-
-    @Override
-    protected void initData() {
-        LogWrapper.e(TAG, "initData: ");
+    protected void loadData() {
+        LogWrapper.e(TAG, "loadData: ");
         mPresenters = new AddPresentersImpl(this);
         // Type
         setSpinnerType();
@@ -126,39 +119,23 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
                 LogWrapper.e(TAG, "Submit click!");
                 mNameAdapter.addData(getName());
                 mPresenters.addNew();
-                resetUI();
+                refreshUI();
                 break;
             case R.id.btn_add_reset:
                 LogWrapper.e(TAG, "Reset click!");
-                resetUI();
+                refreshUI();
                 break;
         }
     }
 
-    private void resetUI() {
-        mEdtTxtStandard.setText("");
-        mRbAddOnline.setSelected(true);
-        mEdtTxtPrice.setText("");
+    @Override
+    protected void resumeData() {
+
     }
 
     @Override
-    public void showProgress() {
-        showLoadingProgress();
-    }
-
-    @Override
-    public void hideProgress() {
-        hideLoadingProgress();
-    }
-
-    @Override
-    public void showError(String message) {
-        ToastUtil.showLong(getContext(), message);
-    }
-
-    @Override
-    public void refreshUI() {
-
+    public Context getContext() {
+        return this;
     }
 
     @Override
@@ -199,6 +176,28 @@ public class AddMainFragment extends BaseFragment implements AddPresenters.View 
     public void onAddGoodsSuccess(long id) {
         ToastUtil.showLong(getContext(), "添加成功！id = " + id);
         EventBus.getDefault().post(new UpdateGoodsEvents());
+    }
+
+    @Override
+    public void showProgress() {
+
+    }
+
+    @Override
+    public void hideProgress() {
+
+    }
+
+    @Override
+    public void showError(String message) {
+
+    }
+
+    @Override
+    public void refreshUI() {
+        mEdtTxtStandard.setText("");
+        mRbAddOnline.setSelected(true);
+        mEdtTxtPrice.setText("");
     }
 
     private void setSpinnerType() {
