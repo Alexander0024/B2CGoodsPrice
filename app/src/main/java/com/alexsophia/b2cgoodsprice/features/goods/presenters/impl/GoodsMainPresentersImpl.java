@@ -3,7 +3,7 @@ package com.alexsophia.b2cgoodsprice.features.goods.presenters.impl;
 import com.alexsophia.b2cgoodsprice.app.MyApplication;
 import com.alexsophia.b2cgoodsprice.database.DbMaster;
 import com.alexsophia.b2cgoodsprice.features.base.presenters.AbstractPresenter;
-import com.alexsophia.b2cgoodsprice.features.goods.presenters.ListPresenters;
+import com.alexsophia.b2cgoodsprice.features.goods.presenters.GoodsMainPresenters;
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
 
 import java.util.ArrayList;
@@ -13,17 +13,17 @@ import greendao.Goods;
 import greendao.GoodsType;
 
 /**
- * ListPresentersImpl
+ * GoodsMainPresentersImpl
  * <p>
  * Created by Alexander on 2016/10/26.
  */
-public class ListPresentersImpl extends AbstractPresenter implements ListPresenters {
-    private String TAG = "ListPresentersImpl";
+public class GoodsMainPresentersImpl extends AbstractPresenter implements GoodsMainPresenters {
+    private String TAG = "GoodsMainPresentersImpl";
     private final View mView;
     private final DbMaster mDbMaster;
     private GoodsType mSelectedType;
 
-    public ListPresentersImpl(ListPresenters.View view) {
+    public GoodsMainPresentersImpl(GoodsMainPresenters.View view) {
         super();
         this.mView = view;
         this.mDbMaster = MyApplication.getInstance().getDbMaster();

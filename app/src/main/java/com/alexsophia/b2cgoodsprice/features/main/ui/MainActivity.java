@@ -14,7 +14,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 import com.alexsophia.b2cgoodsprice.R;
-import com.alexsophia.b2cgoodsprice.features.goods.ui.ListMainFragment;
+import com.alexsophia.b2cgoodsprice.features.goods.ui.GoodsMainFragment;
 import com.alexsophia.b2cgoodsprice.features.main.presenters.MainPresenters;
 import com.alexsophia.b2cgoodsprice.features.main.ui.adapter.FragmentAdapter;
 import com.alexsophia.b2cgoodsprice.features.manage.ui.ManageMainFragment;
@@ -57,7 +57,7 @@ public class MainActivity extends AppCompatActivity implements MainPresenters.Vi
         List<Fragment> fragments = new ArrayList<>();
         // Item 0 - 物品列表
         titles.add(getString(R.string.menu_item));
-        fragments.add(ListMainFragment.newInstance());
+        fragments.add(GoodsMainFragment.newInstance());
         // Item 1 - 管理
         titles.add(getString(R.string.menu_manage));
         fragments.add(ManageMainFragment.newInstance());

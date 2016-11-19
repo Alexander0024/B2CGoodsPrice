@@ -12,8 +12,8 @@ import android.widget.RadioGroup;
 import android.widget.Spinner;
 
 import com.alexsophia.b2cgoodsprice.R;
-import com.alexsophia.b2cgoodsprice.features.goods.presenters.AddPresenters;
-import com.alexsophia.b2cgoodsprice.features.goods.presenters.impl.AddPresentersImpl;
+import com.alexsophia.b2cgoodsprice.features.goods.presenters.GoodsAddNewPresenters;
+import com.alexsophia.b2cgoodsprice.features.goods.presenters.impl.GoodsAddNewPresentersImpl;
 import com.alexsophia.b2cgoodsprice.features.goods.ui.adapter.GoodsNameAdapter;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseActivity;
 import com.alexsophia.b2cgoodsprice.share.DropEditText;
@@ -31,7 +31,7 @@ import butterknife.OnClick;
  * <p>
  * Created by Alexander on 2016/11/19.
  */
-public class AddNewGoodsActivity extends BaseActivity implements AddPresenters.View {
+public class GoodsAddNewActivity extends BaseActivity implements GoodsAddNewPresenters.View {
     @Bind(R.id.spinner_add_type)
     Spinner mSpinnerType; // 类别的下拉列表
     @Bind(R.id.spinner_add_brand)
@@ -52,10 +52,9 @@ public class AddNewGoodsActivity extends BaseActivity implements AddPresenters.V
     Button mBtnSubmit; // 提交按钮
     @Bind(R.id.btn_add_reset)
     Button mBtnReset; // 重置按钮
-    private static final String TAG = "AddNewGoodsActivity";
-    private AddPresenters mPresenters;
+    private static final String TAG = "GoodsAddNewActivity";
+    private GoodsAddNewPresenters mPresenters;
     private GoodsNameAdapter mNameAdapter;
-    private ArrayAdapter<String> mBrandAdapter;
 
     @Override
     protected void stop() {
@@ -69,7 +68,7 @@ public class AddNewGoodsActivity extends BaseActivity implements AddPresenters.V
 
     @Override
     protected int getContentViewRes() {
-        return R.layout.add_main_fragment;
+        return R.layout.goods_add_new_activity;
     }
 
     @Override
@@ -80,7 +79,7 @@ public class AddNewGoodsActivity extends BaseActivity implements AddPresenters.V
     @Override
     protected void loadData() {
         LogWrapper.e(TAG, "loadData: ");
-        mPresenters = new AddPresentersImpl(this);
+        mPresenters = new GoodsAddNewPresentersImpl(this);
         // Type
         setSpinnerType();
         mSpinnerType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -208,8 +207,8 @@ public class AddNewGoodsActivity extends BaseActivity implements AddPresenters.V
     }
 
     private void setSpinnerBrand(long goodsTypeId) {
-        mBrandAdapter = new ArrayAdapter<>(getContext(), android.R.layout.simple_spinner_item,
-                mPresenters.getGoodsBrands(goodsTypeId));
+        ArrayAdapter<String> mBrandAdapter = new ArrayAdapter<>(getContext(), android.R.layout
+                .simple_spinner_item, mPresenters.getGoodsBrands(goodsTypeId));
         mBrandAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         mSpinnerBrand.setAdapter(mBrandAdapter);
     }

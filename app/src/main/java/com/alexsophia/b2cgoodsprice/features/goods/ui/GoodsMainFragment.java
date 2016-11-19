@@ -10,8 +10,8 @@ import android.widget.TextView;
 
 import com.alexsophia.b2cgoodsprice.R;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseFragment;
-import com.alexsophia.b2cgoodsprice.features.goods.presenters.ListPresenters;
-import com.alexsophia.b2cgoodsprice.features.goods.presenters.impl.ListPresentersImpl;
+import com.alexsophia.b2cgoodsprice.features.goods.presenters.GoodsMainPresenters;
+import com.alexsophia.b2cgoodsprice.features.goods.presenters.impl.GoodsMainPresentersImpl;
 import com.alexsophia.b2cgoodsprice.features.goods.ui.adapter.GoodsListAdapter;
 import com.alexsophia.b2cgoodsprice.share.events.UpdateGoodsEvents;
 import com.alexsophia.b2cgoodsprice.utils.LogWrapper;
@@ -28,11 +28,11 @@ import butterknife.OnClick;
 import greendao.Goods;
 
 /**
- * ListMainFragment
+ * GoodsMainFragment
  * <p>
  * Created by Alexander on 2016/10/26.
  */
-public class ListMainFragment extends BaseFragment implements ListPresenters.View {
+public class GoodsMainFragment extends BaseFragment implements GoodsMainPresenters.View {
     // Header 统计数字
     @Bind(R.id.tv_list_count)
     TextView mTvCount;
@@ -45,13 +45,13 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
     // Content ListView
     @Bind(R.id.lVi_list_goods)
     ListView mLVGoods;
-    private String TAG = "ListMainFragment";
-    private ListPresentersImpl mPresenters;
+    private String TAG = "GoodsMainFragment";
+    private GoodsMainPresentersImpl mPresenters;
     // ListView的Adapter
     private GoodsListAdapter mGoodsListAdapter;
 
-    public static ListMainFragment newInstance() {
-        return new ListMainFragment();
+    public static GoodsMainFragment newInstance() {
+        return new GoodsMainFragment();
     }
 
     @Override
@@ -61,7 +61,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
 
     @Override
     protected int getLayoutRes() {
-        return R.layout.list_main_fragment;
+        return R.layout.goods_main_fragment;
     }
 
     @Override
@@ -83,7 +83,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
     @Override
     protected void initData() {
         LogWrapper.e(TAG, "initData");
-        mPresenters = new ListPresentersImpl(this);
+        mPresenters = new GoodsMainPresentersImpl(this);
         // Init spinner
         ArrayAdapter<String> typeAdapter = new ArrayAdapter<>(getContext(), android.R.layout
                 .simple_spinner_item, mPresenters.getGoodsTypes());
@@ -138,7 +138,7 @@ public class ListMainFragment extends BaseFragment implements ListPresenters.Vie
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_add_new:
-                startActivity(getActivity(), AddNewGoodsActivity.class);
+                startActivity(getActivity(), GoodsAddNewActivity.class);
                 break;
             default:
         }

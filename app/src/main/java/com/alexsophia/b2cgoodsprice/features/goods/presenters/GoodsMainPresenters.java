@@ -10,11 +10,11 @@ import java.util.List;
 import greendao.Goods;
 
 /**
- * ListPresenters
+ * GoodsMainPresenters
  * <p>
  * Created by Alexander on 2016/10/26.
  */
-public interface ListPresenters extends BasePresenter {
+public interface GoodsMainPresenters extends BasePresenter {
     /**
      * 获得GoodsType 列表
      *

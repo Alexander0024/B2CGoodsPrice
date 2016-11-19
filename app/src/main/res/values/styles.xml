@@ -44,7 +44,7 @@
         <item name="android:backgroundDimEnabled">false</item><!--模糊-->
     </style>
 
-    <!-- ================ List ================ -->
+    <!-- ================ Goods ================ -->
     <!-- 价格列表项Item的格式 -->
     <style name="ListItemStyle">
         <item name="android:layout_height">match_parent</item>
@@ -57,7 +57,6 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <!-- ================ Add ================ -->
     <!-- 添加新项目样式 -->
     <style name="AddNewItemStyle">
         <item name="android:layout_height">45dp</item>

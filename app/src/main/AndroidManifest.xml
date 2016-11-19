@@ -36,7 +36,7 @@
         </activity>
         <!-- ================ 物品相关界面 ================ -->
         <!-- Add Goods 添加界面 -->
-        <activity android:name=".features.goods.ui.AddNewGoodsActivity"/>
+        <activity android:name=".features.goods.ui.GoodsAddNewActivity"/>
 
         <!-- ================ 管理相关界面 ================ -->
         <!-- Goods type 管理界面 -->

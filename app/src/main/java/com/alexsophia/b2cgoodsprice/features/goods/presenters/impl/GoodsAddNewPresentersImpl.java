@@ -2,23 +2,23 @@ package com.alexsophia.b2cgoodsprice.features.goods.presenters.impl;
 
 import com.alexsophia.b2cgoodsprice.app.MyApplication;
 import com.alexsophia.b2cgoodsprice.database.DbMaster;
-import com.alexsophia.b2cgoodsprice.features.goods.presenters.AddPresenters;
+import com.alexsophia.b2cgoodsprice.features.goods.presenters.GoodsAddNewPresenters;
 import com.alexsophia.b2cgoodsprice.features.base.presenters.AbstractPresenter;
 
 import greendao.Goods;
 
 /**
- * AddPresentersImpl
+ * GoodsAddNewPresentersImpl
  * <p>
  * Created by Alexander on 2016/10/26.
  */
-public class AddPresentersImpl extends AbstractPresenter implements AddPresenters {
+public class GoodsAddNewPresentersImpl extends AbstractPresenter implements GoodsAddNewPresenters {
     private final View mView;
     private final DbMaster mDbMaster;
     private long mSelectedGoodsTypeId;
     private long mSelectedBrandId;
 
-    public AddPresentersImpl(View view) {
+    public GoodsAddNewPresentersImpl(View view) {
         super();
         this.mView = view;
         this.mDbMaster = MyApplication.getInstance().getDbMaster();

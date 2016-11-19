@@ -54,7 +54,7 @@ public class GoodsListAdapter extends BaseAdapter {
         ViewHolder viewHolder;
         if (view == null) {
             viewHolder = new ViewHolder();
-            view = LayoutInflater.from(mContext).inflate(R.layout.list_price_item, null);
+            view = LayoutInflater.from(mContext).inflate(R.layout.goods_list_price_item, null);
             viewHolder.mType = (TextView) view.findViewById(R.id.tv_main_type);
             viewHolder.mBrand = (TextView) view.findViewById(R.id.tv_main_brand);
             viewHolder.mName = (TextView) view.findViewById(R.id.tv_main_name);

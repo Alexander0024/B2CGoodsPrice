@@ -6,11 +6,11 @@ import com.alexsophia.b2cgoodsprice.features.base.presenters.BasePresenter;
 import com.alexsophia.b2cgoodsprice.features.base.ui.BaseView;
 
 /**
- * AddPresenters
+ * GoodsAddNewPresenters
  * <p>
  * Created by Alexander on 2016/10/26.
  */
-public interface AddPresenters extends BasePresenter {
+public interface GoodsAddNewPresenters extends BasePresenter {
     /**
      * 获取types
      */
